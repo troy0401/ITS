@@ -162,7 +162,7 @@
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="validationCustom02">Final Summative Exam (Duration)</label>
-                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Duration (Minutes)" required>
+                                                    <input type="number" class="form-control" id="validationCustom03" placeholder="Duration (Minutes)" required>
                                                 </div>
                                                  <div class="col-md-6 mb-3">
                                                     <label for="validationCustom02">Final Summative Exam (number of items)</label>

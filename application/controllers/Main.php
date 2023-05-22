@@ -29,8 +29,8 @@ class Main extends CI_Controller {
         $data = array(
                     "mod_name"=>$data[0],
 					"mod_desc"=>$data[1],
-					"mod_exam_time"$data[2],
-					"mod_exam_item"$data[3],
+					"mod_exam_time"=>$data[2],
+					"mod_exam_item"=>$data[3],
                 );
          if($this->model->insert_into("module", $data)){
            echo json_encode(true);
