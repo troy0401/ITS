@@ -29,6 +29,25 @@
     <!-- others plugins -->
     <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/plugins.js')?>"></script>
     <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/scripts.js')?>"></script>
+    <script>
+    var base_url='<?php echo base_url(); ?>'
+    $(document).ready(function(){
+		$('#form_module').submit(function(e){
+			e.preventDefault();
+			var data = [];
+			$("#form_module input").each(function(){
+				data.push(this.value);
+			});
+
+			$.post(base_url+'Main/Add_Module',
+				{data:data},function(result){
+					$('#form_module')[0].reset();
+					$('#mod').modal('hide');
+					alert(result);
+			},'json');
+		})
+	})
+    </script>
 </body>
 
 </html>
