@@ -160,6 +160,14 @@
                                                     <label for="validationCustom02">Module Description</label>
                                                     <input type="text" class="form-control" id="validationCustom02" placeholder="Module Description" required>
                                                 </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom02">Final Summative Exam (Duration)</label>
+                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Duration (Minutes)" required>
+                                                </div>
+                                                 <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom02">Final Summative Exam (number of items)</label>
+                                                    <input type="number" class="form-control" id="validationCustom03" placeholder="Number of items" required>
+                                                </div>
                                             </div>
                                             </div>
                                             <div class="modal-footer">
