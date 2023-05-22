@@ -55,11 +55,11 @@ class Main extends CI_Controller {
                     $r->mod_desc,
                     ($r->mod_exam_time=='' ? '' : $minutes),
 					$r->mod_exam_item,
-                   '<a  onclick="ViewSubs(\''.$r->mod_name.'\',\''.$r->mod_desc.'\','.$r->mod_id.');" data-toggle="modal" data-target="#ViewMod" data-toggle="tooltip" data-placement="top" title="View Subjects" class="btn btn-info btn-circle btn-sm">
+                   '<a  data-toggle="modal" data-target="#ViewSubj" data-toggle="tooltip" data-placement="top" title="View Subjects" class="btn btn-info btn-circle btn-sm">
                                                     <i class="fa fa-info-circle"></i>
                                                 </a>
-                                                <a  onclick="ViewStuds('.$r->mod_id.','.$this->input->post("id").');" data-toggle="modal" data-target="#ViewStuds" data-toggle="tooltip" data-placement="top" title="View Students" class="btn btn-info btn-circle btn-sm">
-                                                    <i class="fa fa-book"></i>
+                                                <a  onclick="ViewStuds('.$r->mod_id.','.$this->input->post("id").');" data-toggle="modal" data-target="#ViewStuds" data-toggle="tooltip" data-placement="top" title="View Students" class="btn btn-primary btn-circle btn-sm">
+                                                    <i class="fa fa-child"></i>
                                                 </a>
                                                 <a data-toggle="modal" onclick="modhead('.$minutes.',\''.$r->mod_name.'\',\''.$r->mod_desc.'\','.$r->mod_id.')" data-target="#EditMod" class="btn btn-warning btn-circle btn-sm" title="Edit">
                                                     <i class="fa fa-edit"></i>
