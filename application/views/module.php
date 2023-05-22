@@ -1,0 +1,302 @@
+		<!--[header]-->
+        <!--[sidebar]-->
+
+            <!--[topbar]-->
+
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Module</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a href="index.html">Home</a></li>
+                                <li><span>Module</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/images/author/avatar.png')?>" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Kumkum Rai <i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Message</a>
+                                <a class="dropdown-item" href="#">Settings</a>
+                                <a class="dropdown-item" href="#">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page title area end -->
+            <div class="main-content-inner">
+                <!-- accroding start -->
+                <div class="row">
+                    <!-- accordion style 1 start -->
+                    <div class="col-lg-6 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Accordion 1</h4>
+                                <div id="accordion1" class="according">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="card-link" data-toggle="collapse" href="#accordion11">Collapsible Group
+                                                Item #1</a>
+                                        </div>
+                                        <div id="accordion11" class="collapse show" data-parent="#accordion1">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion12">Collapsible
+                                                Group Item #2</a>
+                                        </div>
+                                        <div id="accordion12" class="collapse" data-parent="#accordion1">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion13">Collapsible
+                                                Group Item #3</a>
+                                        </div>
+                                        <div id="accordion13" class="collapse" data-parent="#accordion1">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- accordion style 1 end -->
+                    <!-- accordion style 2 start -->
+                    <div class="col-lg-6 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Accordion 1</h4>
+                                <div id="accordion2" class="according accordion-s2">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="card-link" data-toggle="collapse" href="#accordion21">Collapsible Group
+                                                Item #1</a>
+                                        </div>
+                                        <div id="accordion21" class="collapse show" data-parent="#accordion2">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion22">Collapsible
+                                                Group Item #2</a>
+                                        </div>
+                                        <div id="accordion22" class="collapse" data-parent="#accordion2">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Collapsible
+                                                Group Item #3</a>
+                                        </div>
+                                        <div id="accordion23" class="collapse" data-parent="#accordion2">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- accordion style 2 end -->
+                    <!-- accordion style 3 start -->
+                    <div class="col-lg-6 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Accordion 1</h4>
+                                <div id="accordion3" class="according accordion-s3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="card-link" data-toggle="collapse" href="#accordion31">Collapsible Group
+                                                Item #1</a>
+                                        </div>
+                                        <div id="accordion31" class="collapse show" data-parent="#accordion3">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion32">Collapsible
+                                                Group Item #2</a>
+                                        </div>
+                                        <div id="accordion32" class="collapse" data-parent="#accordion3">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion33">Collapsible
+                                                Group Item #3</a>
+                                        </div>
+                                        <div id="accordion33" class="collapse" data-parent="#accordion3">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- accordion style 3 end -->
+                    <!-- accordion style 4 start -->
+                    <div class="col-lg-6 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Accordion 1</h4>
+                                <div id="accordion4" class="according accordion-s3 gradiant-bg">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="card-link" data-toggle="collapse" href="#accordion41">Collapsible Group
+                                                Item #1</a>
+                                        </div>
+                                        <div id="accordion41" class="collapse show" data-parent="#accordion4">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion42">Collapsible
+                                                Group Item #2</a>
+                                        </div>
+                                        <div id="accordion42" class="collapse" data-parent="#accordion4">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion43">Collapsible
+                                                Group Item #3</a>
+                                        </div>
+                                        <div id="accordion43" class="collapse" data-parent="#accordion4">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- accordion style 4 end -->
+                    <!-- accordion style 5 start -->
+                    <div class="col-lg-6 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Accordion 1</h4>
+                                <div id="accordion5" class="according accordion-s2 gradiant-bg">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="card-link" data-toggle="collapse" href="#accordion51">Collapsible Group
+                                                Item #1</a>
+                                        </div>
+                                        <div id="accordion51" class="collapse show" data-parent="#accordion5">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion52">Collapsible
+                                                Group Item #2</a>
+                                        </div>
+                                        <div id="accordion52" class="collapse" data-parent="#accordion5">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion53">Collapsible
+                                                Group Item #3</a>
+                                        </div>
+                                        <div id="accordion53" class="collapse" data-parent="#accordion5">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- accordion style 5 end -->
+                    <!-- accordion style 6 start -->
+                    <div class="col-lg-6 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Accordion 1</h4>
+                                <div id="accordion6" class="according gradiant-bg">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="card-link" data-toggle="collapse" href="#accordion61">Collapsible Group
+                                                Item #1</a>
+                                        </div>
+                                        <div id="accordion61" class="collapse show" data-parent="#accordion6">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion62">Collapsible
+                                                Group Item #2</a>
+                                        </div>
+                                        <div id="accordion62" class="collapse" data-parent="#accordion6">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#accordion63">Collapsible
+                                                Group Item #3</a>
+                                        </div>
+                                        <div id="accordion63" class="collapse" data-parent="#accordion6">
+                                            <div class="card-body">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo eaque porro alias assumenda accusamus incidunt odio molestiae maxime quo atque in et quaerat, vel unde aliquam aperiam quidem consectetur omnis dicta officiis? Dolorum, error dolorem!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- accordion style 6 end -->
+                </div>
+                <!-- accroding end -->
+            </div>
+       <!--footer-->
