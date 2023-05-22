@@ -35,7 +35,7 @@
                      <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title"><button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" data-target="#mod">Add Subject <i class="fa fa-plus"></i> </button></h4>
+                                <h4 class="header-title"><button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" data-target="#subj">Add Subject <i class="fa fa-plus"></i> </button></h4>
                                 <div class="data-tables">
                                     <table id="dataTable" class="text-center">
                                         <thead class="bg-light text-capitalize">
@@ -55,11 +55,11 @@
 
                         <!--Modals-->
 
-                        <div  id="subj" class="modal fade bd-example-modal-lg">
+                        <div id="subj" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Module Details</h5>
+                                                <h5 class="modal-title">Subject Details</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
 										<form id="form_subj" class="needs-validation" autocomplete="off">
@@ -67,11 +67,11 @@
                                             <div class="form-row">
                                                 <div class="col-md-6 mb-3">
                                                     <label for="validationCustom01">Subject Name</label>
-                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Module name" required>
+                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Subject name" required>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="validationCustom02">Subject Description</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Module Description" required>
+                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Subject Description" required>
                                                 </div>
                                                  <div class="col-md-6 mb-3">
                                                     <label for="validationCustom02">E-Learning Site (links)</label>
