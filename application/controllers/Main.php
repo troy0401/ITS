@@ -12,11 +12,11 @@ class Main extends CI_Controller {
     }
 
     //--------------------------->views---------------------------------------------
-	  public function Module(){
+	  public function Subject(){
         $this->load->view('includes/header');
         $this->load->view('includes/sidebar');
         $this->load->view('includes/topbar');
-		$this->load->view('module');
+		$this->load->view('subject');
 		$this->load->view('includes/footer');
 
 
