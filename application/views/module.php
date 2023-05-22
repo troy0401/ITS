@@ -149,16 +149,16 @@
                                                 <h5 class="modal-title">Module Details</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
-										<form id="form_module" class="needs-validation" novalidate="">
+										<form id="form_module" class="needs-validation">
                                             <div class="modal-body">
                                             <div class="form-row">
                                                 <div class="col-md-6 mb-3">
                                                     <label for="validationCustom01">Module Name</label>
-                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Module name" required="">
+                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Module name" required>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="validationCustom02">Module Description</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Module Description" required="">
+                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Module Description" required>
                                                 </div>
                                             </div>
                                             </div>
