@@ -36,7 +36,7 @@ class Main extends CI_Controller {
         }
     }
 
-     public function subject()//admin view of modules
+     public function subject_list()//admin view of modules
      {
         $draw = intval($this->input->post("draw"));
         $start = intval($this->input->post("start"));
