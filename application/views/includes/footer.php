@@ -34,23 +34,23 @@
     $(document).ready(function(){
 		 $('#dataTable').DataTable( {
             "ajax": {
-                    url : "<?php echo base_url("Main/modules"); ?>",
+                    url : "<?php echo base_url("Main/subject_list"); ?>",
                     type : 'POST',
-					data: {table:"module"}
+					data: {table:"subject"}
              }
         } );
 
-		$('#form_module').submit(function(e){
+		$('#form_subj').submit(function(e){
 			e.preventDefault();
 			var data = [];
-			$("#form_module input").each(function(){
+			$("#form_subj input").each(function(){
 				data.push(this.value);
 			});
 
-			$.post(base_url+'Main/Add_Module',
+			$.post(base_url+'Main/Add_Subj',
 				{data:data},function(result){
-					$('#form_module')[0].reset();
-					$('#mod').modal('hide');
+					$('#form_subj')[0].reset();
+					$('#subj').modal('hide');
 					alert(result);
 			},'json');
 		})
