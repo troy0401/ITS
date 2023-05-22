@@ -42,7 +42,7 @@
                                             <tr>
                                                 <th>Module Title</th>
                                                 <th>Description</th>
-                                                <th>Duration</th>
+                                                <th>Duration (Minutes)</th>
                                                 <th>Test Items</th>
                                                 <th>Actions</th>
                                             </tr>
