@@ -11,7 +11,7 @@
                             <h4 class="page-title pull-left">Module</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="index.html">Home</a></li>
-                                <li><span>Module</span></li>
+                                <li><span>Subject</span></li>
                             </ul>
                         </div>
                     </div>
@@ -40,10 +40,8 @@
                                     <table id="dataTable" class="text-center">
                                         <thead class="bg-light text-capitalize">
                                             <tr>
-                                                <th>Module Title</th>
+                                                <th>Subject Title</th>
                                                 <th>Description</th>
-                                                <th>Duration (Minutes)</th>
-                                                <th>Test Items</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
