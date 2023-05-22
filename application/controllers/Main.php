@@ -29,11 +29,51 @@ class Main extends CI_Controller {
         $data = array(
                     "mod_name"=>$data[0],
 					"mod_desc"=>$data[1],
-					"mod_exam_time"=>$data[2],
+					"mod_exam_time"=>$data[2]*60,
 					"mod_exam_item"=>$data[3],
                 );
          if($this->model->insert_into("module", $data)){
            echo json_encode(true);
         }
     }
+
+     public function modules()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $mod = $this->model->select_all($this->input->post("table"));
+
+          $data = array();
+
+          foreach($mod->result() as $r) {
+              $minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $r->mod_name,
+                    $r->mod_desc,
+                    ($r->mod_exam_time=='' ? '' : $minutes),
+					$r->mod_exam_item,
+                   '<a  onclick="ViewSubs(\''.$r->mod_name.'\',\''.$r->mod_desc.'\','.$r->mod_id.');" data-toggle="modal" data-target="#ViewMod" data-toggle="tooltip" data-placement="top" title="View Subjects" class="btn btn-info btn-circle btn-sm">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                                <a  onclick="ViewStuds('.$r->mod_id.','.$this->input->post("id").');" data-toggle="modal" data-target="#ViewStuds" data-toggle="tooltip" data-placement="top" title="View Students" class="btn btn-info btn-circle btn-sm">
+                                                    <i class="fa fa-book"></i>
+                                                </a>
+                                                <a data-toggle="modal" onclick="modhead('.$minutes.',\''.$r->mod_name.'\',\''.$r->mod_desc.'\','.$r->mod_id.')" data-target="#EditMod" class="btn btn-warning btn-circle btn-sm" title="Edit">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>'
+      );
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $mod->num_rows(),
+                 "recordsFiltered" => $mod->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
 }

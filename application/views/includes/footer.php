@@ -32,6 +32,14 @@
     <script>
     var base_url='<?php echo base_url(); ?>'
     $(document).ready(function(){
+		 $('#dataTable').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/modules"); ?>",
+                    type : 'POST',
+					data: {table:"module"}
+             }
+        } );
+
 		$('#form_module').submit(function(e){
 			e.preventDefault();
 			var data = [];
@@ -47,6 +55,7 @@
 			},'json');
 		})
 	})
+
     </script>
 </body>
 
