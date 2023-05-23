@@ -43,16 +43,16 @@ class Main extends CI_Controller {
         $length = intval($this->input->post("length"));
 
 
-          $mod = $this->model->select_all($this->input->post("table"));
+          $sub = $this->model->select_all($this->input->post("table"));
 
           $data = array();
 
-          foreach($mod->result() as $r) {
+          foreach($sub->result() as $r) {
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
                     $r->subj_name,
                     $r->subj_desc,
-                    ($r->subj_file=='' ? 'No link found' : $r->subj_file),
+                    //($r->subj_file=='' ? 'No link found' : $r->subj_file),
                    '<a data-toggle="modal" data-target="#ViewSubj" data-toggle="tooltip" data-placement="top" title="View Subjects" class="btn btn-info btn-circle btn-sm">
                                                     <i class="fa fa-info-circle"></i>
                                                 </a>
@@ -67,8 +67,8 @@ class Main extends CI_Controller {
 
           $output = array(
                "draw" => $draw,
-                 "recordsTotal" => $mod->num_rows(),
-                 "recordsFiltered" => $mod->num_rows(),
+                 "recordsTotal" => $sub->num_rows(),
+                 "recordsFiltered" => $sub->num_rows(),
                  "data" => $data
             );
           echo json_encode($output);
