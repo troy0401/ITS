@@ -13,12 +13,30 @@ class Main extends CI_Controller {
 
     //--------------------------->views---------------------------------------------
 	  public function Subject(){
+		$acc_type = $this->session->userdata('accnt_type');
+		 if ($acc_type == 1) {
         $this->load->view('includes/header');
         $this->load->view('includes/sidebar');
         $this->load->view('includes/topbar');
 		$this->load->view('subject');
 		$this->load->view('includes/footer');
+		 }else{
+			 redirect(base_url('Main/Login'));
+		}
 
+    }
+
+      public function Student(){
+		$acc_type = $this->session->userdata('accnt_type');
+		 if ($acc_type == 2) {
+        $this->load->view('includes/header');
+        $this->load->view('includes/sidebar');
+        $this->load->view('includes/topbar');
+		$this->load->view('student');
+		$this->load->view('includes/footer');
+		 }else{
+			 redirect(base_url('Main/Login'));
+		}
 
     }
 
@@ -46,6 +64,41 @@ class Main extends CI_Controller {
            echo json_encode(true);
         }
     }
+
+	public function login_function(){
+		 $post = $this->input->post('data');
+        $un=$post[0];
+        $pass=$post[1];
+        $count=$this->model->login_user($un);
+        if($count>0){
+            $acc=$this->model->select_table_with_id2("account","accnt_user",$un);
+            foreach($acc as $ac){
+                if(password_verify($pass,$ac->accnt_pass))
+                {
+                    $fetch=$this->model->select_table_with_id2("account","accnt_id",$ac->accnt_id);
+                    foreach($fetch as $a){
+                        $acc_id = $a->accnt_id;
+                        $accnt = $a->accnt_name;
+						$type = $a->accnt_type;
+
+                    }
+                    $newdata = array(
+					  'accnt_id'=>$acc_id,
+                      'accnt_name'=>$accnt,
+					  'accnt_type'=>$type
+                    );
+
+                    //$this->model->update_where('accounts', $data, 'account_id', $acc_id);
+                    $this->session->set_userdata($newdata);
+                    //echo json_encode($newdata);
+                    //redirect(base_url().'masterfile/dashboard/');
+					echo json_encode($ac->accnt_type);
+                }
+            }
+		}else{
+                    echo json_encode(false);
+                }
+	}
        public function Add_Subj(){
 		//$minutes=$this->input->post('mod_test_time')*60;
 		$data = $this->input->post('data');
@@ -297,5 +350,16 @@ class Main extends CI_Controller {
            echo json_encode(true);
         }
 	}
+
+	public function Logout(){
+    $data = array(
+					'accnt_id'=>'',
+					'accnt_name'=>'',
+					'accnt_type'=>''
+                    );
+    $this->session->unset_userdata($data);
+    $this->session->sess_destroy();
+    redirect(base_url('Main/Login'));
+   }
 
 }

@@ -42,20 +42,21 @@
     <div class="login-area login-s2">
         <div class="container">
             <div class="login-box ptb--100">
-                <form>
+            <form id="login">
                     <div class="login-form-head">
                         <h4>Sign In</h4>
                     </div>
+
                     <div class="login-form-body">
                         <div class="form-gp">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" id="exampleInputEmail1">
+                            <input type="email" id="exampleInputEmail1" required>
                             <i class="ti-email"></i>
                             <div class="text-danger"></div>
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" id="exampleInputPassword1">
+                            <input type="password" id="exampleInputPassword1" required>
                             <i class="ti-lock"></i>
                             <div class="text-danger"></div>
                         </div>
@@ -66,7 +67,7 @@
                             <p class="text-muted">Don't have an account? <a href="<?php echo base_url('Main/Register'); ?>">Sign up</a></p>
                         </div>
                     </div>
-                </form>
+                     </form>
             </div>
         </div>
     </div>
@@ -90,6 +91,29 @@
     <!-- others plugins -->
     <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/plugins.js')?>"></script>
     <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/scripts.js')?>"></script>
+
+     <script>
+	var base_url='<?php echo base_url();?>';
+		$(document).ready(function(){
+			$("#login").submit(function(e){
+				var data = [];
+				e.preventDefault();
+				$("#login input").each(function(){
+				data.push(this.value);
+			});
+				$.post(base_url+'Main/login_function',{data:data}, function(data){
+						if(data=='2'){
+					window.location =base_url+'Main/Student';
+					}else if(data=='1'){
+					window.location=base_url+'Main/Subject';
+					}else{
+					alert("Invalid Username or Password");
+					}
+				},'json');
+			});
+			});
+  </script>
+
 </body>
 
 </html>

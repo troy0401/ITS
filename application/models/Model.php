@@ -24,10 +24,16 @@ class Model extends CI_Model
         return $query;
     }
 
+    public function select_table_with_id2($table,$column,$id)
+    {
+        $query = $this->db->query("SELECT * FROM $table WHERE $column='$id'");
+        return $query->result();
+    }
+
 	
 	 public function users($email)
     {
-        $qry = $this->db->query("SELECT * FROM accounts WHERE email='$email'");
+        $qry = $this->db->query("SELECT * FROM account WHERE accnt_user='$email'");
         return $qry->result();
     }
 
@@ -447,8 +453,8 @@ class Model extends CI_Model
     
     public function login_user($username){
         $this->db->select('*');
-        $this->db->from('accounts');
-        $this->db->where("email='$username'");
+        $this->db->from('account');
+        $this->db->where("accnt_user='$username'");
         $query=$this->db->get();
         $rows=$query->num_rows();
         return $rows;
