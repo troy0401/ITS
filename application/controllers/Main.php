@@ -351,6 +351,11 @@ class Main extends CI_Controller {
         }
 	}
 
+	public function subjects(){
+		$sub=$this->model->select_all("subject");
+		echo json_encode($sub);
+	}
+
 	public function Logout(){
     $data = array(
 					'accnt_id'=>'',

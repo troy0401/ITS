@@ -9,7 +9,7 @@ class Model extends CI_Model
      public function select_all($table)
     {
         $query = $this->db->get($table);
-        return $query;
+        return $query->result();
     }
 
     public function select_all_with_limit($table)

@@ -33,6 +33,7 @@
     var base_url='<?php echo base_url(); ?>'
     var subject_id;
     $(document).ready(function(){
+		Load_sub(<?php echo $this->session->userdata('accnt_id');?>);
 		 $('#subjTable').DataTable( {
             "ajax": {
                     url : "<?php echo base_url("Main/subject_list"); ?>",
@@ -178,6 +179,15 @@
 					$($('#editExamSett_form input')[0]).val(result[0]['exam_set_Type']);
 					$($('#editExamSett_form input')[1]).val(result[0]['exam_set_Time']);
 					$($('#editExamSett_form input')[2]).val(result[0]['exam_set_Items']);
+			},'json');
+	}
+
+	function Load_sub(id){
+		$.post(base_url+'Main/subjects',
+					function(result){
+					for(var i=0; i<result.length; i++){
+						$('#subtopics').append('<button type="button" data-toggle="modal" data-target="#editSubj" class="list-group-item list-group-item-action">'+result[i]['subj_name']+'</button>');
+					}
 			},'json');
 	}
 

@@ -9,8 +9,14 @@
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
+                        <?php $type=$this->session->userdata('accnt_type');
+						if($type==1){?>
                              <li><a href="<?php echo base_url('Main/Subject'); ?>"><i class="ti-archive"></i> <span>Subject</span></a></li>
-                            <li><!--
+                            <li>
+						<?php }else{?>
+							<li><a href="<?php echo base_url('Main/Student'); }?>"><i class="ti-archive"></i> <span>Home</span></a></li>
+                            <li>
+							<!--
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Sidebar
                                         Types
