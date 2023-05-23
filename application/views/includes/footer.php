@@ -89,7 +89,7 @@
 			},'json');
 		});
 
-		$('#editForm_quest').submit(function(e){//Add Questionaire
+		$('#editForm_quest').submit(function(e){//Edit Questionaire
 				e.preventDefault();
 				var id=$("#editForm_quest").data("index");
 				var data = [];
@@ -101,6 +101,22 @@
 						$('#editForm_quest')[0].reset();
 						$('#editQuest_modal').modal('hide');
 						$('#dataQuest').DataTable().ajax.reload();
+						alert("Update Success");
+				},'json');
+		});
+
+		$('#editExamSett_form').submit(function(e){//Edit Exam Settings
+				e.preventDefault();
+				var id=$("#editExamSett_form").data("index");
+				var data = [];
+				$("#editExamSett_form input").each(function(){
+					data.push(this.value);
+				});
+				$.post(base_url+'Main/editExamSett',
+					{data:data,id:id},function(result){
+						$('#editExamSett_form')[0].reset();
+						$('#editExamSett_modal').modal('hide');
+						$('#dataTest').DataTable().ajax.reload();
 						alert("Update Success");
 				},'json');
 		});
@@ -152,6 +168,16 @@
 					$($('#editForm_quest input')[3]).val(result[0]['testq_2']);
 					$($('#editForm_quest input')[4]).val(result[0]['testq_3']);
 					$($('#editForm_quest input')[5]).val(result[0]['testq_4']);
+			},'json');
+	}
+
+	function editExamSett(id){
+		$("#editExamSett_form").data("index",id);
+		$.post(base_url+'Main/getExamSett',
+					{id:id},function(result){
+					$($('#editExamSett_form input')[0]).val(result[0]['exam_set_Type']);
+					$($('#editExamSett_form input')[1]).val(result[0]['exam_set_Time']);
+					$($('#editExamSett_form input')[2]).val(result[0]['exam_set_Items']);
 			},'json');
 	}
 

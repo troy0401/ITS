@@ -108,6 +108,8 @@ class Main extends CI_Controller {
           echo json_encode($data);
      }
 
+
+
      public function editSubj(){
 
 	  $post = $this->input->post('data');
@@ -140,7 +142,6 @@ class Main extends CI_Controller {
            echo json_encode(true);
         }
 	}
-
 
      public function subject_list()//admin view of modules
      {
@@ -223,14 +224,14 @@ class Main extends CI_Controller {
           $exam_set = $this->model->select_table_with_id($this->input->post("table"),$this->input->post("column"),$this->input->post("id"));
 
           $data = array();
-
           foreach($exam_set->result() as $es) {
+			  $minutes=floor(((int)$es->exam_set_Time / 60) % 60);
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
                     $es->exam_set_Type,
-					$es->exam_set_Time,
+					$minutes,
 					$es->exam_set_Items,
-					'<button type="button" class="btn btn-rounded btn-info mb-3"><i class="fa fa-edit"></i></button>'
+					'<button type="button" data-toggle="modal" onclick="editExamSett('.$es->exam_set_ID.')" data-target="#editExamSett_modal" class="btn btn-rounded btn-info mb-3"><i class="fa fa-edit"></i></button>'
       );
            }
 
@@ -244,5 +245,34 @@ class Main extends CI_Controller {
           exit();
      }
 
+      public function getExamSett(){
+
+            $sett = $this->model->select_table_with_id("exam_settings","exam_set_ID",$this->input->post('id'));
+            $data=array();
+            foreach($sett->result() as $s) {
+				$minutes=floor(((int)$s->exam_set_Time / 60) % 60);
+
+                 $data[] = array(
+					"exam_set_Type"  => $s->exam_set_Type,
+					"exam_set_Time"  => $minutes,
+					"exam_set_Items"  => $s->exam_set_Items
+
+                 );
+              }
+          echo json_encode($data);
+     }
+
+    public function editExamSett(){
+
+	  $post = $this->input->post('data');
+      $data = array(
+            'exam_set_Time'=>$post[1]*60,
+			'exam_set_Items'=>$post[2]
+          );
+
+    if($this->model->update_where('exam_settings', $data, 'exam_set_ID', $this->input->post('id'))){
+           echo json_encode(true);
+        }
+	}
 
 }
