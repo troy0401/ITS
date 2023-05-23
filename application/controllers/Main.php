@@ -52,8 +52,8 @@ class Main extends CI_Controller {
                $data[] = array(
                     $r->subj_name,
                     $r->subj_desc,
-                    //($r->subj_file=='' ? 'No link found' : $r->subj_file),
-                   '<a data-toggle="modal" data-target="#ViewSubj" data-toggle="tooltip" data-placement="top" title="View Subjects" class="btn btn-info btn-circle btn-sm">
+                    ($r->subj_file=='' ? 'No link found' : $r->subj_file),
+					'<a data-toggle="modal" data-target="#ViewSubj" data-toggle="tooltip" data-placement="top" title="View Subjects" class="btn btn-info btn-circle btn-sm">
                                                     <i class="fa fa-info-circle"></i>
                                                 </a>
                                                 <a   data-toggle="modal" data-target="#ViewStuds" data-toggle="tooltip" data-placement="top" title="View Students" class="btn btn-primary btn-circle btn-sm">
