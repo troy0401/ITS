@@ -50,25 +50,19 @@
                     <div class="login-form-body">
                         <div class="form-gp">
                             <label for="exampleInputName1">Full Name</label>
-                            <input type="text" id="exampleInputName1">
+                            <input type="text" id="exampleInputName1" required>
                             <i class="ti-user"></i>
                             <div class="text-danger"></div>
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" id="exampleInputEmail1">
+                            <input type="email" id="exampleInputEmail1" required>
                             <i class="ti-email"></i>
                             <div class="text-danger"></div>
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" id="exampleInputPassword1">
-                            <i class="ti-lock"></i>
-                            <div class="text-danger"></div>
-                        </div>
-                        <div class="form-gp">
-                            <label for="exampleInputPassword2">Confirm Password</label>
-                            <input type="password" id="exampleInputPassword2">
+                            <input type="password" id="exampleInputPassword1" required>
                             <i class="ti-lock"></i>
                             <div class="text-danger"></div>
                         </div>
@@ -103,35 +97,19 @@
     <script>
      var base_url='<?php echo base_url(); ?>';
        $(document).ready(function() {
+		   var data = [];
             $("#reg").submit(function(e) {
 				e.preventDefault();
 				$("#reg input").each(function(){
 				data.push(this.value);
 			});
-					  $.post(base_url+'Main/add_Account',
+				$.post(base_url+'Main/add_Account',
 					 {data:data}, function(result){
-            $('#reg')[0].reset();
-			$($('#reg input')[2]).removeClass().addClass('form-control');
+						$('#reg')[0].reset();
+						alert('Account Registered!')
 					 },'json');
                 });
             });
-        //for password validation
-        $($('#reg input')[2]).on('input', function(){
-          var pass1 = $($('#reg input')[2]).val();
-          var pass2 = $($('#reg input')[3]).val();
-          if(pass2.length>0){
-              if (pass1 !== pass2){
-                  $($('#reg input')[3]).addClass("is-invalid");
-                  $("#form_submit").prop('disabled', true);
-              }else{
-                  $($('#reg input')[3]).removeClass("is-invalid").addClass('is-valid');
-                  $("#form_submit").prop('disabled', false);
-              }
-            }else{
-               $($('#reg input')[3]).removeClass().addClass('form-control');
-              $("#form_submit").prop('disabled', false);
-            }
-          });
     </script>
 </body>
 

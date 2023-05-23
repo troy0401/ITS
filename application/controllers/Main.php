@@ -30,7 +30,22 @@ class Main extends CI_Controller {
 		$this->load->view('register');
     }
 
-    //--------------------------->functions-----------------------------------------
+    //--------------------------->functions------------------------------------------
+	public function add_account(){
+		$post = $this->input->post('data');
+        $name=$post[0];
+        $email=$post[1];
+        $pass=$post[2];
+        $data = array(
+            'accnt_user'=>$email,
+            'accnt_pass'=>password_hash($pass, PASSWORD_DEFAULT),
+            'accnt_name'=>$name,
+			'accnt_type'=>2
+        );
+        if($this->model->insert_into("account", $data)){
+           echo json_encode(true);
+        }
+    }
        public function Add_Subj(){
 		//$minutes=$this->input->post('mod_test_time')*60;
 		$data = $this->input->post('data');
