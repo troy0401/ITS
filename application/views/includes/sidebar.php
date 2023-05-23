@@ -2,14 +2,14 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="<?php echo base_url('Main/Module'); ?>"><img src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/images/icon/its.png')?>" alt="logo"></a>
+                    <a href="<?php echo base_url('Main/Subject'); ?>"><img src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/images/icon/its.png')?>" alt="logo"></a>
                 </div>
             </div>
             <div class="main-menu">
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-                             <li><a href="<?php echo base_url('Main/Module'); ?>"><i class="ti-archive"></i> <span>Module</span></a></li>
+                             <li><a href="<?php echo base_url('Main/Subject'); ?>"><i class="ti-archive"></i> <span>Subject</span></a></li>
                             <li><!--
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Sidebar

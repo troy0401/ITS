@@ -22,6 +22,14 @@ class Main extends CI_Controller {
 
     }
 
+      public function Login(){
+		$this->load->view('login');
+    }
+
+     public function Register(){
+		$this->load->view('register');
+    }
+
     //--------------------------->functions-----------------------------------------
        public function Add_Subj(){
 		//$minutes=$this->input->post('mod_test_time')*60;
