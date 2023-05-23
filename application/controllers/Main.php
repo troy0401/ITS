@@ -88,6 +88,26 @@ class Main extends CI_Controller {
           echo json_encode($data);
      }
 
+     public function getQuest(){
+
+            $quest = $this->model->select_table_with_id("test_quest","testq_id",$this->input->post('id'));
+            $data=array();
+            foreach($quest->result() as $q) {
+
+                 $data[] = array(
+					"testq_0"  => $q->testq_0,
+					"testq_1"  => $q->testq_1,
+					"testq_2"  => $q->testq_2,
+					"testq_3"  => $q->testq_3,
+					"testq_4"  => $q->testq_4,
+					"testq_ans"  => $q->testq_ans,
+					"testq_hint"  => $q->testq_hint
+
+                 );
+              }
+          echo json_encode($data);
+     }
+
      public function editSubj(){
 
 	  $post = $this->input->post('data');
@@ -101,6 +121,26 @@ class Main extends CI_Controller {
            echo json_encode(true);
         }
 	}
+
+	 public function editQuest(){
+
+	  $post = $this->input->post('data');
+      $data = array(
+            'testq_0'=>$post[0],
+            'testq_1'=>$post[1],
+			'testq_hint'=>$post[2],
+			'testq_1'=>$post[3],
+			'testq_2'=>$post[4],
+			'testq_3'=>$post[5],
+			'testq_4'=>$post[6]
+
+          );
+
+    if($this->model->update_where('test_quest', $data, 'testq_id', $this->input->post('id'))){
+           echo json_encode(true);
+        }
+	}
+
 
      public function subject_list()//admin view of modules
      {
@@ -157,15 +197,9 @@ class Main extends CI_Controller {
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
                     $q->testq_0,
-					'<a data-toggle="modal" data-target="#ViewSubj" data-toggle="tooltip" data-placement="top" title="View Subjects" class="btn btn-info btn-circle btn-sm">
-                                                    <i class="fa fa-info-circle"></i>
-                                                </a>
-                                                <a   data-toggle="modal" data-target="#ViewStuds" data-toggle="tooltip" data-placement="top" title="View Students" class="btn btn-primary btn-circle btn-sm">
-                                                    <i class="fa fa-child"></i>
-                                                </a>
-                                                <a data-toggle="modal"  data-target="#EditMod" class="btn btn-warning btn-circle btn-sm" title="Edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>'
+					'<a data-toggle="modal" onclick=editQuest('.$q->testq_id.')  data-target="#editQuest_modal" class="btn btn-warning btn-circle btn-sm" title="Edit">
+					<i class="fa fa-edit"></i>
+					</a>'
       );
            }
 

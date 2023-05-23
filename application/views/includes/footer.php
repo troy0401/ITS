@@ -88,7 +88,25 @@
 					alert("Insert Success");
 			},'json');
 		});
+
+		$('#editForm_quest').submit(function(e){//Add Questionaire
+				e.preventDefault();
+				var id=$("#editForm_quest").data("index");
+				var data = [];
+				$("#editForm_quest input, #editForm_quest textarea").each(function(){
+					data.push(this.value);
+				});
+				$.post(base_url+'Main/editQuest',
+					{data:data,id:id},function(result){
+						$('#editForm_quest')[0].reset();
+						$('#editQuest_modal').modal('hide');
+						$('#dataQuest').DataTable().ajax.reload();
+						alert("Update Success");
+				},'json');
+		});
 	});
+
+
 
 	function ViewSubj(id){
 		subject_id=id;
@@ -122,6 +140,22 @@
 					$($('#form_editSubj input')[2]).val(result[0]['subj_file']);
 			},'json');
 	}
+
+	function editQuest(id){
+		$("#editForm_quest").data("index",id);
+		$.post(base_url+'Main/getQuest',
+					{id:id},function(result){
+					$($('#editForm_quest textarea')[0]).val(result[0]['testq_0']);
+					$($('#editForm_quest input')[0]).val(result[0]['testq_1']);
+					$($('#editForm_quest input')[1]).val(result[0]['testq_hint']);
+					$($('#editForm_quest input')[2]).val(result[0]['testq_1']);
+					$($('#editForm_quest input')[3]).val(result[0]['testq_2']);
+					$($('#editForm_quest input')[4]).val(result[0]['testq_3']);
+					$($('#editForm_quest input')[5]).val(result[0]['testq_4']);
+			},'json');
+	}
+
+
 
     </script>
 </body>
