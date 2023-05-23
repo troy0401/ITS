@@ -117,18 +117,18 @@
             });
         //for password validation
         $($('#reg input')[2]).on('input', function(){
-          var pass1 = $($('#reg input')[1]).val();
-          var pass2 = $($('#reg input')[2]).val();
+          var pass1 = $($('#reg input')[2]).val();
+          var pass2 = $($('#reg input')[3]).val();
           if(pass2.length>0){
               if (pass1 !== pass2){
-                  $($('#reg input')[2]).addClass("is-invalid");
+                  $($('#reg input')[3]).addClass("is-invalid");
                   $("#form_submit").prop('disabled', true);
               }else{
-                  $($('#reg input')[2]).removeClass("is-invalid").addClass('is-valid');
+                  $($('#reg input')[3]).removeClass("is-invalid").addClass('is-valid');
                   $("#form_submit").prop('disabled', false);
               }
             }else{
-               $($('#reg input')[2]).removeClass().addClass('form-control');
+               $($('#reg input')[3]).removeClass().addClass('form-control');
               $("#form_submit").prop('disabled', false);
             }
           });
