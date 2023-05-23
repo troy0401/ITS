@@ -32,12 +32,13 @@
     <script>
     var base_url='<?php echo base_url(); ?>'
     $(document).ready(function(){
-		 $('#dataTable').DataTable( {
+		 $('#subjTable').DataTable( {
             "ajax": {
                     url : "<?php echo base_url("Main/subject_list"); ?>",
                     type : 'POST',
 					data: {table:"subject"}
-             }
+             },
+             responsive: true
         } );
 
 		$('#form_subj').submit(function(e){
@@ -51,10 +52,33 @@
 				{data:data},function(result){
 					$('#form_subj')[0].reset();
 					$('#subj').modal('hide');
-					alert(result);
+					$('#subjTable').DataTable().ajax.reload();
+					alert("Insert Success");
 			},'json');
 		})
-	})
+	});
+
+	function ViewSubj(id){
+		 $('#dataQuest').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/quest_list"); ?>",
+                    type : 'POST',
+					data: {table:"test_quest",column:"subj_id",id:id}
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
+		  $('#dataTest').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/exam_set"); ?>",
+                    type : 'POST',
+					data: {table:"exam_settings",column:"subj_id",id:id}
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+	}
 
     </script>
 </body>

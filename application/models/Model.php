@@ -18,6 +18,12 @@ class Model extends CI_Model
         return $query;
     }
 
+     public function select_table_with_id($table,$column,$id)
+    {
+        $query = $this->db->query("SELECT * FROM $table WHERE $column='$id'");
+        return $query;
+    }
+
 	
 	 public function users($email)
     {
