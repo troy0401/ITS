@@ -89,6 +89,38 @@
                                     </div>
                                 </div>
 
+								 <div id="editSubj" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Subject Details</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+										<form id="form_editSubj" class="needs-validation" autocomplete="off">
+                                            <div class="modal-body">
+                                            <div class="form-row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom01">Subject Name</label>
+                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Subject name" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom02">Subject Description</label>
+                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Subject Description" required>
+                                                </div>
+                                                 <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom02">E-Learning Site (links)</label>
+                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Tutorial Links" required>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                             </form>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <div id="ViewSubj" class="modal fade bd-example-modal-lg">

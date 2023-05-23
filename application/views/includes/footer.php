@@ -58,6 +58,22 @@
 			},'json');
 		});
 
+		$('#form_editSubj').submit(function(e){//Edit Subject/Subtopic
+			e.preventDefault();
+			var data = [];
+			$("#form_editSubj input").each(function(){
+				data.push(this.value);
+			});
+
+			$.post(base_url+'Main/editSubj',
+				{data:data,id:subject_id},function(result){
+					$('#form_editSubj')[0].reset();
+					$('#editSubj').modal('hide');
+					$('#subjTable').DataTable().ajax.reload();
+					alert("Update Success");
+			},'json');
+		});
+
 		$('#form_quest').submit(function(e){//Add Questionaire
 			e.preventDefault();
 			var data = [];
@@ -65,7 +81,7 @@
 				data.push(this.value);
 			});
 			$.post(base_url+'Main/add_Quest',
-				{data:data,id:id},function(result){
+				{data:data,id:subject_id},function(result){
 					$('#form_quest')[0].reset();
 					$('#quest_modal').modal('hide');
 					$('#dataQuest').DataTable().ajax.reload();
@@ -95,6 +111,16 @@
              responsive: true,
 			  "destroy": true
         } );
+	}
+
+	function editSubj(id){
+		subject_id=id;
+		$.post(base_url+'Main/getSubj',
+					{id:id},function(result){
+					$($('#form_editSubj input')[0]).val(result[0]['subj_name']);
+					$($('#form_editSubj input')[1]).val(result[0]['subj_desc']);
+					$($('#form_editSubj input')[2]).val(result[0]['subj_file']);
+			},'json');
 	}
 
     </script>

@@ -72,6 +72,36 @@ class Main extends CI_Controller {
 		 }
     }
 
+      public function getSubj(){
+
+            $subj = $this->model->select_table_with_id("subject","subj_id",$this->input->post('id'));
+            $data=array();
+            foreach($subj->result() as $s) {
+
+                 $data[] = array(
+					"subj_name"  => $s->subj_name,
+					"subj_desc"  => $s->subj_desc,
+					"subj_file" => $s->subj_file
+
+                 );
+              }
+          echo json_encode($data);
+     }
+
+     public function editSubj(){
+
+	  $post = $this->input->post('data');
+      $data = array(
+            'subj_name'=>$post[0],
+            'subj_desc'=>$post[1],
+			'subj_file'=>$post[2]
+          );
+
+    if($this->model->update_where('subject', $data, 'subj_id', $this->input->post('id'))){
+           echo json_encode(true);
+        }
+	}
+
      public function subject_list()//admin view of modules
      {
         $draw = intval($this->input->post("draw"));
@@ -95,8 +125,8 @@ class Main extends CI_Controller {
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#ViewSubj" onclick=ViewSubj('.$r->subj_id.')>View Subject</a>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#ViewStuds">View Students</a>
-                                                <a class="dropdown-item" data-toggle="modal"  data-target="#EditMod">Edit</a>
+                                                <a class="dropdown-item">View Students</a>
+                                                <a class="dropdown-item"  data-toggle="modal" data-target="#editSubj" onclick=editSubj('.$r->subj_id.')>Edit</a>
                                             </div>
                                         </div>'
       );
@@ -179,4 +209,6 @@ class Main extends CI_Controller {
           echo json_encode($output);
           exit();
      }
+
+
 }
