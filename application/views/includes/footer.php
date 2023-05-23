@@ -31,6 +31,7 @@
     <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/scripts.js')?>"></script>
     <script>
     var base_url='<?php echo base_url(); ?>'
+    var subject_id;
     $(document).ready(function(){
 		 $('#subjTable').DataTable( {
             "ajax": {
@@ -41,7 +42,7 @@
              responsive: true
         } );
 
-		$('#form_subj').submit(function(e){
+		$('#form_subj').submit(function(e){//Add Subject/Subtopic
 			e.preventDefault();
 			var data = [];
 			$("#form_subj input").each(function(){
@@ -55,10 +56,26 @@
 					$('#subjTable').DataTable().ajax.reload();
 					alert("Insert Success");
 			},'json');
-		})
+		});
+
+		$('#form_quest').submit(function(e){//Add Questionaire
+			e.preventDefault();
+			var data = [];
+			$("#form_quest input, #form_quest textarea").each(function(){
+				data.push(this.value);
+			});
+			$.post(base_url+'Main/add_Quest',
+				{data:data,id:id},function(result){
+					$('#form_quest')[0].reset();
+					$('#quest_modal').modal('hide');
+					$('#dataQuest').DataTable().ajax.reload();
+					alert("Insert Success");
+			},'json');
+		});
 	});
 
 	function ViewSubj(id){
+		subject_id=id;
 		 $('#dataQuest').DataTable( {
             "ajax": {
                     url : "<?php echo base_url("Main/quest_list"); ?>",

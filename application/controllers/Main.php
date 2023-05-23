@@ -51,6 +51,27 @@ class Main extends CI_Controller {
 		 }
     }
 
+    public function add_Quest(){
+		//$minutes=$this->input->post('mod_test_time')*60;
+		$data = $this->input->post('data');
+		$id	=	$this->input->post('id');
+        $data = array(
+                    "testq_0"=>$data[0],
+					"testq_1"=>$data[3],
+					"testq_2"=>$data[4],
+					"testq_3"=>$data[5],
+					"testq_4"=>$data[6],
+					"testq_ans"=>$data[1],
+					"testq_hint"=>$data[2],
+					"subj_id"=>$id
+
+                );
+		 if($this->model->insert_into("test_quest", $data))
+		 {
+           echo json_encode(true);
+		 }
+    }
+
      public function subject_list()//admin view of modules
      {
         $draw = intval($this->input->post("draw"));
@@ -91,7 +112,7 @@ class Main extends CI_Controller {
           exit();
      }
 
-     public function quest_list()//admin view of modules
+     public function quest_list()//List of Questionaires
      {
         $draw = intval($this->input->post("draw"));
         $start = intval($this->input->post("start"));
@@ -105,7 +126,7 @@ class Main extends CI_Controller {
           foreach($quest->result() as $q) {
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
-                    $q->subj_name,
+                    $q->testq_0,
 					'<a data-toggle="modal" data-target="#ViewSubj" data-toggle="tooltip" data-placement="top" title="View Subjects" class="btn btn-info btn-circle btn-sm">
                                                     <i class="fa fa-info-circle"></i>
                                                 </a>
