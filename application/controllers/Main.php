@@ -354,19 +354,24 @@ class Main extends CI_Controller {
 
     public function editExamSett(){
 
-	  $post = $this->input->post('data');
-      $data = array(
+		$post = $this->input->post('data');
+		$data = array(
             'exam_set_Time'=>$post[1]*60,
 			'exam_set_Items'=>$post[2]
-          );
+		);
 
-    if($this->model->update_where('exam_settings', $data, 'exam_set_ID', $this->input->post('id'))){
+		if($this->model->update_where('exam_settings', $data, 'exam_set_ID', $this->input->post('id'))){
            echo json_encode(true);
         }
 	}
 
 	public function subjects(){
 		$sub=$this->model->select_all("subject");
+		echo json_encode($sub->result());
+	}
+
+	public function lesson(){
+		$sub=$this->model->select_all("lesson_status");
 		echo json_encode($sub->result());
 	}
 

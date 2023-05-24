@@ -34,6 +34,7 @@
     var subject_id;
     $(document).ready(function(){
 		Load_sub(<?php echo $this->session->userdata('accnt_id');?>);
+
 		 $('#subjTable').DataTable( {
             "ajax": {
                     url : "<?php echo base_url("Main/subject_list"); ?>",
@@ -182,18 +183,54 @@
 			},'json');
 	}
 
-	function Load_sub(id){
-		$.post(base_url+'Main/subjects',
+	function Load_sub(id){ //load first subject
+			$.post(base_url+'Main/subjects',
 					function(result){
-					for(var i=0; i<result.length; i++){
+						$('#subtopics').append('<button type="button" onclick="ViewSubjStud('+result[0]['subj_id']+',\''+result[0]['subj_name'] +'\',\''+result[0]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[0]['subj_name']+' ('+result[0]['subj_desc']+')</button>');
+						Load_sub1(<?php echo $this->session->userdata('accnt_id');?>);
+			},'json');
+	}
+
+	function ViewSubjStud(id,name,link){
+		$('.subject_title').html(name);
+		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:<?php echo $this->session->userdata('accnt_id');?>},
+					function(result){
+						//var data = CheckSubjSession(result[0]['subj_name']);
+						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
+						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
+						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+
+						'<button type="button" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+
+						'</div></div></div>'+
+						'<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion22">Practice Exam</a>'+
+						'</div><div id="accordion22" class="collapse" data-parent="#accordion2">'+
+						'<div class="card-body">'+(result.length==0 ? '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>' : '<button type="button" class="btn btn-success btn-lg mb-3">Take Exam</button>')+
+						'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">[9/10]</span></button>'+
+						'</div></div></div><div class="card">'+
+						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
+						'<div id="accordion23" class="collapse" data-parent="#accordion2">'+
+						'<div class="card-body">'+
+						'<button type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>'+
+						'</div></div></div></div>');
+
+			},'json');
+	}
+		function Load_sub1(id){
+			$.post(base_url+'Main/subjects',
+					function(result){
+					for(var i=1; i<result.length; i++){
 						$('#subtopics').append('<button type="button" onclick=ViewSubjStud('+result[i]['subj_id']+') class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
 					}
 			},'json');
 	}
 
-	function ViewSubjStud(id){
 
+
+		function checkSubjSession(subj_id,accnt_id){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
+		var data = $.post(base_url+'Main/examStatus',
+					function(result){},'json');
+		return data;
 	}
+
 
 
 
