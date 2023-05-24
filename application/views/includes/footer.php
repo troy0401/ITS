@@ -209,9 +209,8 @@
 						'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">[9/10]</span></button>'+
 						'</div></div></div><div class="card">'+
 						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
-						'<div id="accordion23" class="collapse" data-parent="#accordion2">'+
-						'<div class="card-body">'+
-						'<button type="button" disabled class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>'+
+						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body">'+
+						(data['exam_type'] == 3 && result[0]['ls_status']==0 ? '<button type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>')+
 						'</div></div></div></div>');
 
 			},'json');
@@ -228,7 +227,7 @@
 
 
 		function checkSubjSession(subj_id,accnt_id){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
-		var data = $.post(base_url+'Main/examStatus',{subj_id:id,accnt_id:accnt_id}
+		var data = $.post(base_url+'Main/examStatus',{subj_id:subj_id,accnt_id:accnt_id},
 					function(result){},'json');
 		return data;
 	}
