@@ -375,6 +375,11 @@ class Main extends CI_Controller {
 		echo json_encode($sub->result());
 	}
 
+	public function examStatus(){
+		$sub=$this->model->select_dual_column("exam","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'));
+		echo json_encode($sub->result());
+	}
+
 	public function Logout(){
     $data = array(
 					'accnt_id'=>'',

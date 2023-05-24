@@ -192,10 +192,12 @@
 	}
 
 	function ViewSubjStud(id,name,link){
+		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>;
 		$('.subject_title').html(name);
-		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:<?php echo $this->session->userdata('accnt_id');?>},
+		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
-						//var data = CheckSubjSession(result[0]['subj_name']);
+						var data = checkSubjSession(subj_id,accnt_id);
+						console.log(data);
 						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
 						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
 						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+
@@ -209,7 +211,7 @@
 						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
 						'<div id="accordion23" class="collapse" data-parent="#accordion2">'+
 						'<div class="card-body">'+
-						'<button type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>'+
+						'<button type="button" disabled class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>'+
 						'</div></div></div></div>');
 
 			},'json');
@@ -226,7 +228,7 @@
 
 
 		function checkSubjSession(subj_id,accnt_id){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
-		var data = $.post(base_url+'Main/examStatus',
+		var data = $.post(base_url+'Main/examStatus',{subj_id:id,accnt_id:accnt_id}
 					function(result){},'json');
 		return data;
 	}

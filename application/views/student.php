@@ -42,7 +42,7 @@
                     <div class="col-md-6 mt-5">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title subject_title">Sub Topic 1 Details</h4>
+                                <h4 class="header-title subject_title"></h4>
                                 <div class="list-group" id="subtopic_details">
 
                                 </div>
