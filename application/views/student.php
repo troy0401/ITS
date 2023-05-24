@@ -30,11 +30,21 @@
                 <div class="row">
                     <!-- Basic List Group start -->
                     <!-- Buttons Items start -->
-                    <div class="col-md-12 mt-5">
+                    <div class="col-md-6 mt-5">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title">Sub Topics</h4>
                                 <div class="list-group" id="subtopics">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Sub Topics Details</h4>
+                                <div class="list-group" id="subtopic_details">
+
                                 </div>
                             </div>
                         </div>

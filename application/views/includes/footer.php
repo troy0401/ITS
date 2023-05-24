@@ -186,10 +186,16 @@
 		$.post(base_url+'Main/subjects',
 					function(result){
 					for(var i=0; i<result.length; i++){
-						$('#subtopics').append('<button type="button" data-toggle="modal" data-target="#editSubj" class="list-group-item list-group-item-action">'+result[i]['subj_name']+'</button>');
+						$('#subtopics').append('<button type="button" onclick=ViewSubjStud('+result[i]['subj_id']+') class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
 					}
 			},'json');
 	}
+
+	function ViewSubjStud(id){
+
+	}
+
+
 
 
 

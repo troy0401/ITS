@@ -14,8 +14,8 @@
                              <li><a href="<?php echo base_url('Main/Subject'); ?>"><i class="ti-archive"></i> <span>Subject</span></a></li>
                             <li>
 						<?php }else{?>
-							<li><a href="<?php echo base_url('Main/Student'); }?>"><i class="ti-archive"></i> <span>Home</span></a></li>
-                            <li>
+							<li><a href="<?php echo base_url('Main/Student');?>"><i class="ti-archive"></i> <span>Home</span></a></li>
+							<?php } ?>
 							<!--
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Sidebar
