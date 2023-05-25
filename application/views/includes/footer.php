@@ -164,7 +164,7 @@
 		$.post(base_url+'Main/getQuest',
 					{id:id},function(result){
 					$($('#editForm_quest textarea')[0]).val(result[0]['testq_0']);
-					$($('#editForm_quest input')[0]).val(result[0]['testq_1']);
+					$($('#editForm_quest input')[0]).val(result[0]['testq_ans']);
 					$($('#editForm_quest input')[1]).val(result[0]['testq_hint']);
 					$($('#editForm_quest input')[2]).val(result[0]['testq_1']);
 					$($('#editForm_quest input')[3]).val(result[0]['testq_2']);
