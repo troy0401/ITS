@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 23, 2023 at 05:49 PM
+-- Generation Time: May 25, 2023 at 06:57 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -41,7 +41,8 @@ CREATE TABLE `account` (
 
 INSERT INTO `account` (`accnt_id`, `accnt_user`, `accnt_pass`, `accnt_name`, `accnt_type`) VALUES
 (1, 'new_stud@yahoo.com', '$2y$10$VjQ5jENEqlDW60ww3lBJ4OLffR2M50py4whgymZm6Mmg8yJyqFH2G', 'New Student', 2),
-(2, 'prof@yahoo.com', '$2y$10$lqMGbxUnkXIqMrkFOY1WF.WMfpi61bXQJC8.DY.9bgXO824u//Sou', 'Professor', 1);
+(2, 'prof@yahoo.com', '$2y$10$lqMGbxUnkXIqMrkFOY1WF.WMfpi61bXQJC8.DY.9bgXO824u//Sou', 'Professor', 1),
+(3, 'new_stud2@yahoo.com', '$2y$10$nGcw0xOt/cNBnpzd0LQVHOZhY7kvvIz037J5AKwdl0hUxr1FWfbnm', 'New Student 2', 2);
 
 -- --------------------------------------------------------
 
@@ -54,8 +55,17 @@ CREATE TABLE `exam` (
   `subj_id` int(11) NOT NULL,
   `accnt_id` int(11) NOT NULL,
   `exam_type` int(11) NOT NULL COMMENT '1=summative exam (5 attempts 10 items [7/10 passing score]), 2=subtopic exam (1 attempt [20 items]),\r\n3=final summative exam(if 5 subtopics have been taken, passed or failed.) ',
-  `trial` int(11) NOT NULL COMMENT 'number of attempts'
+  `exam_status` int(11) NOT NULL COMMENT '0=unlocked 1=locked',
+  `exam_trial` int(11) NOT NULL COMMENT 'number of attempts',
+  `exam_set_trial` int(11) NOT NULL COMMENT 'number of allowable attempts'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `exam`
+--
+
+INSERT INTO `exam` (`exam_id`, `subj_id`, `accnt_id`, `exam_type`, `exam_status`, `exam_trial`, `exam_set_trial`) VALUES
+(1, 1, 1, 1, 0, 5, 10);
 
 -- --------------------------------------------------------
 
@@ -79,7 +89,29 @@ INSERT INTO `exam_settings` (`exam_set_ID`, `exam_set_Type`, `exam_set_Time`, `e
 (1, 'Practice', 600, 10, 1),
 (2, 'Summative', 1200, 30, 1),
 (3, 'Practice', 600, 10, 2),
-(4, 'Summative', 1200, 30, 2);
+(4, 'Summative', 1200, 30, 2),
+(5, 'Practice', 600, 10, 3),
+(6, 'Summative', 1200, 30, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lesson_status`
+--
+
+CREATE TABLE `lesson_status` (
+  `ls_id` int(11) NOT NULL,
+  `subj_id` int(11) NOT NULL,
+  `accnt_id` int(11) NOT NULL,
+  `ls_status` int(11) NOT NULL COMMENT '1=subtopic is finished'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lesson_status`
+--
+
+INSERT INTO `lesson_status` (`ls_id`, `subj_id`, `accnt_id`, `ls_status`) VALUES
+(1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -114,7 +146,8 @@ CREATE TABLE `subject` (
 
 INSERT INTO `subject` (`subj_id`, `subj_name`, `subj_desc`, `subj_file`) VALUES
 (1, 'Subtopic 1', 'Description1', 'https://www.youtube.com/watch?v=cvhyJT9c0ac'),
-(2, 'Subtopic 2', 'Description 2', 'https://www.youtube.com/watch?v=SwaVN0epc0w');
+(2, 'Subtopic 2', 'Description 2', 'https://www.youtube.com/watch?v=SwaVN0epc0w'),
+(3, 'dhgfhgfg', 'rhtfhf', 'ygjjjhk');
 
 -- --------------------------------------------------------
 
@@ -195,6 +228,14 @@ ALTER TABLE `exam_settings`
   ADD KEY `subj_id` (`subj_id`);
 
 --
+-- Indexes for table `lesson_status`
+--
+ALTER TABLE `lesson_status`
+  ADD PRIMARY KEY (`ls_id`),
+  ADD KEY `subj_id` (`subj_id`),
+  ADD KEY `accnt_id` (`accnt_id`);
+
+--
 -- Indexes for table `scores`
 --
 ALTER TABLE `scores`
@@ -239,19 +280,25 @@ ALTER TABLE `views`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `accnt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `accnt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `exam`
 --
 ALTER TABLE `exam`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `exam_settings`
 --
 ALTER TABLE `exam_settings`
-  MODIFY `exam_set_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `exam_set_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `lesson_status`
+--
+ALTER TABLE `lesson_status`
+  MODIFY `ls_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `scores`
@@ -263,7 +310,7 @@ ALTER TABLE `scores`
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subj_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `subj_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `test_quest`

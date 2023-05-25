@@ -39,18 +39,21 @@ class Main extends CI_Controller {
 		}
 	}
 
-      public function Student(){
-
-			$acc_type = $this->session->userdata('accnt_type');
-			if ($acc_type == 2) {
-			$this->load->view('includes/header');
-			$this->load->view('includes/sidebar');
-			$this->load->view('includes/topbar');
-			$this->load->view('student');
-			$this->load->view('includes/footer');
+	public function Student(){
+		if (!$this->session->has_userdata('accnt_type')){
+				redirect('Main/Login');
 			}else{
-			 redirect(base_url('Main/Login'));
-		}
+				$acc_type = $this->session->userdata('accnt_type');
+				if ($acc_type == 2) {
+				$this->load->view('includes/header');
+				$this->load->view('includes/sidebar');
+				$this->load->view('includes/topbar');
+				$this->load->view('student');
+				$this->load->view('includes/footer');
+				}else{
+				redirect(base_url('Main/Login'));
+				}
+			}
 
     }
 
@@ -378,6 +381,39 @@ class Main extends CI_Controller {
 	public function examStatus(){
 		$sub=$this->model->select_dual_column("exam","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'));
 		echo json_encode($sub->result());
+	}
+
+	public function CheckLsExamTbl(){
+		$chk=$this->model->select_dual_column("exam","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'));
+		if($chk->num_rows() < 1) {
+			$score_data = array(
+                    "subj_id"=>$this->input->post('subj_id'),
+					"accnt_id"=>$this->input->post('accnt_id')
+                );
+			$score_id=$this->model->insert_into("scores", $score_data);
+			$exam_data = array(
+                    "subj_id"=>$this->input->post('subj_id'),
+					"accnt_id"=>$this->input->post('accnt_id'),
+					"score_id"=>$score_id,
+					"exam_type"=>0,
+					"exam_trial"=>0,
+					"exam_set_trial"=>10
+                );
+			$lesson_data = array(
+                    "subj_id"=>$this->input->post('subj_id'),
+					"accnt_id"=>$this->input->post('accnt_id'),
+					"ls_status"=>0
+                );
+			$this->model->insert_into("exam", $exam_data);
+			$this->model->insert_into("lesson_status", $lesson_data);
+		}
+	}
+
+	public function updateExamTableSumm(){
+		$data = array(
+                                'exam_type'=>1
+                        );
+		$this->model->update_where('exam', $data, 'exam_id', $this->input->post('exam_id'));
 	}
 
 	public function Logout(){
