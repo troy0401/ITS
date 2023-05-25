@@ -198,7 +198,7 @@
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
 						var data = checkSubjSession(subj_id,accnt_id);
-						active='<button type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
+						active='<button type="button" onclick="practiceExam('+data[0]['exam_id']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						button=result.length>0 ? Number(data[0]['exam_type']) == 1 ? Number(data[0]['exam_set_trial'])> Number(data[0]['exam_trial']) ? active : inactive: inactive : inactive;
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
@@ -268,6 +268,10 @@
 			dataType:"json",
 			async:false
 			}).responseJSON;
+	}
+
+	function practiceExam(id){
+		$('#takeExam_modal').modal('show');
 	}
 
 

@@ -51,6 +51,46 @@
                     </div>
                     <!-- Buttons Items end -->
 
+					 <div id="takeExam_modal" class="modal fade bd-example-modal-lg"  data-backdrop="static" data-keyboard="false">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Practice Exam</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+										<form id="editExamSett_form" class="needs-validation" autocomplete="off">
+                                            <div class="modal-body">
+												<div class="question bg-white p-3 border-bottom question-list">
+                                                    <div class="d-flex flex-row align-items-center question-title">
+                                                        <h3 class="text-danger">Q.</h3>
+                                                        <h5 class="mt-1 ml-2">Which of the following country has largest population?</h5>
+                                                    </div>
+                                                    <div class="ans ml-2">
+                                                        <label class="radio"> <input type="radio" name="answer" value="brazil"> <span>Brazil</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="ans ml-2">
+                                                        <label class="radio"> <input type="radio" name="answer" value="Germany"> <span>Germany</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="ans ml-2">
+                                                        <label class="radio"> <input type="radio" name="answer" value="Indonesia"> <span>Indonesia</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="ans ml-2">
+                                                        <label class="radio"> <input type="radio" name="answer" value="Russia"> <span>Russia</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                             </form>
+                                        </div>
+                                    </div>
+                                </div>
                     <!-- Custom Content end -->
                 </div>
             </div>
