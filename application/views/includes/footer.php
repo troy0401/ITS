@@ -32,8 +32,12 @@
     <script>
     var base_url='<?php echo base_url(); ?>'
     var subject_id;
+	var count_quest=0,total_quest=1;
+var startTime, endTime, durationInSeconds, timer;
     $(document).ready(function(){
 		Load_sub(<?php echo $this->session->userdata('accnt_id');?>);
+		//startTimer();
+		//countdownTimer(600);
 
 		 $('#subjTable').DataTable( {
             "ajax": {
@@ -122,6 +126,37 @@
 						alert("Update Success");
 				},'json');
 		});
+
+		 $('#submitExamForm').submit(function(e){
+            e.preventDefault();
+             $.post(base_url+'Controller/SubmitAnswer',
+            {
+                ans:$($("#submitExamForm input[type='radio']:checked")[0]).val(),
+                testq_id:$($("#submitExamForm input[type='hidden']")[0]).val(),
+                test_Type:$($("#submitExamForm input[type='hidden']")[1]).val(),
+                total:count_quest
+            }, function(result){
+                        if(count_quest>total_quest){
+                            $('#question'+next_quest+'').remove();
+                            next_quest++;
+                            $('#question'+next_quest+'').css({"display":"block"});
+                            total_quest++;
+                            var total_display=total_quest+" of "+count_quest;
+                            $('#total_count').html(total_display);
+                            $("#submitExamForm button[type=submit]").prop('disabled',true);
+                          }else{
+                            //StopTimer();
+                            GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+                            $('#question'+next_quest+'').remove();
+                            $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+                            $('.submit_quiz').click(function(){
+                               $('#takeExam_modal').modal('hide');
+                               $('.button_handler').empty().append('<button class="btn btn-success submit_quiz" type="submit">Next<i class="fa fa-angle-right ml-2"></i></button>');
+
+                            });
+                          }
+            },'json');
+        });
 	});
 
 
@@ -198,7 +233,8 @@
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
 						var data = checkSubjSession(subj_id,accnt_id);
-						active='<button type="button" onclick="practiceExam('+data[0]['exam_id']+','+subj_id+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
+						var exam_setData = getExamSettings(subj_id,1);
+						active='<button type="button" onclick="practiceExam('+data[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						button=result.length>0 ? Number(data[0]['exam_type']) == 1 ? Number(data[0]['exam_set_trial'])> Number(data[0]['exam_trial']) ? active : inactive: inactive : inactive;
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
@@ -270,15 +306,107 @@
 			}).responseJSON;
 	}
 
-	function practiceExam(exam_id,subj_id){
+	function checkSubjSession(subj_id,accnt_id){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
+			var result = $.ajax({
+		url:base_url+"Main/examStatus",
+		type:"POST",
+		data:{subj_id:subj_id,accnt_id:accnt_id},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+	}
+
+	function getExamSettings(subj_id,exam_setType){ //get exam settings for exam type and duration of the exam and  number of items
+			var result = $.ajax({
+		url:base_url+"Main/examSettings",
+		type:"POST",
+		data:{subj_id:subj_id,exam_setType:exam_setType},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+	}
+
+	function practiceExam(exam_id,subj_id,test_items,time,type){
 		$('#takeExam_modal').modal('show');
-		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:id},
+		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
 					function(result){
+					$('.question-list').empty();
+					countdownTimer(time);
 					for(var i=1; i<result.length; i++){
-						$('#subtopics').append('<button type="button" onclick=ViewSubjStud('+result[i]['subj_id']+') class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
-					}
+						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'><div class="question bg-white p-3 border-bottom">'+
+						'<div>'+
+						'Time Remaining:<div class="timer"></div>'+
+                        '<h5>'+result[i]['subj_name']+'</h5><span id="total_count">(5 of 20)</span></div></div>'+
+                        '<div class="d-flex flex-row align-items-center question-title"><h3 class="text-danger">Q.</h3>'+
+                        '<input type="hidden" value="'+result[i]['testq_id']+'">'+
+                        '<input type="hidden" value="'+type+'">'+
+						'<input type="hidden" value="">'+
+                        '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span>'+result[i]['testq_1']+'</span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span>'+result[i]['testq_2']+'</span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span>'+result[i]['testq_3']+'</span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span>'+result[i]['testq_4']+'</span></label></div></div></div></div>');
+                      count_quest++;
+                         }
+                         startTimer();
+                         var total_display=total_quest+" of "+(count_quest + 1);
+                         $('#total_count').html(total_display);
+						 alert($($('#submitExamForm input')[2]).val());
 			},'json');
 	}
+
+	function countdownTimer(seconds) {
+  var countdown = setInterval(function() {
+    var minutes = Math.floor(seconds / 60);
+    var remainingSeconds = seconds % 60;
+
+    // Add leading zero if the value is less than 10
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
+
+    // Display the countdown timer in the console or update a HTML element
+    //console.log(minutes + ":" + remainingSeconds);
+	$('.timer').empty().append(minutes + ":" + remainingSeconds);
+
+    if (seconds <= 0) {
+      clearInterval(countdown);
+      console.log("Countdown timer has ended");
+    } else {
+      seconds--;
+    }
+  }, 1000);
+}
+function stopCountdown() {
+  clearInterval(countdownTimer);
+}
+
+
+function startTimer() {
+  startTime = new Date();
+  timer = setInterval(updateTimer, 1000); // Update the timer every second
+}
+
+function updateTimer() {
+  var currentTime = new Date();
+  durationInSeconds = Math.floor((currentTime - startTime) / 1000); // Calculate duration in seconds
+
+  var hours = Math.floor(durationInSeconds / 3600);
+  var minutes = Math.floor((durationInSeconds % 3600) / 60);
+  var seconds = durationInSeconds % 60;
+
+  var formattedTime = padZero(hours) + ":" + padZero(minutes) + ":" + padZero(seconds);
+  //console.log("Duration: " + formattedTime);
+  $($('#submitExamForm input')[2]).val(formattedTime);
+}
+
+function padZero(number) {
+  return number.toString().padStart(2, "0"); // Add leading zero if needed
+}
+function stopTimer() {
+  clearInterval(startTimer);
+}
 
 
     </script>

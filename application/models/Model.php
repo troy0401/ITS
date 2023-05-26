@@ -155,8 +155,8 @@ class Model extends CI_Model
         return $qry;
     }
 
-    public function test_questions($course_id,$mod_id,$sub_id){
-        $qry = $this->db->query("SELECT a.quiz_id, a.question, a.option1, a.option2, a.option3, a.option4, b.subject_name FROM quiz a LEFT JOIN subjects b on a.subject_id=b.subject_id LEFT JOIN module c on b.mod_id=c.mod_id WHERE c.course_id='$course_id' and c.mod_id='$mod_id' and a.subject_id='$sub_id' ORDER BY RAND() LIMIT 10");
+    public function test_questions($subj_id,$items){
+        $qry = $this->db->query("SELECT a.*, b.* FROM test_quest a LEFT JOIN subject b ON a.subj_id=b.subj_id WHERE a.subj_id=$subj_id ORDER BY RAND() LIMIT $items");
         return $qry;
     }
 

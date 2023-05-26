@@ -384,6 +384,11 @@ class Main extends CI_Controller {
 		echo json_encode($sub->result());
 	}
 
+	public function examSettings(){
+		$exam_set=$this->model->select_dual_column("exam_settings","subj_id",$this->input->post('subj_id'),"exam_set_Type",$this->input->post('exam_setType'));
+		echo json_encode($exam_set->result());
+	}
+
 	public function CheckLsExamTbl(){
 		$chk=$this->model->select_dual_column("exam","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'));
 		if($chk->num_rows() < 1) {
@@ -418,11 +423,19 @@ class Main extends CI_Controller {
 	}
 
 	public function getQuestionsExam(){
-		$data = array('exam_trial'=>1);
+		$check_trial=$this->model->select_table_with_id("exam","exam_id",$this->input->post('exam_id'));
+		$trial=0;
+		foreach($check_trial->result() as $ct){
+			$trial=$ct->exam_trial;
+		}
+		$change_trial = $trial + 1;
+		$data = array('exam_trial'=>$change_trial);
 		$this->model->update_where('exam', $data, 'exam_id', $this->input->post('exam_id'));
-		$quests=$this->model->test_questions($this->input->post('subj_id'),);
+		$quests=$this->model->test_questions($this->input->post('subj_id'),$this->input->post('test_items'));
 		echo json_encode($quests->result());
 	}
+
+
 
 	public function Logout(){
     $data = array(

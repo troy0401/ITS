@@ -56,9 +56,8 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Practice Exam</h5>
-                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
-										<form id="editExamSett_form" class="needs-validation" autocomplete="off">
+										<form id="submitExamForm" class="needs-validation" autocomplete="off">
                                             <div class="modal-body">
 												<div class="question bg-white p-3 border-bottom question-list">
                                                     <div class="d-flex flex-row align-items-center question-title">
@@ -83,9 +82,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            <div class="modal-footer button_handler">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
                                              </form>
                                         </div>
