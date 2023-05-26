@@ -198,7 +198,7 @@
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
 						var data = checkSubjSession(subj_id,accnt_id);
-						active='<button type="button" onclick="practiceExam('+data[0]['exam_id']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
+						active='<button type="button" onclick="practiceExam('+data[0]['exam_id']+','+subj_id+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						button=result.length>0 ? Number(data[0]['exam_type']) == 1 ? Number(data[0]['exam_set_trial'])> Number(data[0]['exam_trial']) ? active : inactive: inactive : inactive;
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
@@ -222,7 +222,7 @@
 
 			},'json');
 	}
-		function Load_sub1(id){
+	function Load_sub1(id){
 			$.post(base_url+'Main/subjects',
 					function(result){
 					for(var i=1; i<result.length; i++){
@@ -270,8 +270,14 @@
 			}).responseJSON;
 	}
 
-	function practiceExam(id){
+	function practiceExam(exam_id,subj_id){
 		$('#takeExam_modal').modal('show');
+		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:id},
+					function(result){
+					for(var i=1; i<result.length; i++){
+						$('#subtopics').append('<button type="button" onclick=ViewSubjStud('+result[i]['subj_id']+') class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
+					}
+			},'json');
 	}
 
 

@@ -146,6 +146,7 @@
 											<table id="dataQuest" class="text-center" width="100%">
 												<thead class="bg-light text-capitalize">
 													<tr>
+														<th>Question No.</th>
 														<th>Questionaire list</th>
 														<th>Actions</th>
 													</tr>

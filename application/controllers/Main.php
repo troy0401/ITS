@@ -126,13 +126,13 @@ class Main extends CI_Controller {
                 );
          $id=$this->model->insert_into("subject", $data);
 		 $practice=array(
-					"exam_set_Type"=>"Practice",
+					"exam_set_Type"=>1,//practice
 					"exam_set_Time"=>10*60,
 					"exam_set_Items"=>10,
 					"subj_id"=>$id
 		);
 		 $summative=array(
-					"exam_set_Type"=>"Summative",
+					"exam_set_Type"=>2,//summative
 					"exam_set_Time"=>20*60,
 					"exam_set_Items"=>30,
 					"subj_id"=>$id
@@ -286,10 +286,11 @@ class Main extends CI_Controller {
           $quest = $this->model->select_table_with_id($this->input->post("table"),$this->input->post("column"),$this->input->post("id"));
 
           $data = array();
-
+		$i=1;
           foreach($quest->result() as $q) {
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
+					$i++,
                     $q->testq_0,
 					'<a data-toggle="modal" onclick=editQuest('.$q->testq_id.')  data-target="#editQuest_modal" class="btn btn-warning btn-circle btn-sm" title="Edit">
 					<i class="fa fa-edit"></i>
@@ -321,7 +322,7 @@ class Main extends CI_Controller {
 			  $minutes=floor(((int)$es->exam_set_Time / 60) % 60);
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
-                    $es->exam_set_Type,
+                    ($es->exam_set_Type == 1 ? "Practice Exam" : "Summative Exam"),
 					$minutes,
 					$es->exam_set_Items,
 					'<button type="button" data-toggle="modal" onclick="editExamSett('.$es->exam_set_ID.')" data-target="#editExamSett_modal" class="btn btn-rounded btn-info mb-3"><i class="fa fa-edit"></i></button>'
@@ -414,6 +415,13 @@ class Main extends CI_Controller {
                                 'exam_type'=>1
                         );
 		$this->model->update_where('exam', $data, 'exam_id', $this->input->post('exam_id'));
+	}
+
+	public function getQuestionsExam(){
+		$data = array('exam_trial'=>1);
+		$this->model->update_where('exam', $data, 'exam_id', $this->input->post('exam_id'));
+		$quests=$this->model->test_questions($this->input->post('subj_id'),);
+		echo json_encode($quests->result());
 	}
 
 	public function Logout(){
