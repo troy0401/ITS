@@ -58,8 +58,7 @@
                                                 <h5 class="modal-title">Practice Exam</h5>
                                             </div>
 										<form id="submitExamForm" class="needs-validation" autocomplete="off">
-                                            <div class="modal-body">
-												<div class="question bg-white p-3 border-bottom question-list">
+                                            <div class="modal-body question-list">
                                                     <div class="d-flex flex-row align-items-center question-title">
                                                         <h3 class="text-danger">Q.</h3>
                                                         <h5 class="mt-1 ml-2">Which of the following country has largest population?</h5>
@@ -80,10 +79,9 @@
                                                         <label class="radio"> <input type="radio" name="answer" value="Russia"> <span>Russia</span>
                                                         </label>
                                                     </div>
-                                                </div>
                                             </div>
                                             <div class="modal-footer button_handler">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <button type="submit" disabled class="btn btn-primary">Submit</button>
                                             </div>
                                              </form>
                                         </div>

@@ -435,6 +435,24 @@ class Main extends CI_Controller {
 		echo json_encode($quests->result());
 	}
 
+	public function submitAnswer(){
+		$exam_ans = array(
+			'testr_StudAns'=>$this->input->post('ans'),
+			'testr_TimeQuest'=>$this->input->post('duration'),
+			'testr_Type'=>$this->input->post('test_Type'),
+			'testq_id'=>$this->input->post('testq_id'),
+			'accnt_id'=>$this->session->userdata('accnt_id')
+		);
+		$id=$this->model->insert_into("test_report", $exam_ans);
+		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
+		foreach($qry->result() as $q){
+			$result=($this->input->post('ans')==$q->testq_ans ? 1 : 2);
+		$data = array('testr_Status'=>$result);
+		$this->model->update_where('test_report', $data, 'testr_ID', $id);
+		}
+		echo json_encode(true);
+	}
+
 
 
 	public function Logout(){

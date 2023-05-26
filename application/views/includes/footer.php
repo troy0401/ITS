@@ -32,7 +32,7 @@
     <script>
     var base_url='<?php echo base_url(); ?>'
     var subject_id;
-	var count_quest=0,total_quest=1;
+	var count_quest=0,total_quest=1;next_quest=0
 var startTime, endTime, durationInSeconds, timer;
     $(document).ready(function(){
 		Load_sub(<?php echo $this->session->userdata('accnt_id');?>);
@@ -127,15 +127,16 @@ var startTime, endTime, durationInSeconds, timer;
 				},'json');
 		});
 
-		 $('#submitExamForm').submit(function(e){
+		 $('#submitExamForm').submit(function(e){//submit practice exam answer
             e.preventDefault();
-             $.post(base_url+'Controller/SubmitAnswer',
+             $.post(base_url+'Main/submitAnswer',
             {
                 ans:$($("#submitExamForm input[type='radio']:checked")[0]).val(),
                 testq_id:$($("#submitExamForm input[type='hidden']")[0]).val(),
                 test_Type:$($("#submitExamForm input[type='hidden']")[1]).val(),
-                total:count_quest
+				duration:$($("#submitExamForm input[type='hidden']")[2]).val(),
             }, function(result){
+						stopTimer();
                         if(count_quest>total_quest){
                             $('#question'+next_quest+'').remove();
                             next_quest++;
@@ -146,15 +147,18 @@ var startTime, endTime, durationInSeconds, timer;
                             $("#submitExamForm button[type=submit]").prop('disabled',true);
                           }else{
                             //StopTimer();
-                            GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+                            //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
                             $('#question'+next_quest+'').remove();
                             $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
                             $('.submit_quiz').click(function(){
                                $('#takeExam_modal').modal('hide');
-                               $('.button_handler').empty().append('<button class="btn btn-success submit_quiz" type="submit">Next<i class="fa fa-angle-right ml-2"></i></button>');
+                               $('.button_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
 
                             });
                           }
+							startTimer();
+
+
             },'json');
         });
 	});
@@ -334,11 +338,10 @@ var startTime, endTime, durationInSeconds, timer;
 					function(result){
 					$('.question-list').empty();
 					countdownTimer(time);
-					for(var i=1; i<result.length; i++){
-						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'><div class="question bg-white p-3 border-bottom">'+
-						'<div>'+
-						'Time Remaining:<div class="timer"></div>'+
-                        '<h5>'+result[i]['subj_name']+'</h5><span id="total_count">(5 of 20)</span></div></div>'+
+					for(var i=0; i<result.length; i++){
+						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
+						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
+                        '<h4>'+result[i]['subj_name']+'</h5><span id="total_count">(5 of 20)</span>'+
                         '<div class="d-flex flex-row align-items-center question-title"><h3 class="text-danger">Q.</h3>'+
                         '<input type="hidden" value="'+result[i]['testq_id']+'">'+
                         '<input type="hidden" value="'+type+'">'+
@@ -347,15 +350,18 @@ var startTime, endTime, durationInSeconds, timer;
                         '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span>'+result[i]['testq_1']+'</span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span>'+result[i]['testq_2']+'</span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span>'+result[i]['testq_3']+'</span></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span>'+result[i]['testq_4']+'</span></label></div></div></div></div>');
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span>'+result[i]['testq_4']+'</span></label></div>');
                       count_quest++;
                          }
                          startTimer();
-                         var total_display=total_quest+" of "+(count_quest + 1);
+                         var total_display=total_quest+" of "+count_quest;
                          $('#total_count').html(total_display);
-						 alert($($('#submitExamForm input')[2]).val());
 			},'json');
 	}
+
+	function change(val){
+      $("#submitExamForm button[type=submit]").prop('disabled',false);
+    }
 
 	function countdownTimer(seconds) {
   var countdown = setInterval(function() {
@@ -406,6 +412,7 @@ function padZero(number) {
 }
 function stopTimer() {
   clearInterval(startTimer);
+  $($('#submitExamForm input')[2]).val('');
 }
 
 
