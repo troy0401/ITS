@@ -145,6 +145,7 @@ var startTime, endTime, durationInSeconds, timer;
                             var total_display=total_quest+" of "+count_quest;
                             $('#total_count').html(total_display);
                             $("#submitExamForm button[type=submit]").prop('disabled',true);
+							startTimer();
                           }else{
                             //StopTimer();
                             //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
@@ -156,8 +157,6 @@ var startTime, endTime, durationInSeconds, timer;
 
                             });
                           }
-							startTimer();
-
 
             },'json');
         });
