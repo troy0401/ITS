@@ -392,11 +392,6 @@ class Main extends CI_Controller {
 	public function CheckLsExamTbl(){
 		$chk=$this->model->select_dual_column("exam","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'));
 		if($chk->num_rows() < 1) {
-			$score_data = array(
-                    "subj_id"=>$this->input->post('subj_id'),
-					"accnt_id"=>$this->input->post('accnt_id')
-                );
-			$score_id=$this->model->insert_into("scores", $score_data);
 			$exam_data = array(
                     "subj_id"=>$this->input->post('subj_id'),
 					"accnt_id"=>$this->input->post('accnt_id'),
@@ -437,12 +432,22 @@ class Main extends CI_Controller {
 
 	public function recordTestHistory(){
 	$test_history=array(
-			"th_Type"=>1,
+			"th_Type"=>$this->input->post('exam_type'),
 			"subj_id"=>$this->input->post('subj_id'),
 			"accnt_id"=>$this->input->post('accnt_id')
 		);
-		$id=$this->model->insert_into("test_history", $test_history);
-		echo json_encode($id);
+	$score_data=array(
+			"subj_id"=>$this->input->post('subj_id'),
+			"accnt_id"=>$this->input->post('accnt_id'),
+			"score_type"=>$this->input->post('exam_type')
+		);
+		$history_id=$this->model->insert_into("test_history", $test_history);
+		$score_id=$this->model->insert_into("scores", $score_data);
+		$data=array(
+				"history_id"=>$history_id,
+				"score_id"=>$score_id
+		);
+		echo json_encode($data);
 	}
 
 	public function submitAnswer(){
@@ -481,6 +486,31 @@ class Main extends CI_Controller {
 	public function getScore(){
 		$score=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
 		echo json_encode($score->result());
+	}
+
+	public function updatePracticeStatus(){
+		$data_score = array(
+						'exam_status'=>$this->input->post('exam_status')
+					);
+		$this->model->update_where('exam', $data_score, 'exam_id', $this->input->post('exam_id'));
+		$data=$this->model->select_table_with_id("exam","exam_id",$this->input->post('exam_id'));
+		foreach($data->result() as $d){
+			$summ=array(
+				"subj_id"=>$d->subj_id,
+				"accnt_id"=>$d->accnt_id,
+				"exam_type"=>2,
+			   "exam_status"=>0,
+			   "exam_trial"=>0,
+			   "exam_set_trial"=>1
+			);
+			$this->model->insert_into("exam", $summ);
+		}
+		echo json_encode($data->result());
+	}
+
+	public function getAttempts(){
+		$data=$this->model->select_table_with_id("exam","exam_id",$this->input->post('exam_id'));
+		echo json_encode($data->result());
 	}
 
 
