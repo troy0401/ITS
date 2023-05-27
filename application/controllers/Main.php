@@ -435,22 +435,52 @@ class Main extends CI_Controller {
 		echo json_encode($quests->result());
 	}
 
+	public function recordTestHistory(){
+	$test_history=array(
+			"th_Type"=>1,
+			"subj_id"=>$this->input->post('subj_id'),
+			"accnt_id"=>$this->input->post('accnt_id')
+		);
+		$id=$this->model->insert_into("test_history", $test_history);
+		echo json_encode($id);
+	}
+
 	public function submitAnswer(){
 		$exam_ans = array(
 			'testr_StudAns'=>$this->input->post('ans'),
 			'testr_TimeQuest'=>$this->input->post('duration'),
 			'testr_Type'=>$this->input->post('test_Type'),
 			'testq_id'=>$this->input->post('testq_id'),
-			'accnt_id'=>$this->session->userdata('accnt_id')
+			'accnt_id'=>$this->session->userdata('accnt_id'),
+			'th_ID'=>$this->input->post('history_id')
 		);
 		$id=$this->model->insert_into("test_report", $exam_ans);
 		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
 		foreach($qry->result() as $q){
-			$result=($this->input->post('ans')==$q->testq_ans ? 1 : 2);
+			$result=0;
+			if($this->input->post('ans')==$q->testq_ans){
+				$result=1;
+				$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
+				foreach($sc_qry->result() as $sq){
+					$score=$sq->score + 1;
+					$data_score = array(
+						'score'=>$score,
+						'num_of_items'=>$this->input->post('test_items')
+					);
+					$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
+				}
+			}else{
+				$result=2;
+			}
 		$data = array('testr_Status'=>$result);
 		$this->model->update_where('test_report', $data, 'testr_ID', $id);
 		}
 		echo json_encode(true);
+	}
+
+	public function getScore(){
+		$score=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
+		echo json_encode($score->result());
 	}
 
 

@@ -135,6 +135,9 @@ var startTime, endTime, durationInSeconds, timer;
                 testq_id:$($("#submitExamForm input[type='hidden']")[0]).val(),
                 test_Type:$($("#submitExamForm input[type='hidden']")[1]).val(),
 				duration:$($("#submitExamForm input[type='hidden']")[2]).val(),
+				score_id:$($("#submitExamForm input[type='hidden']")[3]).val(),
+				test_items:$($("#submitExamForm input[type='hidden']")[4]).val(),
+				history_id:$($("#submitExamForm input[type='hidden']")[5]).val(),
             }, function(result){
 						stopTimer();
                         if(count_quest>total_quest){
@@ -147,8 +150,11 @@ var startTime, endTime, durationInSeconds, timer;
                             $("#submitExamForm button[type=submit]").prop('disabled',true);
 							startTimer();
                           }else{
+							stopTimer();
+							stopCountdown()
                             //StopTimer();
                             //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+							getScorePractice($($("#submitExamForm input[type='hidden']")[3]).val());
                             $('#question'+next_quest+'').remove();
                             $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
                             $('.submit_quiz').click(function(){
@@ -295,7 +301,7 @@ var startTime, endTime, durationInSeconds, timer;
 						var practiceExamData = checkSubjSession(subj_id,accnt_id,1);//practice exam parameter
 						var summativeExamData = checkSubjSession(subj_id,accnt_id,2);//summative exam paramater
 						var exam_setData = getExamSettings(subj_id,1);
-						active='<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
+						active='<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+practiceExamData[0]['score_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						button=result.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : inactive: inactive : inactive;
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
@@ -307,7 +313,7 @@ var startTime, endTime, durationInSeconds, timer;
 						'<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+
 						'</div></div></div>'+
 						'<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion22">Practice Exam</a>'+
-						'</div><div id="accordion22" class="collapse" data-parent="#accordion2">'+
+						'</div><div id="practice_buttons" class="collapse" data-parent="#accordion2">'+
 						'<div class="card-body">'+button+
 						'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>'+
 						'</div></div></div><div class="card">'+
@@ -338,6 +344,17 @@ var startTime, endTime, durationInSeconds, timer;
 	function checkSubjSession(subj_id,accnt_id,type){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
 			var result = $.ajax({
 		url:base_url+"Main/examStatus",
+		type:"POST",
+		data:{subj_id:subj_id,accnt_id:accnt_id,exam_type:type},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+	}
+
+	function recordTestHistory(subj_id,accnt_id,type){ //records attempts history
+	var result = $.ajax({
+		url:base_url+"Main/recordTestHistory",
 		type:"POST",
 		data:{subj_id:subj_id,accnt_id:accnt_id,exam_type:type},
 		dataType:"json",
@@ -378,12 +395,13 @@ var startTime, endTime, durationInSeconds, timer;
 	return result;
 	}
 
-	function practiceExam(exam_id,subj_id,test_items,time,type){
+	function practiceExam(exam_id,score_id,subj_id,test_items,time,type){
 		$('#takeExam_modal').modal('show');
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
 					function(result){
 					$('.question-list').empty();
 					countdownTimer(time);
+					var history_id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,1);
 					for(var i=0; i<result.length; i++){
 						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
@@ -392,7 +410,9 @@ var startTime, endTime, durationInSeconds, timer;
                         '<input type="hidden" value="'+result[i]['testq_id']+'">'+
                         '<input type="hidden" value="'+type+'">'+
 						'<input type="hidden" value="">'+
-						'<input type="hidden" value="'+exam_id+'">'+
+						'<input type="hidden" value="'+score_id+'">'+
+						'<input type="hidden" value="'+test_items+'">'+
+						'<input type="hidden" value="'+history_id+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span>'+result[i]['testq_1']+'</span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span>'+result[i]['testq_2']+'</span></label></div>'+
@@ -406,9 +426,21 @@ var startTime, endTime, durationInSeconds, timer;
 			},'json');
 	}
 
-// 	function getScore(){
-//
-// 	}
+	function getScorePractice(score_id){
+      $.post(base_url+'Main/getScore',{score_id:score_id}, function(result){
+          var score=result[0]['score'];
+          var final= score/count_quest*100;
+          if(score>=70){
+            $('.question-list').html('<h2 class="text-center">Your score:'+result[0]['score']+'/'+result[0]['num_of_items']+'</h2>'+
+              '<h3 class="text-success text-center">You Passed!</h3>');
+          }else{
+            $('.question-list').html('<h2 class="text-center">'+result[0]['score']+'/'+result[0]['num_of_items']+'</h2>'+
+              '<h3 class="text-danger text-center">You Failed!</h3>');
+          }
+          count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
+
+      },'json');
+    }
 
 
 
