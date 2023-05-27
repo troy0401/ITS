@@ -43,6 +43,11 @@ class Model extends CI_Model
         return $qry;
     }
 
+     public function select_tri_column($table,$col1,$id1,$col2,$id2,$col3,$id3){
+        $qry = $this->db->query("SELECT * FROM $table WHERE $col1=$id1 AND $col2=$id2 AND $col3=$id3");
+        return $qry;
+    }
+
      public function select_account($id)
     {
         $qry = $this->db->query("SELECT a.*, a.account_id, b.*, d.* FROM accounts a LEFT JOIN course b ON a.course_id=b.course_id LEFT JOIN rank d ON d.rank_id = a.rank_id WHERE a.account_id='$id'");

@@ -380,7 +380,7 @@ class Main extends CI_Controller {
 	}
 
 	public function examStatus(){
-		$sub=$this->model->select_dual_column("exam","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'));
+		$sub=$this->model->select_tri_column("exam","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'),"exam_type",$this->input->post('exam_type'));
 		echo json_encode($sub->result());
 	}
 

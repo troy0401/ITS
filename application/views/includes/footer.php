@@ -187,6 +187,63 @@ var startTime, endTime, durationInSeconds, timer;
         } );
 	}
 
+	function change(val){
+      $("#submitExamForm button[type=submit]").prop('disabled',false);
+    }
+
+	function countdownTimer(seconds) {
+	var countdown = setInterval(function() {
+    var minutes = Math.floor(seconds / 60);
+    var remainingSeconds = seconds % 60;
+
+    // Add leading zero if the value is less than 10
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
+
+    // Display the countdown timer in the console or update a HTML element
+    //console.log(minutes + ":" + remainingSeconds);
+	$('.timer').empty().append(minutes + ":" + remainingSeconds);
+
+			if (seconds <= 0) {
+			clearInterval(countdown);
+			console.log("Countdown timer has ended");
+			} else {
+			seconds--;
+			}
+		}, 1000);
+	}
+
+	function stopCountdown() {
+	clearInterval(countdownTimer);
+	}
+
+	function startTimer() {
+	startTime = new Date();
+	timer = setInterval(updateTimer, 1000); // Update the timer every second
+	}
+
+	function updateTimer() {
+	var currentTime = new Date();
+	durationInSeconds = Math.floor((currentTime - startTime) / 1000); // Calculate duration in seconds
+
+	var hours = Math.floor(durationInSeconds / 3600);
+	var minutes = Math.floor((durationInSeconds % 3600) / 60);
+	var seconds = durationInSeconds % 60;
+
+	var formattedTime = padZero(hours) + ":" + padZero(minutes) + ":" + padZero(seconds);
+	//console.log("Duration: " + formattedTime);
+	$($('#submitExamForm input')[2]).val(formattedTime);
+	}
+
+	function padZero(number) {
+	return number.toString().padStart(2, "0"); // Add leading zero if needed
+	}
+	function stopTimer() {
+	clearInterval(startTimer);
+	$($('#submitExamForm input')[2]).val('');
+	}
+
+
 	function editSubj(id){
 		subject_id=id;
 		$.post(base_url+'Main/getSubj',
@@ -235,27 +292,28 @@ var startTime, endTime, durationInSeconds, timer;
 		$('.subject_title').html(name);
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
-						var data = checkSubjSession(subj_id,accnt_id);
+						var practiceExamData = checkSubjSession(subj_id,accnt_id,1);//practice exam parameter
+						var summativeExamData = checkSubjSession(subj_id,accnt_id,2);//summative exam paramater
 						var exam_setData = getExamSettings(subj_id,1);
-						active='<button type="button" onclick="practiceExam('+data[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
+						active='<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
-						button=result.length>0 ? Number(data[0]['exam_type']) == 1 ? Number(data[0]['exam_set_trial'])> Number(data[0]['exam_trial']) ? active : inactive: inactive : inactive;
+						button=result.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : inactive: inactive : inactive;
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
 						//alert(sum);
 
 						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
 						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
 						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+
-						'<button type="button" onclick="redirectPage(\''+link +'\','+data[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+
+						'<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+
 						'</div></div></div>'+
 						'<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion22">Practice Exam</a>'+
 						'</div><div id="accordion22" class="collapse" data-parent="#accordion2">'+
 						'<div class="card-body">'+button+
-						'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+data[0]['exam_trial']+'/'+data[0]['exam_set_trial']+']</span></button>'+
+						'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>'+
 						'</div></div></div><div class="card">'+
 						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
 						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body">'+
-						(data['exam_type'] == 3 && result[0]['ls_status']==0 ? '<button type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>')+
+						(summativeExamData.length>0 && result[0]['ls_status']==0 ? '<button type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>')+
 						'</div></div></div></div>');
 
 
@@ -277,11 +335,11 @@ var startTime, endTime, durationInSeconds, timer;
 		ViewSubjStud(subj_id,name,page)
 	}
 
-	function checkSubjSession(subj_id,accnt_id){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
+	function checkSubjSession(subj_id,accnt_id,type){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
 			var result = $.ajax({
 		url:base_url+"Main/examStatus",
 		type:"POST",
-		data:{subj_id:subj_id,accnt_id:accnt_id},
+		data:{subj_id:subj_id,accnt_id:accnt_id,exam_type:type},
 		dataType:"json",
 		async:false
 	}).responseJSON;
@@ -309,17 +367,6 @@ var startTime, endTime, durationInSeconds, timer;
 			}).responseJSON;
 	}
 
-	function checkSubjSession(subj_id,accnt_id){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
-			var result = $.ajax({
-		url:base_url+"Main/examStatus",
-		type:"POST",
-		data:{subj_id:subj_id,accnt_id:accnt_id},
-		dataType:"json",
-		async:false
-	}).responseJSON;
-	return result;
-	}
-
 	function getExamSettings(subj_id,exam_setType){ //get exam settings for exam type and duration of the exam and  number of items
 			var result = $.ajax({
 		url:base_url+"Main/examSettings",
@@ -345,6 +392,7 @@ var startTime, endTime, durationInSeconds, timer;
                         '<input type="hidden" value="'+result[i]['testq_id']+'">'+
                         '<input type="hidden" value="'+type+'">'+
 						'<input type="hidden" value="">'+
+						'<input type="hidden" value="'+exam_id+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span>'+result[i]['testq_1']+'</span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span>'+result[i]['testq_2']+'</span></label></div>'+
@@ -358,61 +406,11 @@ var startTime, endTime, durationInSeconds, timer;
 			},'json');
 	}
 
-	function change(val){
-      $("#submitExamForm button[type=submit]").prop('disabled',false);
-    }
-
-	function countdownTimer(seconds) {
-  var countdown = setInterval(function() {
-    var minutes = Math.floor(seconds / 60);
-    var remainingSeconds = seconds % 60;
-
-    // Add leading zero if the value is less than 10
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
-
-    // Display the countdown timer in the console or update a HTML element
-    //console.log(minutes + ":" + remainingSeconds);
-	$('.timer').empty().append(minutes + ":" + remainingSeconds);
-
-    if (seconds <= 0) {
-      clearInterval(countdown);
-      console.log("Countdown timer has ended");
-    } else {
-      seconds--;
-    }
-  }, 1000);
-}
-function stopCountdown() {
-  clearInterval(countdownTimer);
-}
+// 	function getScore(){
+//
+// 	}
 
 
-function startTimer() {
-  startTime = new Date();
-  timer = setInterval(updateTimer, 1000); // Update the timer every second
-}
-
-function updateTimer() {
-  var currentTime = new Date();
-  durationInSeconds = Math.floor((currentTime - startTime) / 1000); // Calculate duration in seconds
-
-  var hours = Math.floor(durationInSeconds / 3600);
-  var minutes = Math.floor((durationInSeconds % 3600) / 60);
-  var seconds = durationInSeconds % 60;
-
-  var formattedTime = padZero(hours) + ":" + padZero(minutes) + ":" + padZero(seconds);
-  //console.log("Duration: " + formattedTime);
-  $($('#submitExamForm input')[2]).val(formattedTime);
-}
-
-function padZero(number) {
-  return number.toString().padStart(2, "0"); // Add leading zero if needed
-}
-function stopTimer() {
-  clearInterval(startTimer);
-  $($('#submitExamForm input')[2]).val('');
-}
 
 
     </script>
