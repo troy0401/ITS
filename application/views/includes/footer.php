@@ -296,7 +296,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 
 	function ViewSubjStud(id,name,link){
 		checkSubtopicStatForStud(id,<?php echo $this->session->userdata('accnt_id');?>);
-		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive;
+		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive,request_button;
 		$('.subject_title').html(name);
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
@@ -305,7 +305,9 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						var exam_setData = getExamSettings(subj_id,1);
 						active='<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
-						button=result.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active :inactive : inactive: inactive : inactive;
+						request_button='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
+						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>';
+						button=result.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
 						//alert(sum);
 
@@ -397,6 +399,20 @@ var startTime, endTime, durationInSeconds, timer,countdown
 	return result;
 	}
 
+	function showRequestModal(id){
+		$('#requestAttempt_modal').modal('show');
+		$('.button_attempt').empty().append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
+											'<button type="button" onclick="submitRequestToProf('+id+')" class="btn btn-primary">Submit request</button>');
+	}
+
+	function submitRequestToProf(id){
+		$.post(base_url+'Main/requestProf',{exam_id:id},
+					function(result){
+						alert('Request Sent..');
+						$('#requestAttempt_modal').modal('hide');
+			},'json');
+	}
+
 	function practiceExam(exam_id,subj_id,test_items,time,type){
 		$('#takeExam_modal').modal('show');
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
@@ -458,7 +474,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 		}else{
 			$.post(base_url+'Main/getAttempts',{exam_id:exam_id}, function(result){
 				var exam_setData = getExamSettings(result[0]['subj_id'],1);
-					$('.practice_buttons').empty().append((Number(result[0]['exam_set_trial'])> Number(result[0]['exam_trial']) ? '<button type="button" onclick="practiceExam('+result[0]['exam_id']+','+result[0]['subj_id']+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>')+'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+result[0]['exam_trial']+'/'+result[0]['exam_set_trial']+']</span></button>');
+					$('.practice_buttons').empty().append((Number(result[0]['exam_set_trial'])> Number(result[0]['exam_trial']) ? '<button type="button" onclick="practiceExam('+result[0]['exam_id']+','+result[0]['subj_id']+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button type="button" onclick="showRequestModal('+exam_id+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>')+'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+result[0]['exam_trial']+'/'+result[0]['exam_set_trial']+']</span></button>');
 			},'json');
 		}
 	}

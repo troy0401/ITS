@@ -457,7 +457,8 @@ class Main extends CI_Controller {
 			'testr_Type'=>$this->input->post('test_Type'),
 			'testq_id'=>$this->input->post('testq_id'),
 			'accnt_id'=>$this->session->userdata('accnt_id'),
-			'th_ID'=>$this->input->post('history_id')
+			'th_ID'=>$this->input->post('history_id'),
+			'score_ID'=>$this->input->post('score_id')
 		);
 		$id=$this->model->insert_into("test_report", $exam_ans);
 		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
@@ -511,6 +512,15 @@ class Main extends CI_Controller {
 	public function getAttempts(){
 		$data=$this->model->select_table_with_id("exam","exam_id",$this->input->post('exam_id'));
 		echo json_encode($data->result());
+	}
+
+	public function requestProf(){
+		$data=array(
+				"exam_id"=>$this->input->post('exam_id'),
+				"req_message"=>"Requesting additional attempt"
+			);
+			$this->model->insert_into("requests", $data);
+			echo json_encode(true);
 	}
 
 
