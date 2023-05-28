@@ -167,6 +167,47 @@ var startTime, endTime, durationInSeconds, timer,countdown
 
             },'json');
         });
+
+		 $('#submitSummExamForm').submit(function(e){//submit summative exam answer
+            e.preventDefault();
+             $.post(base_url+'Main/submitAnswer',
+            {
+                ans:$($("#submitSummExamForm input[type='radio']:checked")[0]).val(),
+                testq_id:$($("#submitSummExamForm input[type='hidden']")[0]).val(),
+                test_Type:$($("#submitSummExamForm input[type='hidden']")[1]).val(),
+				duration:$($("#submitSummExamForm input[type='hidden']")[2]).val(),
+				//score_id:$($("#submitExamForm input[type='hidden']")[3]).val(),
+				test_items:$($("#submitSummExamForm input[type='hidden']")[3]).val(),
+				history_id:$($("#submitSummExamForm input[type='hidden']")[4]).val(),
+				score_id:$($("#submitSummExamForm input[type='hidden']")[5]).val(),
+				exam_id:$($("#submitSummExamForm input[type='hidden']")[6]).val()
+            }, function(result){
+						stopTimer();
+						startTimer();
+                        if(count_quest>total_quest){
+                            $('#question'+next_quest+'').remove();
+                            next_quest++;
+                            $('#question'+next_quest+'').css({"display":"block"});
+                            total_quest++;
+                            var total_display=total_quest+" of "+count_quest;
+                            $('#total_count').html(total_display);
+                            $("#submitSummExamForm button[type=submit]").prop('disabled',true);
+                          }else{
+							stopCountdown();
+                            stopTimer();
+                            //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+							getScoreSummative($($("#submitSummExamForm input[type='hidden']")[5]).val(),$($("#submitSummExamForm input[type='hidden']")[6]).val());//score_id and exam_id
+                            $('#question'+next_quest+'').remove();
+                            $('.summbutton_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+                            $('.submit_quiz').click(function(){
+                               $('#summExam_modal').modal('hide');
+                               $('.summbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
+
+                            });
+                          }
+
+            },'json');
+        });
 	});
 
 
@@ -196,6 +237,10 @@ var startTime, endTime, durationInSeconds, timer,countdown
 
 	function change(val){
       $("#submitExamForm button[type=submit]").prop('disabled',false);
+    }
+
+    function summ_change(val){
+      $("#submitSummExamForm button[type=submit]").prop('disabled',false);
     }
 
 	function countdownTimer(seconds) {
@@ -241,6 +286,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 	var formattedTime = padZero(hours) + ":" + padZero(minutes) + ":" + padZero(seconds);
 	//console.log("Duration: " + formattedTime);
 	$($('#submitExamForm input')[2]).val(formattedTime);
+	$($('#submitSummExamForm input')[2]).val(formattedTime);
 	}
 
 	function padZero(number) {
@@ -249,6 +295,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 	function stopTimer() {
 	clearInterval(timer);
 	$($('#submitExamForm input')[2]).val('');
+	$($('#submitSummExamForm input')[2]).val('');
 	}
 
 
@@ -303,6 +350,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						var practiceExamData = checkSubjSession(subj_id,accnt_id,1);//practice exam parameter
 						var summativeExamData = checkSubjSession(subj_id,accnt_id,2);//summative exam paramater
 						var exam_setData = getExamSettings(subj_id,1);
+						var summexam_setData = getExamSettings(subj_id,2);
 						active='<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
 						request_button='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
@@ -322,8 +370,8 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>'+
 						'</div></div></div><div class="card">'+
 						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
-						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body">'+
-						(summativeExamData.length>0 && result[0]['ls_status']==0 ? '<button type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>')+
+						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body summative_button">'+
+						(summativeExamData.length>0 && result[0]['ls_status']==0 ? '<button type="button" onclick=takeSummExam('+summativeExamData[0]['exam_id']+','+subj_id+','+summexam_setData[0]['exam_set_Items']+','+summexam_setData[0]['exam_set_Time']+','+summexam_setData[0]['exam_set_Type']+') class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>')+
 						'</div></div></div></div>');
 
 
@@ -466,9 +514,11 @@ var startTime, endTime, durationInSeconds, timer,countdown
     function updatePracticeButtons(exam_id,status){
 		if(status==1){
 			$.post(base_url+'Main/updatePracticeStatus',{exam_id:exam_id,exam_status:status}, function(result){
+					var summativeExamData = checkSubjSession(result[0]['subj_id'],<?php echo $this->session->userdata('accnt_id') ?>,2);
+					var exam_setData = getExamSettings(result[0]['subj_id'],2);
 					$('.practice_buttons').empty().append('<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+result[0]['exam_trial']+'/'+result[0]['exam_set_trial']+']</span></button>');
 					$('#accordion23').empty().append('<div class="card-body">'+
-					'<button type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>'+
+					'<button type="button" onclick=takeSummExam('+result[0]['exam_summ_id']+','+summativeExamData[0]['subj_id']+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+') class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>'+
 					'</div>');
 			},'json');
 		}else{
@@ -477,6 +527,66 @@ var startTime, endTime, durationInSeconds, timer,countdown
 					$('.practice_buttons').empty().append((Number(result[0]['exam_set_trial'])> Number(result[0]['exam_trial']) ? '<button type="button" onclick="practiceExam('+result[0]['exam_id']+','+result[0]['subj_id']+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button type="button" onclick="showRequestModal('+exam_id+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>')+'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+result[0]['exam_trial']+'/'+result[0]['exam_set_trial']+']</span></button>');
 			},'json');
 		}
+	}
+
+	function takeSummExam(exam_id,subj_id,exam_items,exam_time,exam_type){
+		$('#summExam_modal').modal('show');
+		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:exam_items},
+					function(result){
+					$('.summ-list').empty();
+					countdownTimer(exam_time);
+					startTimer();
+					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,2);
+					for(var i=0; i<result.length; i++){
+						$('.summ-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
+						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
+                        '<h4>'+result[i]['subj_name']+'</h5><span id="total_count">(5 of 20)</span>'+
+                        '<div class="d-flex flex-row align-items-center question-title"><h3 class="text-danger">Q.</h3>'+
+                        '<input type="hidden" value="'+result[i]['testq_id']+'">'+
+                        '<input type="hidden" value="'+exam_type+'">'+
+						'<input type="hidden" value="">'+
+						'<input type="hidden" value="'+exam_items+'">'+
+						'<input type="hidden" value="'+id['history_id']+'">'+
+						'<input type="hidden" value="'+id['score_id']+'">'+
+						'<input type="hidden" value="'+exam_id+'">'+
+                        '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input onchange="summ_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span>'+result[i]['testq_1']+'</span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_2']+'"> <span>'+result[i]['testq_2']+'</span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_3']+'"> <span>'+result[i]['testq_3']+'</span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_4']+'"> <span>'+result[i]['testq_4']+'</span></label></div>');
+                      count_quest++;
+                         }
+                         var total_display=total_quest+" of "+count_quest;
+                         $('#total_count').html(total_display);
+			},'json');
+
+	}
+
+	function getScoreSummative(score_id,exam_id){
+      $.post(base_url+'Main/getScore',{score_id:score_id}, function(result){
+          var score=result[0]['score'];
+          var final= score/count_quest*100;
+		  addNewLesson(exam_id); //add new subtopic for student
+          if(final>=70){
+            $('.summ-list').html('<h2 class="text-center">Your score:'+result[0]['score']+'/'+count_quest+'</h2>'+
+              '<h3 class="text-success text-center">You Passed!</h3>');
+				//updatePracticeButtons(exam_id,1);//1=passed; 0=failed
+          }else{
+            $('.summ-list').html('<h2 class="text-center">'+result[0]['score']+'/'+result[0]['num_of_items']+'</h2>'+
+              '<h3 class="text-danger text-center">You Failed!</h3>');
+				//updatePracticeButtons(exam_id,0);
+          }
+          count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
+
+
+      },'json');
+    }
+
+    function addNewLesson(exam_id){
+		$.post(base_url+'Main/addSubTopicToStud',{exam_id},
+					function(result){
+					$('.summative_button').empty().append('<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>');
+		},'json');
 	}
 
 

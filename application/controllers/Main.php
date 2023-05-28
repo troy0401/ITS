@@ -395,7 +395,6 @@ class Main extends CI_Controller {
 			$exam_data = array(
                     "subj_id"=>$this->input->post('subj_id'),
 					"accnt_id"=>$this->input->post('accnt_id'),
-					"score_id"=>$score_id,
 					"exam_type"=>0,
 					"exam_trial"=>0,
 					"exam_set_trial"=>10
@@ -495,6 +494,7 @@ class Main extends CI_Controller {
 					);
 		$this->model->update_where('exam', $data_score, 'exam_id', $this->input->post('exam_id'));
 		$data=$this->model->select_table_with_id("exam","exam_id",$this->input->post('exam_id'));
+		$new_id;
 		foreach($data->result() as $d){
 			$summ=array(
 				"subj_id"=>$d->subj_id,
@@ -504,9 +504,18 @@ class Main extends CI_Controller {
 			   "exam_trial"=>0,
 			   "exam_set_trial"=>1
 			);
-			$this->model->insert_into("exam", $summ);
+			$new_id=$this->model->insert_into("exam", $summ);
 		}
-		echo json_encode($data->result());
+
+		foreach($data->result() as $old_exam){
+			$new_data[]=array(
+					"exam_trial"=>$old_exam->exam_trial,
+					"exam_set_trial"=>$old_exam->exam_set_trial,
+					"exam_sum_id"=>$new_id,
+					"subj_id"=>$old_exam->subj_id
+			);
+		}
+		echo json_encode($new_data);
 	}
 
 	public function getAttempts(){
@@ -523,6 +532,45 @@ class Main extends CI_Controller {
 			echo json_encode(true);
 	}
 
+	public function addSubTopicToStud(){
+		$sub=$this->model->select_all("subject");
+		$count_sub=$sub->num_rows();
+
+		$check_sub=$this->model->select_table_with_id("exam","exam_type","2");
+		$count_finished=$check_sub->num_rows();
+
+		if($count_sub > $count_finished){
+			$newSub_id;
+			$oldSub_id;
+			$finished_sub=$this->model->select_table_with_id("exam","exam_id",$this->input->post('exam_id'));
+			foreach($finished_sub->result() as $fs){
+				$newSub_id=$fs->subj_id + 1;
+				$oldSub_id=$fs->subj_id;
+			}
+
+			$this->model->update_where_dual_column('lesson_status', 'ls_status', '1', 'subj_id', $oldSub_id, 'accnt_id', $this->session->userdata('accnt_id'));
+
+			$data=array(
+				"subj_id"=>$newSub_id,
+				"accnt_id"=>$this->session->userdata('accnt_id'),
+				"exam_type"=>0,
+				"exam_status"=>0,
+				"exam_trial"=>0,
+				"exam_set_trial"=>10
+
+			);
+			$lesson_data = array(
+                    "subj_id"=>$newSub_id,
+					"accnt_id"=>$this->session->userdata('accnt_id'),
+					"ls_status"=>0
+                );
+			$this->model->insert_into("exam", $data);
+			$this->model->insert_into("lesson_status", $lesson_data);
+
+		}
+
+		echo json_encode(true);
+	}
 
 
 	public function Logout(){
