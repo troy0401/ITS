@@ -344,30 +344,67 @@ var startTime, endTime, durationInSeconds, timer,countdown
 	function ViewSubjStud(id,name,link){
 		checkSubtopicStatForStud(id,<?php echo $this->session->userdata('accnt_id');?>);
 		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive,request_button;
+		var redirect_button;
 		$('.subject_title').html(name);
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
+						var learnExamData = checkSubjSession(subj_id,accnt_id,0)
 						var practiceExamData = checkSubjSession(subj_id,accnt_id,1);//practice exam parameter
 						var summativeExamData = checkSubjSession(subj_id,accnt_id,2);//summative exam paramater
 						var exam_setData = getExamSettings(subj_id,1);
 						var summexam_setData = getExamSettings(subj_id,2);
-						active='<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
-						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>';
-						request_button='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
-						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>';
-						button=result.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
+
+						active=(learnExamData.length> 0 ? '<button type="button" onclick="practiceExam('+learnExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
+
+						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+(learnExamData.length>0 ? '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
+
+						request_button=(learnExamData.length>0 ? '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
+						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
+						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>');
+
+						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
+
+
+						//button=learnExamData.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
+						if(learnExamData.length>0){
+							if(Number(learnExamData[0]['exam_type'])==1){
+								if(Number(learnExamData[0]['exam_status'])==0){
+									if(Number(learnExamData[0]['exam_set_trial'])> Number(learnExamData[0]['exam_trial'])){
+										button=active;
+									}else{
+										button=request_button;
+									}
+								}else{
+									button=inactive;
+								}
+							}else{
+								button=inactive;
+							}
+						}else{
+							if(Number(practiceExamData[0]['exam_type'])==1){
+								if(Number(practiceExamData[0]['exam_status'])==0){
+									if(Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial'])){
+										button=active;
+									}else{
+										button=request_button;
+									}
+								}else{
+									button=inactive;
+								}
+							}else{
+								button=inactive;
+							}
+						}
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
 						//alert(sum);
 
 						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
 						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
-						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+
-						'<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+
+						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+redirect_button+
 						'</div></div></div>'+
 						'<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion22">Practice Exam</a>'+
 						'</div><div id="accordion22" class="collapse" data-parent="#accordion2">'+
 						'<div class="card-body practice_buttons">'+button+
-						'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>'+
 						'</div></div></div><div class="card">'+
 						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
 						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body summative_button">'+
@@ -381,8 +418,81 @@ var startTime, endTime, durationInSeconds, timer,countdown
 			$.post(base_url+'Main/subjects',
 					function(result){
 					for(var i=1; i<result.length; i++){
-						$('#subtopics').append('<button type="button" onclick=ViewSubjStud('+result[i]['subj_id']+') class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
+						$('#subtopics').append('<button type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
 					}
+			},'json');
+	}
+
+		function ViewSubjStudCont(id,name,link){
+		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive,request_button;
+		var redirect_button;
+		$('.subject_title').html(name);
+		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
+					function(result){
+						var learnExamData = checkSubjSession(subj_id,accnt_id,0)
+						var practiceExamData = checkSubjSession(subj_id,accnt_id,1);//practice exam parameter
+						var summativeExamData = checkSubjSession(subj_id,accnt_id,2);//summative exam paramater
+						var exam_setData = getExamSettings(subj_id,1);
+						var summexam_setData = getExamSettings(subj_id,2);
+
+						active=(learnExamData.length> 0 ? '<button type="button" onclick="practiceExam('+learnExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
+
+						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+(learnExamData.length>0 ? '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
+
+						request_button=(learnExamData.length>0 ? '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
+						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
+						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>');
+
+						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
+
+
+						//button=learnExamData.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
+						if(learnExamData.length>0){
+							if(Number(learnExamData[0]['exam_type'])==1){
+								if(Number(learnExamData[0]['exam_status'])==0){
+									if(Number(learnExamData[0]['exam_set_trial'])> Number(learnExamData[0]['exam_trial'])){
+										button=active;
+									}else{
+										button=request_button;
+									}
+								}else{
+									button=inactive;
+								}
+							}else{
+								button=inactive;
+							}
+						}else{
+							if(Number(practiceExamData[0]['exam_type'])==1){
+								if(Number(practiceExamData[0]['exam_status'])==0){
+									if(Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial'])){
+										button=active;
+									}else{
+										button=request_button;
+									}
+								}else{
+									button=inactive;
+								}
+							}else{
+								button=inactive;
+							}
+						}
+						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
+						//alert(sum);
+
+						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
+						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
+						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+redirect_button+
+						'</div></div></div>'+
+						'<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion22">Practice Exam</a>'+
+						'</div><div id="accordion22" class="collapse" data-parent="#accordion2">'+
+						'<div class="card-body practice_buttons">'+button+
+						'</div></div></div><div class="card">'+
+						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
+						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body summative_button">'+
+						(summativeExamData.length>0 && result[0]['ls_status']==0 ? '<button type="button" onclick=takeSummExam('+summativeExamData[0]['exam_id']+','+subj_id+','+summexam_setData[0]['exam_set_Items']+','+summexam_setData[0]['exam_set_Time']+','+summexam_setData[0]['exam_set_Type']+') class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>')+
+						'</div></div></div></div>');
+
+
 			},'json');
 	}
 
@@ -572,7 +682,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
               '<h3 class="text-success text-center">You Passed!</h3>');
 				//updatePracticeButtons(exam_id,1);//1=passed; 0=failed
           }else{
-            $('.summ-list').html('<h2 class="text-center">'+result[0]['score']+'/'+result[0]['num_of_items']+'</h2>'+
+            $('.summ-list').html('<h2 class="text-center">'+result[0]['score']+'/'+count_quest+'</h2>'+
               '<h3 class="text-danger text-center">You Failed!</h3>');
 				//updatePracticeButtons(exam_id,0);
           }
@@ -583,7 +693,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
     }
 
     function addNewLesson(exam_id){
-		$.post(base_url+'Main/addSubTopicToStud',{exam_id},
+		$.post(base_url+'Main/addSubTopicToStud',{exam_id:exam_id},
 					function(result){
 					$('.summative_button').empty().append('<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>');
 		},'json');

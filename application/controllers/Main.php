@@ -511,7 +511,7 @@ class Main extends CI_Controller {
 			$new_data[]=array(
 					"exam_trial"=>$old_exam->exam_trial,
 					"exam_set_trial"=>$old_exam->exam_set_trial,
-					"exam_sum_id"=>$new_id,
+					"exam_summ_id"=>$new_id,
 					"subj_id"=>$old_exam->subj_id
 			);
 		}
@@ -549,11 +549,12 @@ class Main extends CI_Controller {
 			}
 
 			$this->model->update_where_dual_column('lesson_status', 'ls_status', '1', 'subj_id', $oldSub_id, 'accnt_id', $this->session->userdata('accnt_id'));
+			$this->model->update_where_dual_column('exam', 'exam_status', '1', 'subj_id', $oldSub_id, 'accnt_id', $this->session->userdata('accnt_id'));
 
 			$data=array(
 				"subj_id"=>$newSub_id,
 				"accnt_id"=>$this->session->userdata('accnt_id'),
-				"exam_type"=>0,
+				"exam_type"=>1,
 				"exam_status"=>0,
 				"exam_trial"=>0,
 				"exam_set_trial"=>10
