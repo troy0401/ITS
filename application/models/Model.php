@@ -48,6 +48,11 @@ class Model extends CI_Model
 		return $query;
 	}
 
+	public function select_history_quest($id){
+		$query=$this->db->query("SELECT a.*, b.* FROM test_report a LEFT JOIN test_quest b ON a.testq_id=b.testq_id WHERE a.th_ID=$id");
+		return $query;
+	}
+
 	public function update_where_dual_column($table,$setCol,$setVal,$col1,$col_id1,$col2,$col_id2)
     {
         $qry = $this->db->query("UPDATE $table SET $setCol = $setVal WHERE $col1 = '$col_id1' AND $col2 = $col_id2");

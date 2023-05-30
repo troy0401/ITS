@@ -13,7 +13,7 @@
 						if($type==1){?>
                              <li><a href="<?php echo base_url('Main/Subject'); ?>"><i class="ti-archive"></i> <span>Subject</span></a></li>
                             <li>
-                             <li><a href="<?php echo base_url('Main/Records'); ?>"><i class="ti-archive"></i> <span>Student Records</span></a></li>
+                             <li><a href="<?php echo base_url('Main/Records'); ?>"><i class="ti-book"></i> <span>Student Records</span></a></li>
                             <li>
 						<?php }else{?>
 							<li><a href="<?php echo base_url('Main/Student');?>"><i class="ti-archive"></i> <span>Home</span></a></li>

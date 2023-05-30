@@ -250,6 +250,80 @@ class Main extends CI_Controller {
         }
 	}
 
+	public function students()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $stud = $this->model->select_table_with_id("account","accnt_type",2);
+
+          $data = array();
+
+          foreach($stud->result() as $s) {
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $s->accnt_name,
+					'<div class="btn-group" role="group">
+                                                <button onclick="dropButtonStud('.$s->accnt_id.');" id="btnGroupDrop" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                See Actions
+                                            </button>
+                                            <div class="dropdown-menu drop_button" aria-labelledby="btnGroupDrop1">
+                                            </div>
+                                        </div>'
+      );
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $stud->num_rows(),
+                 "recordsFiltered" => $stud->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
+     public function studentExams()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $record = $this->model->select_tri_column("test_history","accnt_id",$this->input->post('accnt_id'),"subj_id",$this->input->post('subj_id'),"th_Type",$this->input->post('th_Type'));
+
+          $data = array();
+
+          foreach($record->result() as $rec) {
+			  $test_history=$this->model->select_history_quest($rec->th_ID);
+			  foreach($test_history->result() as $th){
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $s->accnt_name,
+					'<div class="btn-group" role="group">
+                                                <button onclick="dropButtonStud('.$s->accnt_id.');" id="btnGroupDrop" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                See Actions
+                                            </button>
+                                            <div class="dropdown-menu drop_button" aria-labelledby="btnGroupDrop1">
+                                            </div>
+                                        </div>'
+
+							);
+			  }
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $stud->num_rows(),
+                 "recordsFiltered" => $stud->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
      public function subject_list()//admin view of modules
      {
         $draw = intval($this->input->post("draw"));

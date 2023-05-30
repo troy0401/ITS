@@ -48,6 +48,14 @@ var startTime, endTime, durationInSeconds, timer,countdown
              responsive: true
         } );
 
+		$('#students').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/students"); ?>",
+                    type : 'POST'
+             },
+             responsive: true
+        } );
+
 		$('#form_subj').submit(function(e){//Add Subject/Subtopic
 			e.preventDefault();
 			var data = [];
@@ -876,6 +884,39 @@ var startTime, endTime, durationInSeconds, timer,countdown
 	}
 	function addIndexToRequest(id){
 	$("#form_request").data("index",id);
+	}
+
+	function dropButtonStud(accnt_id){
+		$.post(base_url+'Main/subjects',
+			function(result){
+				$('.drop_button').empty();
+				for(var i=0; i<result.length; i++){
+				$('.drop_button').append('<a class="dropdown-item" data-toggle="modal" data-target="#viewRecord" onclick=viewRecordStud('+accnt_id+','+result[i]['subj_id']+')>'+result[i]['subj_name']+'</a>');
+				}
+		},'json');
+
+	}
+
+	function viewRecordStud(accnt_id,subj_id){
+		 $('#practiceStud').DataTable( {
+            "ajax": {
+				url : "<?php echo base_url("Main/getStudPracticeRequest"); ?>",
+				type : 'POST',
+				data: {th_Type:1,accnt_id:accnt_id,subj_id:subj_id}
+             },
+             responsive: true,
+			 "destroy": true
+        } );
+
+		  $('#summativeStud').DataTable( {
+            "ajax": {
+				url : "<?php echo base_url("Main/getStudPracticeRequest"); ?>",
+				type : 'POST',
+				data: {th_Type:2,accnt_id:accnt_id,subj_id}
+             },
+             responsive: true,
+			 "destroy": true
+        } );
 	}
 
 
