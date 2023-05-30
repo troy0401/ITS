@@ -581,6 +581,78 @@ class Main extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function checkFinals(){
+		$count_subject=$this->model->select_all("subject");
+		$countSubs=$count_subject->num_rows();
+
+		$count_finished=$this->model->select_tri_column("exam","accnt_id",$this->input->post('accnt_id'),"exam_type",2,"exam_status",1);
+		$fin=$count_finished->num_rows();
+
+		if($countSubs>$fin){
+			$data=true;
+
+		}else{
+
+			$checkFinalsHist=$this->model->select_table_with_id("finals","accnt_id",$this->input->post('accnt_id'));
+			$countFinals=$checkFinalsHist->num_rows();
+			if($countFinals>0){
+				$data=null;
+			}else{
+				$data=false;
+			}
+
+		}
+
+		echo json_encode($data);
+
+	}
+
+	public function getFinals(){
+		$finals_data = array("accnt_id"=>$this->input->post('accnt_id'));
+		$id=$this->model->insert_into("finals", $finals_data);
+		$data = array();
+		$subs=$this->model->select_all("subject");
+		foreach($subs->result() as $s){
+			$quests=$this->model->select_final_quest($s->subj_id,10);
+			array_push($data,$quests->result());
+		}
+		echo json_encode($data);
+	}
+
+	public function getFinalsID(){
+		$id=$this->model->select_table_with_id("finals","accnt_id",$this->input->post('accnt_id'));
+		echo json_encode($id->result());
+	}
+
+	public function submitFinalsAnswer(){
+		$exam_ans = array(
+			'fr_studAns'=>$this->input->post('ans'),
+			'fr_TimeQuest'=>$this->input->post('duration'),
+			'testq_id'=>$this->input->post('testq_id'),
+			'accnt_id'=>$this->input->post('accnt_id'),
+			'finals_ID'=>$this->input->post('final_id')
+		);
+		$id=$this->model->insert_into("finals_report", $exam_ans);
+		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
+		$result;
+		foreach($qry->result() as $q){
+			if($this->input->post('ans')==$q->testq_ans){
+				$result=1;
+			}else{
+				$result=2;
+			}
+		$data = array('fr_testStat'=>$result);
+		$this->model->update_where('finals_report', $data, 'fr_ID', $id);
+		}
+		echo json_encode(true);
+	}
+
+	public function getScoreFinals(){
+		$getScore=$this->model->select_dual_column("finals_report","finals_ID",$this->input->post('final_id'),"fr_testStat",1);
+
+		echo json_encode($getScore->num_rows());
+
+	}
 
 	public function Logout(){
     $data = array(

@@ -208,6 +208,44 @@ var startTime, endTime, durationInSeconds, timer,countdown
 
             },'json');
         });
+
+		 $('#submitFinalExamForm').submit(function(e){//submit summative exam answer
+            e.preventDefault();
+             $.post(base_url+'Main/submitFinalsAnswer',
+            {
+                ans:$($("#submitFinalExamForm input[type='radio']:checked")[0]).val(),
+                testq_id:$($("#submitFinalExamForm input[type='hidden']")[0]).val(),
+				duration:$($("#submitFinalExamForm input[type='hidden']")[1]).val(),
+				//score_id:$($("#submitExamForm input[type='hidden']")[3]).val(),
+				final_id:$($("#submitFinalExamForm input[type='hidden']")[2]).val(),
+				accnt_id:<?php echo $this->session->userdata('accnt_id');?>
+            }, function(result){
+						stopTimer();
+						startTimer();
+                        if(count_quest>total_quest){
+                            $('#question'+next_quest+'').remove();
+                            next_quest++;
+                            $('#question'+next_quest+'').css({"display":"block"});
+                            total_quest++;
+                            var total_display=total_quest+" of "+count_quest;
+                            $('#total_count').html(total_display);
+                            $("#submitFinalExamForm button[type=submit]").prop('disabled',true);
+                          }else{
+							stopCountdown();
+                            stopTimer();
+                            //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+							getScoreFinals($($("#submitFinalExamForm input[type='hidden']")[2]).val());//score_id and exam_id
+                            $('#question'+next_quest+'').remove();
+                            $('.finalbutton_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+                            $('.submit_quiz').click(function(){
+                               $('#finalExam_modal').modal('hide');
+                               $('.finalbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
+
+                            });
+                          }
+
+            },'json');
+        });
 	});
 
 
@@ -241,6 +279,10 @@ var startTime, endTime, durationInSeconds, timer,countdown
 
     function summ_change(val){
       $("#submitSummExamForm button[type=submit]").prop('disabled',false);
+    }
+
+    function finals_change(val){
+      $("#submitFinalExamForm button[type=submit]").prop('disabled',false);
     }
 
 	function countdownTimer(seconds) {
@@ -287,6 +329,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 	//console.log("Duration: " + formattedTime);
 	$($('#submitExamForm input')[2]).val(formattedTime);
 	$($('#submitSummExamForm input')[2]).val(formattedTime);
+	$($('#submitFinalExamForm input')[1]).val(formattedTime);
 	}
 
 	function padZero(number) {
@@ -296,6 +339,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 	clearInterval(timer);
 	$($('#submitExamForm input')[2]).val('');
 	$($('#submitSummExamForm input')[2]).val('');
+	$($('#submitFinalsExamForm input')[1]).val('');
 	}
 
 
@@ -425,6 +469,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						$('#subtopics').append('<button id="subj_id'+result[i]['subj_id']+'" disabled type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
 						}
 					}
+					renderFinals(<?php echo $this->session->userdata('accnt_id'); ?>);
 			},'json');
 	}
 
@@ -711,7 +756,6 @@ var startTime, endTime, durationInSeconds, timer,countdown
           }
           count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
 
-
       },'json');
     }
 
@@ -728,7 +772,79 @@ var startTime, endTime, durationInSeconds, timer,countdown
 		},'json');
 	}
 
-	function renderFinals(id)
+	function renderFinals(accnt_id){
+		$.post(base_url+'Main/checkFinals',{accnt_id:accnt_id},
+			function(result){
+				if(result==false){
+				$('#subtopics').append('<button id="finals_subject" onclick="takeFinals('+accnt_id+')" type="button" class="list-group-item list-group-item-action">Final Summative Exam</button>');
+				}else if(result==null){
+				$('#subtopics').append('<button disabled type="button" class="list-group-item list-group-item-action">Final Summative Exam</button>');
+				}
+
+		},'json');
+	}
+
+	function takeFinals(accnt_id){
+		$('#finalExam_modal').modal('show');
+		$.post(base_url+'Main/getFinals',{accnt_id:accnt_id},
+					function(result){
+					var finals_id=getFinalsID(accnt_id);
+					$('.final-list').empty();
+					countdownTimer(3600);
+					startTimer();
+					for(var i=0; i<result.length; i++){
+							for(var j=0; j<result[i].length; j++){
+								$('.final-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
+								'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
+								'<h4>'+result[i][j]['subj_name']+'</h5><span id="total_count">(5 of 20)</span>'+
+								'<div class="d-flex flex-row align-items-center question-title"><h3 class="text-danger">Q.</h3>'+
+								'<input type="hidden" value="'+result[i][j]['testq_id']+'">'+
+								'<input type="hidden" value="">'+
+								'<input type="hidden" value="'+finals_id[0]['finals_ID']+'">'+
+								'<h5 class="mt-1 ml-2">'+result[i][j]['testq_0']+'</h5></div>'+
+								'<div class="ans ml-2"><label class="radio"> <input onchange="finals_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i][j]['testq_1']+'"> <span>'+result[i][j]['testq_1']+'</span></label></div>'+
+								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_2']+'"> <span>'+result[i][j]['testq_2']+'</span></label></div>'+
+								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_3']+'"> <span>'+result[i][j]['testq_3']+'</span></label></div>'+
+								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_4']+'"> <span>'+result[i][j]['testq_4']+'</span></label></div>');
+                      count_quest++;
+							}
+
+                         }
+                         var total_display=total_quest+" of "+count_quest;
+                         $('#total_count').html(total_display);
+			},'json');
+	}
+
+	function getFinalsID(accnt_id){// get Last Insert ID for finals
+		var result = $.ajax({
+		url:base_url+"Main/getFinalsID",
+		type:"POST",
+		data:{accnt_id:accnt_id},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+
+	}
+
+	function getScoreFinals(final_id){
+      $.post(base_url+'Main/getScoreFinals',{final_id:final_id}, function(result){
+          var score=result;
+          var final= score/count_quest*100;
+          if(final>=70){
+            $('.final-list').html('<h2 class="text-center">Your score:'+result+'/'+count_quest+'</h2>'+
+              '<h3 class="text-success text-center">You Passed!</h3>');
+				//updatePracticeButtons(exam_id,1);//1=passed; 0=failed
+          }else{
+            $('.final-list').html('<h2 class="text-center">'+result+'/'+count_quest+'</h2>'+
+              '<h3 class="text-danger text-center">You Failed!</h3>');
+				//updatePracticeButtons(exam_id,0);
+          }
+          count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
+		  $("#finals_subject").prop('disabled',true);
+
+      },'json');
+    }
 
 
 

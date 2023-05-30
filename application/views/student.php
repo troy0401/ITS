@@ -7,7 +7,7 @@
                         <div class="breadcrumbs-area clearfix">
                             <h4 class="page-title pull-left">Subject</h4>
                             <ul class="breadcrumbs pull-left">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="<?php  echo base_url('Main/Student') ?>">Home</a></li>
                                 <li><span>Subject</span></li>
                             </ul>
                         </div>
@@ -138,6 +138,43 @@
                                                     </div>
                                             </div>
                                             <div class="modal-footer summbutton_handler">
+                                                <button type="submit" disabled class="btn btn-primary">Submit</button>
+                                            </div>
+                                             </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div id="finalExam_modal" class="modal fade bd-example-modal-lg"  data-backdrop="static" data-keyboard="false">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Practice Exam</h5>
+                                            </div>
+										<form id="submitFinalExamForm" class="needs-validation" autocomplete="off">
+                                            <div class="modal-body final-list">
+                                                    <div class="d-flex flex-row align-items-center question-title">
+                                                        <h3 class="text-danger">Q.</h3>
+                                                        <h5 class="mt-1 ml-2">Which of the following country has largest population?</h5>
+                                                    </div>
+                                                    <div class="ans ml-2">
+                                                        <label class="radio"> <input type="radio" name="answer" value="brazil"> <span>Brazil</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="ans ml-2">
+                                                        <label class="radio"> <input type="radio" name="answer" value="Germany"> <span>Germany</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="ans ml-2">
+                                                        <label class="radio"> <input type="radio" name="answer" value="Indonesia"> <span>Indonesia</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="ans ml-2">
+                                                        <label class="radio"> <input type="radio" name="answer" value="Russia"> <span>Russia</span>
+                                                        </label>
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer finalbutton_handler">
                                                 <button type="submit" disabled class="btn btn-primary">Submit</button>
                                             </div>
                                              </form>

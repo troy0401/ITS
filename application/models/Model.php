@@ -24,6 +24,18 @@ class Model extends CI_Model
         return $query;
     }
 
+      public function select_final_quest($id,$limit)
+    {
+        $query = $this->db->query("SELECT a.*, b.subj_name FROM test_quest a LEFT JOIN subject b ON a.subj_id=b.subj_id WHERE a.subj_id='$id' ORDER BY RAND() LIMIT $limit");
+        return $query;
+    }
+
+    public function select_table_with_id_limit($table,$column,$id,$limit)
+    {
+        $query = $this->db->query("SELECT * FROM $table WHERE $column='$id'  ORDER BY RAND() LIMIT $limit");
+        return $query;
+    }
+
     public function select_table_with_id2($table,$column,$id)
     {
         $query = $this->db->query("SELECT * FROM $table WHERE $column='$id'");
