@@ -122,6 +122,35 @@
                                     </div>
                                 </div>
 
+                                 <div id="viewPracticeRequest" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Grant Request</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                           <div class="data-tables">
+											<table id="studPracticeRequestTable" class="text-center" width="100%">
+												<thead class="bg-light text-capitalize">
+													<tr>
+														<th>Student Name</th>
+														<th>Request Message</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div id="ViewSubj" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog modal-lg">
@@ -303,6 +332,28 @@
                                                     <input type="number" class="form-control" id="validationCustom03" placeholder="Tutorial Links" required>
                                                 </div>
                                             </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                             </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="studRequest_modal" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Attempt Request</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+										<form id="form_request" class="needs-validation" autocomplete="off">
+                                            <div class="modal-body">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom02">Number of Additional Attempt/s</label>
+                                                    <input type="number" class="form-control" id="validationCustom02" placeholder="Attempts" required>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

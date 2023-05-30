@@ -26,6 +26,20 @@ class Main extends CI_Controller {
 
     }
 
+    public function Records(){
+		$acc_type = $this->session->userdata('accnt_type');
+		 if ($acc_type == 1) {
+        $this->load->view('includes/header');
+        $this->load->view('includes/sidebar');
+        $this->load->view('includes/topbar');
+		$this->load->view('records');
+		$this->load->view('includes/footer');
+		 }else{
+			 redirect(base_url('Main/Login'));
+		}
+
+    }
+
     public function Index(){
 		if (!$this->session->has_userdata('accnt_type')){
 				redirect('Main/Login');
@@ -259,7 +273,7 @@ class Main extends CI_Controller {
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#ViewSubj" onclick=ViewSubj('.$r->subj_id.')>View Subject</a>
-                                                <a class="dropdown-item">View Students</a>
+                                                <a class="dropdown-item" onclick="viewStudentRequests('.$r->subj_id.')" data-toggle="modal" data-target="#viewPracticeRequest">View requesting attempts</a>
                                                 <a class="dropdown-item"  data-toggle="modal" data-target="#editSubj" onclick=editSubj('.$r->subj_id.')>Edit</a>
                                             </div>
                                         </div>'
@@ -333,6 +347,36 @@ class Main extends CI_Controller {
                "draw" => $draw,
                  "recordsTotal" => $exam_set->num_rows(),
                  "recordsFiltered" => $exam_set->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
+     public function getStudPracticeRequest()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $req = $this->model->select_request_table($this->input->post('id'));
+
+          $data = array();
+
+          foreach($req->result() as $r) {
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $r->accnt_name,
+                    $r->req_message,
+					'<button type="button" data-toggle="modal" onclick="addIndexToRequest('.$r->exam_id.')" data-target="#studRequest_modal" class="btn btn-rounded btn-info mb-3"><i class="fa fa-edit"></i></button>'
+      );
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $req->num_rows(),
+                 "recordsFiltered" => $req->num_rows(),
                  "data" => $data
             );
           echo json_encode($output);
@@ -652,6 +696,21 @@ class Main extends CI_Controller {
 
 		echo json_encode($getScore->num_rows());
 
+	}
+
+	public function updateRequest(){
+		$post = $this->input->post('data');
+		$prev_attempt=0;
+		$get=$this->model->select_table_with_id("exam","exam_id",$this->input->post('id'));
+		foreach($get->result() as $g){
+			$prev_attempt=$g->exam_set_trial;
+		}
+		$add=$post[0] + $prev_attempt;
+
+		$data = array('exam_set_trial'=>$add);
+		$this->model->update_where('exam', $data, 'exam_id', $this->input->post('id'));
+		$this->model->delete_where("requests","exam_id",$this->input->post('id'));
+		echo json_encode(true);
 	}
 
 	public function Logout(){

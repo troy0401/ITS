@@ -64,6 +64,23 @@ var startTime, endTime, durationInSeconds, timer,countdown
 			},'json');
 		});
 
+		$('#form_request').submit(function(e){//Add new Attempts for students
+			e.preventDefault();
+			var data = [];
+			var id=$("#form_request").data("index");
+			$("#form_request input").each(function(){
+				data.push(this.value);
+			});
+
+			$.post(base_url+'Main/updateRequest',
+				{data:data,id:id},function(result){
+					$('#form_request')[0].reset();
+					$('#studRequest_modal').modal('hide');
+					$('#studPracticeRequestTable').DataTable().ajax.reload();
+					alert("Insert Success");
+			},'json');
+		});
+
 		$('#form_editSubj').submit(function(e){//Edit Subject/Subtopic
 			e.preventDefault();
 			var data = [];
@@ -846,6 +863,20 @@ var startTime, endTime, durationInSeconds, timer,countdown
       },'json');
     }
 
+    function viewStudentRequests(id){
+			 $('#studPracticeRequestTable').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/getStudPracticeRequest"); ?>",
+                    type : 'POST',
+					data: {id:id}
+             },
+             responsive: true,
+			 "destroy": true
+        } );
+	}
+	function addIndexToRequest(id){
+	$("#form_request").data("index",id);
+	}
 
 
 

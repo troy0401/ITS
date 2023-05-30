@@ -42,6 +42,12 @@ class Model extends CI_Model
         return $query->result();
     }
 
+    public function select_request_table($id)
+	{
+		$query=$this->db->query("SELECT a.*, b.*, c.*, d.* FROM requests a LEFT JOIN exam b on a.exam_id=b.exam_id LEFT JOIN subject c ON b.subj_id=c.subj_id LEFT JOIN account d ON b.accnt_id=d.accnt_id WHERE b.subj_id=$id" );
+		return $query;
+	}
+
 	public function update_where_dual_column($table,$setCol,$setVal,$col1,$col_id1,$col2,$col_id2)
     {
         $qry = $this->db->query("UPDATE $table SET $setCol = $setVal WHERE $col1 = '$col_id1' AND $col2 = $col_id2");
