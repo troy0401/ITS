@@ -418,7 +418,12 @@ var startTime, endTime, durationInSeconds, timer,countdown
 			$.post(base_url+'Main/subjects',
 					function(result){
 					for(var i=1; i<result.length; i++){
-						$('#subtopics').append('<button type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
+						var checks=checkActiveSubj(result[i]['subj_id'],<?php echo $this->session->userdata('accnt_id'); ?>);
+						if(checks>0){
+						$('#subtopics').append('<button id="subj_id'+result[i]['subj_id']+'" type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
+						}else{
+						$('#subtopics').append('<button id="subj_id'+result[i]['subj_id']+'" disabled type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
+						}
 					}
 			},'json');
 	}
@@ -443,7 +448,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
 						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>');
 
-						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
+						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage1(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
 
 
 						//button=learnExamData.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
@@ -503,6 +508,12 @@ var startTime, endTime, durationInSeconds, timer,countdown
 		ViewSubjStud(subj_id,name,page)
 	}
 
+	function redirectPage1(page,id,subj_id,name){
+		window.open(page, '_blank');
+		updateSummativeExamButton(id);
+		ViewSubjStudCont(subj_id,name,page)
+	}
+
 	function checkSubjSession(subj_id,accnt_id,type){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
 			var result = $.ajax({
 		url:base_url+"Main/examStatus",
@@ -555,6 +566,18 @@ var startTime, endTime, durationInSeconds, timer,countdown
 		async:false
 	}).responseJSON;
 	return result;
+	}
+
+	function checkActiveSubj(subj_id,accnt_id){// get active subjects per student
+		var result = $.ajax({
+		url:base_url+"Main/activeSubj",
+		type:"POST",
+		data:{subj_id:subj_id,accnt_id:accnt_id},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+
 	}
 
 	function showRequestModal(id){
@@ -696,8 +719,16 @@ var startTime, endTime, durationInSeconds, timer,countdown
 		$.post(base_url+'Main/addSubTopicToStud',{exam_id:exam_id},
 					function(result){
 					$('.summative_button').empty().append('<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>');
+					if(result==null){
+						renderFinals(<?php echo $this->session->userdata('accnt_id'); ?>);
+					}else{
+						$("#subj_id"+result['subj_id']+"").prop('disabled',false);
+					}
+
 		},'json');
 	}
+
+	function renderFinals(id)
 
 
 

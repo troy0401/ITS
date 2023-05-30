@@ -375,7 +375,7 @@ class Main extends CI_Controller {
 	}
 
 	public function lesson(){
-		$sub=$this->model->select_all("lesson_status");
+		$sub=$this->model->select_dual_column("lesson_status","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'));
 		echo json_encode($sub->result());
 	}
 
@@ -387,6 +387,11 @@ class Main extends CI_Controller {
 	public function examSettings(){
 		$exam_set=$this->model->select_dual_column("exam_settings","subj_id",$this->input->post('subj_id'),"exam_set_Type",$this->input->post('exam_setType'));
 		echo json_encode($exam_set->result());
+	}
+
+	public function activeSubj(){
+		$subj=$this->model->select_dual_column("exam","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'));
+		echo json_encode($subj->num_rows());
 	}
 
 	public function CheckLsExamTbl(){
@@ -538,23 +543,21 @@ class Main extends CI_Controller {
 
 		$check_sub=$this->model->select_table_with_id("exam","exam_type","2");
 		$count_finished=$check_sub->num_rows();
-
-		if($count_sub > $count_finished){
-			$newSub_id;
+		$newSub_id;
 			$oldSub_id;
 			$finished_sub=$this->model->select_table_with_id("exam","exam_id",$this->input->post('exam_id'));
 			foreach($finished_sub->result() as $fs){
 				$newSub_id=$fs->subj_id + 1;
 				$oldSub_id=$fs->subj_id;
 			}
-
+		if($count_sub > $count_finished){
 			$this->model->update_where_dual_column('lesson_status', 'ls_status', '1', 'subj_id', $oldSub_id, 'accnt_id', $this->session->userdata('accnt_id'));
 			$this->model->update_where_dual_column('exam', 'exam_status', '1', 'subj_id', $oldSub_id, 'accnt_id', $this->session->userdata('accnt_id'));
 
 			$data=array(
 				"subj_id"=>$newSub_id,
 				"accnt_id"=>$this->session->userdata('accnt_id'),
-				"exam_type"=>1,
+				"exam_type"=>0,
 				"exam_status"=>0,
 				"exam_trial"=>0,
 				"exam_set_trial"=>10
@@ -568,9 +571,14 @@ class Main extends CI_Controller {
 			$this->model->insert_into("exam", $data);
 			$this->model->insert_into("lesson_status", $lesson_data);
 
+		}else{
+			$this->model->update_where_dual_column('lesson_status', 'ls_status', '1', 'subj_id', $oldSub_id, 'accnt_id', $this->session->userdata('accnt_id'));
+			$this->model->update_where_dual_column('exam', 'exam_status', '1', 'subj_id', $oldSub_id, 'accnt_id', $this->session->userdata('accnt_id'));
+			$data=null;
+
 		}
 
-		echo json_encode(true);
+		echo json_encode($data);
 	}
 
 
