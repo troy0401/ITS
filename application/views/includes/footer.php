@@ -458,6 +458,15 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						}
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
 						//alert(sum);
+						if(summativeExamData.length>0){
+							if(result[0]['ls_status']==0){
+								summ_button='<button type="button" onclick=takeSummExam('+summativeExamData[0]['exam_id']+','+subj_id+','+summexam_setData[0]['exam_set_Items']+','+summexam_setData[0]['exam_set_Time']+','+summexam_setData[0]['exam_set_Type']+') class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>';
+							}else{
+								summ_button='<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i> [Finished]</button>'
+							}
+						}else{
+							summ_button='<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i> [Not Yet Finished]</button>'
+						}
 
 						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
 						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
@@ -468,8 +477,8 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						'<div class="card-body practice_buttons">'+button+
 						'</div></div></div><div class="card">'+
 						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
-						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body summative_button">'+
-						(summativeExamData.length>0 && result[0]['ls_status']==0 ? '<button type="button" onclick=takeSummExam('+summativeExamData[0]['exam_id']+','+subj_id+','+summexam_setData[0]['exam_set_Items']+','+summexam_setData[0]['exam_set_Time']+','+summexam_setData[0]['exam_set_Type']+') class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>')+
+						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body summative_button">'
+						+summ_button+
 						'</div></div></div></div>');
 
 
@@ -492,7 +501,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 
 		function ViewSubjStudCont(id,name,link){
 		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive,request_button;
-		var redirect_button;
+		var redirect_button,summ_button;
 		$('.subject_title').html(name);
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
@@ -545,6 +554,15 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						}
 						//var sum = Number(data[0]['exam_set_trial']) > Number(data[0]['exam_trial']);
 						//alert(sum);
+						if(summativeExamData.length>0){
+							if(result[0]['ls_status']==0){
+								summ_button='<button type="button" onclick=takeSummExam('+summativeExamData[0]['exam_id']+','+subj_id+','+summexam_setData[0]['exam_set_Items']+','+summexam_setData[0]['exam_set_Time']+','+summexam_setData[0]['exam_set_Type']+') class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>';
+							}else{
+								summ_button='<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i> [Finished]</button>'
+							}
+						}else{
+							summ_button='<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i> [Not Yet Finished]</button>'
+						}
 
 						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
 						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
@@ -555,8 +573,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						'<div class="card-body practice_buttons">'+button+
 						'</div></div></div><div class="card">'+
 						'<div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion23">Summative Exam</a></div>'+
-						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body summative_button">'+
-						(summativeExamData.length>0 && result[0]['ls_status']==0 ? '<button type="button" onclick=takeSummExam('+summativeExamData[0]['exam_id']+','+subj_id+','+summexam_setData[0]['exam_set_Items']+','+summexam_setData[0]['exam_set_Time']+','+summexam_setData[0]['exam_set_Type']+') class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>' : '<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>')+
+						'<div id="accordion23" class="collapse" data-parent="#accordion2"><div class="card-body summative_button">'+summ_button+
 						'</div></div></div></div>');
 
 
@@ -779,7 +796,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
     function addNewLesson(exam_id){
 		$.post(base_url+'Main/addSubTopicToStud',{exam_id:exam_id},
 					function(result){
-					$('.summative_button').empty().append('<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>');
+					$('.summative_button').empty().append('<button disabled type="button" class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i> [Completed]</button>');
 					if(result==null){
 						renderFinals(<?php echo $this->session->userdata('accnt_id'); ?>);
 					}else{
