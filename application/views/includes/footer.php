@@ -667,7 +667,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 					for(var i=0; i<result.length; i++){
 						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
-                        '<h4>'+result[i]['subj_name']+'</h5><span id="total_count">(5 of 20)</span>'+
+                        '<h4>'+result[i]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
                         '<div class="d-flex flex-row align-items-center question-title"><h3><b>Q.</b></h3>'+
                         '<input type="hidden" value="'+result[i]['testq_id']+'">'+
                         '<input type="hidden" value="'+type+'">'+
@@ -677,10 +677,10 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						'<input type="hidden" value="'+id['score_id']+'">'+
 						'<input type="hidden" value="'+exam_id+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <h5>'+result[i]['testq_1']+'</h5></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <h5>'+result[i]['testq_2']+'</h5></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <h5>'+result[i]['testq_3']+'</h5></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <h5>'+result[i]['testq_4']+'</h5></label></div>');
+                        '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>');
                       count_quest++;
                          }
                          var total_display=total_quest+" of "+count_quest;
@@ -735,7 +735,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 					for(var i=0; i<result.length; i++){
 						$('.summ-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
-                        '<h4>'+result[i]['subj_name']+'</h5><span id="total_count">(5 of 20)</span>'+
+                        '<h4>'+result[i]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
                         '<div class="d-flex flex-row align-items-center question-title"><h3><b>Q.</b></h3>'+
                         '<input type="hidden" value="'+result[i]['testq_id']+'">'+
                         '<input type="hidden" value="'+exam_type+'">'+
@@ -745,10 +745,10 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						'<input type="hidden" value="'+id['score_id']+'">'+
 						'<input type="hidden" value="'+exam_id+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input onchange="summ_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <h5>'+result[i]['testq_1']+'</h5></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_2']+'"> <h5>'+result[i]['testq_2']+'</h5></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_3']+'"> <h5>'+result[i]['testq_3']+'</h5></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_4']+'"> <h5>'+result[i]['testq_4']+'</h5></label></div>');
+                        '<div class="ans ml-2"><label class="radio"> <input onchange="summ_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>');
                       count_quest++;
                          }
                          var total_display=total_quest+" of "+count_quest;
@@ -813,16 +813,16 @@ var startTime, endTime, durationInSeconds, timer,countdown
 							for(var j=0; j<result[i].length; j++){
 								$('.final-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 								'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
-								'<h4>'+result[i][j]['subj_name']+'</h5><span id="total_count">(5 of 20)</span>'+
+								'<h4>'+result[i][j]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
 								'<div class="d-flex flex-row align-items-center question-title"><h3><b>Q.</b></h3>'+
 								'<input type="hidden" value="'+result[i][j]['testq_id']+'">'+
 								'<input type="hidden" value="">'+
 								'<input type="hidden" value="'+finals_id[0]['finals_ID']+'">'+
 								'<h5 class="mt-1 ml-2">'+result[i][j]['testq_0']+'</h5></div>'+
-								'<div class="ans ml-2"><label class="radio"> <input onchange="finals_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i][j]['testq_1']+'"> <h5>'+result[i][j]['testq_1']+'</h5></label></div>'+
-								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_2']+'"> <h5>'+result[i][j]['testq_2']+'</h5></label></div>'+
-								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_3']+'"> <h5>'+result[i][j]['testq_3']+'</h5></label></div>'+
-								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_4']+'"> <h5>'+result[i][j]['testq_4']+'</h5></label></div>');
+								'<div class="ans ml-2"><label class="radio"> <input onchange="finals_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i][j]['testq_1']+'"> <span><b>'+result[i][j]['testq_1']+'</b></span></label></div>'+
+								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_2']+'"> <span><b>'+result[i][j]['testq_2']+'</b></span></label></div>'+
+								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_3']+'"> <span><b>'+result[i][j]['testq_3']+'</b></span></label></div>'+
+								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_4']+'"> <span><b>'+result[i][j]['testq_4']+'</b></span></label></div>');
                       count_quest++;
 							}
 
