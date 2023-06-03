@@ -437,28 +437,20 @@ var startTime, endTime, durationInSeconds, timer,countdown
 						//button=learnExamData.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
 						if(learnExamData.length>0){
 							if(Number(learnExamData[0]['exam_type'])==1){
-								if(Number(learnExamData[0]['exam_status'])==0){
 									if(Number(learnExamData[0]['exam_set_trial'])> Number(learnExamData[0]['exam_trial'])){
 										button=active;
 									}else{
 										button=request_button;
 									}
-								}else{
-									button=inactive;
-								}
 							}else{
 								button=inactive;
 							}
 						}else{
 							if(Number(practiceExamData[0]['exam_type'])==1){
-								if(Number(practiceExamData[0]['exam_status'])==0){
-									if(Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial'])){
-										button=active;
-									}else{
-										button=request_button;
-									}
+								if(Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial'])){
+									button=active;
 								}else{
-									button=inactive;
+									button=request_button;
 								}
 							}else{
 								button=inactive;
@@ -719,7 +711,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 			$.post(base_url+'Main/updatePracticeStatus',{exam_id:exam_id,exam_status:status}, function(result){
 					var summativeExamData = checkSubjSession(result[0]['subj_id'],<?php echo $this->session->userdata('accnt_id') ?>,2);
 					var exam_setData = getExamSettings(result[0]['subj_id'],2);
-					$('.practice_buttons').empty().append('<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+result[0]['exam_trial']+'/'+result[0]['exam_set_trial']+']</span></button>');
+					$('.practice_buttons').empty().append('<button type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+'<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+result[0]['exam_trial']+'/'+result[0]['exam_set_trial']+']</span></button>');
 					$('#accordion23').empty().append('<div class="card-body summative_button" >'+
 					'<button type="button" onclick=takeSummExam('+result[0]['exam_summ_id']+','+summativeExamData[0]['subj_id']+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+') class="btn btn-info btn-lg btn-block">Take Summative Exam <i class="fa fa-edit"></i></button>'+
 					'</div>');
