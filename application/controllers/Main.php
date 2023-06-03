@@ -659,7 +659,7 @@ class Main extends CI_Controller {
 		$sub=$this->model->select_all("subject");
 		$count_sub=$sub->num_rows();
 
-		$check_sub=$this->model->select_table_with_id("exam","exam_type","2");
+		$check_sub=$this->model->select_dual_column("exam","exam_type","2","accnt_id",$this->session->userdata('accnt_id'));
 		$count_finished=$check_sub->num_rows();
 		$newSub_id;
 			$oldSub_id;

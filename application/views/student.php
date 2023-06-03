@@ -8,7 +8,7 @@
                             <h4 class="page-title pull-left">Subject</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="<?php  echo base_url('Main/Student') ?>">Home</a></li>
-                                <li><span>Subject</span></li>
+                                <li><span>Records</span></li>
                             </ul>
                         </div>
                     </div>

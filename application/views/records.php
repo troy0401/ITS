@@ -35,7 +35,6 @@
                      <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title"><button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" data-target="#subj">Add Subject <i class="fa fa-plus"></i> </button></h4>
                                 <div class="data-tables">
                                     <table id="students" class="text-center">
                                         <thead class="bg-light text-capitalize">
