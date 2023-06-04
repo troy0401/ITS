@@ -106,8 +106,10 @@
 					window.location =base_url+'Main/Student';
 					}else if(data=='1'){
 					window.location=base_url+'Main/Subject';
+					}else if(data=='3'){
+						window.location=base_url+'Main/Admin';
 					}else{
-					alert("Invalid Username or Password");
+						alert("Invalid Username or Password");
 					}
 				},'json');
 			});

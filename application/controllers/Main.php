@@ -40,6 +40,20 @@ class Main extends CI_Controller {
 
     }
 
+      public function Admin(){
+		$acc_type = $this->session->userdata('accnt_type');
+		 if ($acc_type == 3) {
+        $this->load->view('includes/header');
+        $this->load->view('includes/sidebar');
+        $this->load->view('includes/topbar');
+		$this->load->view('admin');
+		$this->load->view('includes/footer');
+		 }else{
+			 redirect(base_url('Main/Login'));
+		}
+
+    }
+
     public function Index(){
 		if (!$this->session->has_userdata('accnt_type')){
 				redirect('Main/Login');
@@ -47,8 +61,10 @@ class Main extends CI_Controller {
 			$acc_type = $this->session->userdata('accnt_type');
 			if ($acc_type == 2) {
 				redirect(base_url('Main/Student'));
-			}else{
+			}elseif ($acc_type == 1){
 				redirect(base_url('Main/Subject'));
+			}else{
+				redirect(base_url('Main/Admin'));
 			}
 		}
 	}
