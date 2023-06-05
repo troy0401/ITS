@@ -1029,7 +1029,7 @@ class Main extends CI_Controller {
                $data[] = array(
                     $q->testq_id,
 					$q->testq_0,
-					$q->testr_StudAns,
+					'<p class="text-warning">'$q->testr_StudAns'</p>',
 					($q->testr_Status==2 ? $q->testq_hint : "Correct Answer"),
 					$q->testr_TimeQuest
       );
