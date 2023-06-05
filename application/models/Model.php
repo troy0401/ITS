@@ -24,6 +24,23 @@ class Model extends CI_Model
         return $query;
     }
 
+       public function select_score_passed($id,$score,$type)
+    {
+        $query = $this->db->query("SELECT * FROM scores WHERE score >=$score AND subj_id=$id AND score_type=$type;");
+        return $query;
+    }
+
+    public function getSummativeStat($subj,$type){
+		$query = $this->db->query("SELECT a.*, b.* FROM `test_history` a left join test_report b on a.th_ID=b.th_ID WHERE a.subj_id=$subj and a.th_Type=$type");
+		return $query;
+	}
+
+       public function select_score_failed($id,$score,$type)
+    {
+        $query = $this->db->query("SELECT * FROM scores WHERE score <=$score AND subj_id=$id AND score_type=$type;");
+        return $query;
+    }
+
       public function select_final_quest($id,$limit)
     {
         $query = $this->db->query("SELECT a.*, b.subj_name FROM test_quest a LEFT JOIN subject b ON a.subj_id=b.subj_id WHERE a.subj_id='$id' ORDER BY RAND() LIMIT $limit");
@@ -35,6 +52,11 @@ class Model extends CI_Model
         $query = $this->db->query("SELECT * FROM $table WHERE $column='$id'  ORDER BY RAND() LIMIT $limit");
         return $query;
     }
+
+    public function select_table_questions($th_id,$type){
+		$query= $this->db->query("SELECT a.*, b.* FROM test_report a LEFT JOIN test_quest b ON a.testq_id=b.testq_id WHERE a.th_ID=$th_id AND testr_Type=$type");
+		return $query;
+	}
 
     public function select_table_with_id2($table,$column,$id)
     {

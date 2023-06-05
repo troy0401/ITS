@@ -17,11 +17,10 @@
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                            <img class="avatar user-thumb" src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/images/author/avatar.png')?>" alt="avatar">
+                            <img class="avatar user-thumb" src="<?php echo base_url('uploads/'.$this->session->userdata('accnt_img'))?>" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('accnt_name'); ?><i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Message</a>
-                                <a class="dropdown-item" href="#">Settings</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#profile">Change Profile</a>
                                 <a class="dropdown-item" href="<?php echo base_url('Main/Logout');?>">Log Out</a>
                             </div>
                         </div>
@@ -337,6 +336,31 @@
                                     </div>
                                 </div>
 
+								 <div id="profile" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Profile Picture</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+										<form id="profile_form" class="needs-validation" autocomplete="off">
+                                            <div class="modal-body">
+                                            <div class="form-row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom01">Profile Picture</label>
+                                                    <input type="file" name="userfile" accept="image/*" class="form-control"  required>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                             </form>
+                                        </div>
+                                    </div>
+                                    </div>
+
                                 <div id="studRequest_modal" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -358,6 +382,106 @@
                                         </div>
                                     </div>
                                 </div>
+								</div>
+
+								<div id="viewRecordStud" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Subject Details</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+												<ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#test1" role="tab" aria-controls="home" aria-selected="true">Practice Exam</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#test2" role="tab" aria-controls="profile" aria-selected="false">Summative Exam</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="test1" role="tabpanel" aria-labelledby="home-tab">
+									<div class="data-tables">
+											<table id="studRecordPractice" class="text-center" width="100%">
+												<thead class="bg-light text-capitalize">
+													<tr>
+														<th>No. of Attempts</th>
+														<th>Exam Type</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+                                    </div>
+                                    <div class="tab-pane fade" id="test2" role="tabpanel" aria-labelledby="profile-tab">
+                                   <div class="data-tables">
+											<table id="studRecordSummative" class="text-center" width="100%">
+												<thead class="bg-light text-capitalize">
+													<tr>
+														<th>No. of Attempts</th>
+														<th>Exam Type</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+
+									</div>
+                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="viewRecordHistSummative" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Subject Details</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+												<ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#test1" role="tab" aria-controls="home" aria-selected="true">Summative Exam</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="test1" role="tabpanel" aria-labelledby="home-tab">
+									<div class="data-tables">
+											<table id="studRecordHistSummative" class="text-center" width="100%">
+												<thead class="bg-light text-capitalize">
+													<tr>
+														<th>Question No.</th>
+														<th>Test Question</th>
+														<th>Student's Answer</th>
+														<th>Hint</th>
+														<th>Time per question</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+                                    </div>
+                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <!--Ending for Modals -->
                     </div>

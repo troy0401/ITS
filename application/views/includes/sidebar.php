@@ -17,6 +17,7 @@
                             <li>
 						<?php }elseif($type==2){?>
 							<li><a href="<?php echo base_url('Main/Student');?>"><i class="ti-archive"></i> <span>Home</span></a></li>
+							<li><a href="<?php echo base_url('Main/StudRecord');?>"><i class="ti-archive"></i> <span>My Record</span></a></li>
 							<?php }else{ ?>
 
 								<li><a href="<?php echo base_url('Main/Admin');?>"><i class="ti-archive"></i> <span>Home</span></a></li>

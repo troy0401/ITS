@@ -26,15 +26,74 @@
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+     <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
     <!-- others plugins -->
     <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/plugins.js')?>"></script>
     <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/scripts.js')?>"></script>
+    <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/pie-chart.js')?>"></script>
     <script>
     var base_url='<?php echo base_url(); ?>'
     var subject_id;
 	var count_quest=0,total_quest=1;next_quest=0
-var startTime, endTime, durationInSeconds, timer,countdown
+var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
     $(document).ready(function(){
+		var ctx = $("#subjChart");
+		chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'pie',
+        // The data for our dataset
+        data: {
+            labels: ["Passed", "Failed"],
+            datasets: [{
+                backgroundColor: [
+                    "green",
+					"red"
+                ],
+                borderColor: '#fff',
+                data: [10, 10],
+            }]
+        },
+        // Configuration options go here
+        options: {
+            legend: {
+                display: true
+            },
+            animation: {
+                easing: "easeInOutBack"
+            }
+        }
+    });
+
+		var ctx = $("#subjChart1");
+		chart1 = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'pie',
+        // The data for our dataset
+        data: {
+            labels: ["Passed", "Failed"],
+            datasets: [{
+                backgroundColor: [
+                    "green",
+					"red"
+                ],
+                borderColor: '#fff',
+                data: [10, 10],
+            }]
+        },
+        // Configuration options go here
+        options: {
+            legend: {
+                display: true
+            },
+            animation: {
+                easing: "easeInOutBack"
+            }
+        }
+    });
+
 		Load_sub(<?php echo $this->session->userdata('accnt_id');?>);
 		//startTimer();
 		//countdownTimer(600);
@@ -960,7 +1019,7 @@ var startTime, endTime, durationInSeconds, timer,countdown
 			function(result){
 				$('.drop_button').empty();
 				for(var i=0; i<result.length; i++){
-				$('.drop_button').append('<a class="dropdown-item" data-toggle="modal" data-target="#viewRecord" onclick=viewRecordStud('+accnt_id+','+result[i]['subj_id']+')>'+result[i]['subj_name']+'</a>');
+				$('.drop_button').append('<a class="dropdown-item" data-toggle="modal" data-target="#viewRecordStud" onclick=viewRecordStudHistory('+accnt_id+','+result[i]['subj_id']+',1)>'+result[i]['subj_name']+'</a>');
 				}
 		},'json');
 
@@ -996,6 +1055,145 @@ var startTime, endTime, durationInSeconds, timer,countdown
 				$($("#edit_account input")[1]).val(result[0]['accnt_user']);
 				$($("#edit_account input")[2]).val(result[0]['accnt_pass']);
 		},'json');
+	}
+
+	function getChartData(subj,score,type){
+		var result = $.ajax({
+		url:base_url+"Main/getPassFail",
+		type:"POST",
+		data:{subj:subj,score:score,type:type},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+
+	}
+
+	function getChartDataSummative(subj,type){
+		var result = $.ajax({
+		url:base_url+"Main/getPassFailSummative",
+		type:"POST",
+		data:{subj:subj,type:type},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+
+	}
+
+	function renderSubjChart(id){
+		chart.destroy();
+		var pass=getChartData(id,7,1);
+		var fail=getChartData(id,6,1);
+		var ctx = $("#subjChart");
+		 chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'pie',
+        // The data for our dataset
+        data: {
+            labels: ["Passed", "Failed"],
+            datasets: [{
+                backgroundColor: [
+                    "green",
+					"red"
+                ],
+                borderColor: '#fff',
+                data: [Number(pass), Number(fail)],
+            }]
+        },
+        // Configuration options go here
+        options: {
+            legend: {
+                display: true
+            },
+            animation: {
+                easing: "easeInOutBack"
+            }
+        }
+    });
+		 renderSubjChart1(id);
+	}
+
+	function renderSubjChart1(id){
+		chart1.destroy();
+		var pass=getChartDataSummative(id,2);
+		var fail=getChartDataSummative(id,2);
+		var ctx = $("#subjChart1");
+		var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'pie',
+        // The data for our dataset
+        data: {
+            labels: ["Passed", "Failed"],
+            datasets: [{
+                backgroundColor: [
+                    "green",
+					"red"
+                ],
+                borderColor: '#fff',
+                data: [Number(pass['passed']), Number(fail['failed'])],
+            }]
+        },
+        // Configuration options go here
+        options: {
+            legend: {
+                display: true
+            },
+            animation: {
+                easing: "easeInOutBack"
+            }
+        }
+    });
+	}
+
+	function viewRecordStudHistory(subj_id,accnt_id,type){
+		$('#studRecordPractice').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/testHistory"); ?>",
+                    type : 'POST',
+					data: {subj_id:subj_id,accnt_id:accnt_id,type:type}
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
+		$('#studRecordSummative').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/testHistory1"); ?>",
+                    type : 'POST',
+					data: {subj_id:subj_id,accnt_id:accnt_id,type:2}
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
+	}
+
+
+	function viewRecordStudHistoryQuestions(th_id,type){
+		$('#studRecordHistPractice').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/testHistoryQuestions"); ?>",
+                    type : 'POST',
+					data: {th_id:th_id,type:type}
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
+	}
+
+	function viewRecordStudHistoryQuestions1(th_id,type){
+		$('#studRecordHistSummative').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/testHistoryQuestions"); ?>",
+                    type : 'POST',
+					data: {th_id:th_id,type:type}
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
 	}
 
 

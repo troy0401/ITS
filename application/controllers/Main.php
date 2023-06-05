@@ -40,6 +40,20 @@ class Main extends CI_Controller {
 
     }
 
+      public function StudRecord(){
+		$acc_type = $this->session->userdata('accnt_type');
+		 if ($acc_type == 1) {
+        $this->load->view('includes/header');
+        $this->load->view('includes/sidebar');
+        $this->load->view('includes/topbar');
+		$this->load->view('studrecord');
+		$this->load->view('includes/footer');
+		 }else{
+			 redirect(base_url('Main/Login'));
+		}
+
+    }
+
       public function Admin(){
 		$acc_type = $this->session->userdata('accnt_type');
 		 if ($acc_type == 3) {
@@ -423,6 +437,7 @@ class Main extends CI_Controller {
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#ViewSubj" onclick=ViewSubj('.$r->subj_id.')>View Subject</a>
                                                 <a class="dropdown-item" onclick="viewStudentRequests('.$r->subj_id.')" data-toggle="modal" data-target="#viewPracticeRequest">View requesting attempts</a>
                                                 <a class="dropdown-item"  data-toggle="modal" data-target="#editSubj" onclick=editSubj('.$r->subj_id.')>Edit</a>
+                                                <a class="dropdown-item"  data-toggle="modal" data-target="#viewSubjRecModal" onclick="renderSubjChart('.$r->subj_id.')" >View Subject Records</a>
                                             </div>
                                         </div>'
       );
@@ -898,6 +913,139 @@ class Main extends CI_Controller {
            echo json_encode($this->upload->data('file_name'));
         }
     }
+
+    public function getPassFail(){
+		$data=0;
+		if($this->input->post('score')==7){
+			$pass=$this->model->select_score_passed($this->input->post('subj'),$this->input->post('score'),$this->input->post('type'));
+			$data=$pass->num_rows();
+		}else{
+			$fail=$this->model->select_score_passed($this->input->post('subj'),$this->input->post('score'),$this->input->post('type'));
+			$data=$fail->num_rows();
+		}
+		echo json_encode($data);
+	}
+
+	public function getPassFailSummative(){
+		$summ=$this->model->getSummativeStat($this->input->post('subj'),$this->input->post('type'));
+		$count_items=$summ->num_rows();
+		$array=array("passed"=>'',"failed"=> '');
+		$passed=0;
+		$fail=0;
+		foreach($summ->result() as $sum){
+			$get_score=$this->model->select_table_with_id("scores","score_id",$sum->score_id);
+		}
+		foreach($get_score->result() as $score){
+				$s=$score->score;
+				$final=$s/$count_items*100;
+				if($final>=70){
+				$array["passed"]=$passed=$passed+1;
+				}else{
+				$array["failed"]=$fail=$fail+1;
+				}
+			}
+		echo json_encode($array);
+	}
+
+	public function testHistory()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $rec = $this->model->select_tri_column("test_history","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'),"th_Type",$this->input->post('type'));
+
+          $data = array();
+		$attempt=0;
+          foreach($rec->result() as $r) {
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $attempt+1,
+					'Practice Exam',
+                                                '<button data-toggle="modal" data-target="#viewRecordHistPractice" onclick="viewRecordStudHistoryQuestions('.$r->th_ID.',1);" type="button" class="btn btn-primary">
+                                                View Test report
+                                            </button>'
+      );
+			   $attempt++;
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $rec->num_rows(),
+                 "recordsFiltered" => $rec->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
+     public function testHistory1()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $rec = $this->model->select_tri_column("test_history","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'),"th_Type",$this->input->post('type'));
+
+          $data = array();
+		$attempt=0;
+          foreach($rec->result() as $r) {
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $attempt+1,
+					'Summative Exam',
+                                                '<button data-toggle="modal" data-target="#viewRecordHistSummative" onclick="viewRecordStudHistoryQuestions1('.$r->th_ID.',2);" type="button" class="btn btn-primary">
+                                                View Test report
+                                            </button>'
+      );
+			   $attempt++;
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $rec->num_rows(),
+                 "recordsFiltered" => $rec->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
+
+     public function testHistoryQuestions()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $questions = $this->model->select_table_questions($this->input->post('th_id'),$this->input->post('type'));
+
+          $data = array();
+          foreach($questions->result() as $q) {
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $q->testq_id,
+					$q->testq_0,
+					$q->testr_StudAns,
+					($q->testr_Status==2 ? $q->testq_hint : "Correct Answer"),
+					$q->testr_TimeQuest
+      );
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $questions->num_rows(),
+                 "recordsFiltered" => $questions->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
+
 
 	public function Logout(){
     $data = array(

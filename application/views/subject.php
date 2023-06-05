@@ -364,7 +364,8 @@
                                              </form>
                                         </div>
                                     </div>
-                                </div>
+                                    </div>
+
 
                                 <div id="studRequest_modal" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog">
@@ -387,6 +388,49 @@
                                         </div>
                                     </div>
                                 </div>
+								</div>
+
+								<div id="viewSubjRecModal" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Subject Details</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+												<ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#test1" role="tab" aria-controls="home" aria-selected="true">Practice Exam</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#test2" role="tab" aria-controls="profile" aria-selected="false">Summative Exam</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="test1" role="tabpanel" aria-labelledby="home-tab">
+									<div class="card h-full">
+										<div class="card-body">
+											<canvas id="subjChart" height="233"></canvas>
+										</div>
+									</div>
+                                    </div>
+                                    <div class="tab-pane fade" id="test2" role="tabpanel" aria-labelledby="profile-tab">
+                                   <div class="card h-full">
+										<div class="card-body">
+											<canvas id="subjChart1" height="233"></canvas>
+										</div>
+									</div>
+
+									</div>
+                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <!--Ending for Modals -->
                     </div>
