@@ -35,10 +35,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="data-tables">
-                                    <table id="students" class="text-center">
+                                    <table id="students_subj" class="text-center">
                                         <thead class="bg-light text-capitalize">
                                             <tr>
-                                                <th>Student Name</th>
+                                                <th>Subject Name</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>

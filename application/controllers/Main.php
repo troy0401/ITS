@@ -21,7 +21,7 @@ class Main extends CI_Controller {
 		$this->load->view('subject');
 		$this->load->view('includes/footer');
 		 }else{
-			 redirect(base_url('Main/Login'));
+			 redirect(base_url('Main/'));
 		}
 
     }
@@ -35,21 +35,21 @@ class Main extends CI_Controller {
 		$this->load->view('records');
 		$this->load->view('includes/footer');
 		 }else{
-			 redirect(base_url('Main/Login'));
+			 redirect(base_url('Main/'));
 		}
 
     }
 
       public function StudRecord(){
 		$acc_type = $this->session->userdata('accnt_type');
-		 if ($acc_type == 1) {
+		 if ($acc_type == 2) {
         $this->load->view('includes/header');
         $this->load->view('includes/sidebar');
         $this->load->view('includes/topbar');
 		$this->load->view('studrecord');
 		$this->load->view('includes/footer');
 		 }else{
-			 redirect(base_url('Main/Login'));
+			 redirect(base_url('Main/'));
 		}
 
     }
@@ -63,7 +63,7 @@ class Main extends CI_Controller {
 		$this->load->view('admin');
 		$this->load->view('includes/footer');
 		 }else{
-			 redirect(base_url('Main/Login'));
+			 redirect(base_url('Main/'));
 		}
 
     }
@@ -1029,7 +1029,7 @@ class Main extends CI_Controller {
                $data[] = array(
                     $q->testq_id,
 					$q->testq_0,
-					'<p class="text-warning">'$q->testr_StudAns'</p>',
+					($q->testr_Status==2 ? '<p class="text-danger">'.$q->testr_StudAns.'</p>' : $q->testr_StudAns),
 					($q->testr_Status==2 ? $q->testq_hint : "Correct Answer"),
 					$q->testr_TimeQuest
       );
@@ -1039,6 +1039,36 @@ class Main extends CI_Controller {
                "draw" => $draw,
                  "recordsTotal" => $questions->num_rows(),
                  "recordsFiltered" => $questions->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
+     public function viewStudSubj()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $subject = $this->model->select_all("subject");
+
+          $data = array();
+          foreach($subject->result() as $s) {
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+					$s->subj_name,
+                                                '<button data-toggle="modal" data-target="#viewRecordStud" onclick="viewRecordStudHistory('.$s->subj_id.','.$this->session->userdata('accnt_id').');" type="button" class="btn btn-primary">
+                                                View Test report
+                                            </button>'
+      );
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $subject->num_rows(),
+                 "recordsFiltered" => $subject->num_rows(),
                  "data" => $data
             );
           echo json_encode($output);

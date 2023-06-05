@@ -40,6 +40,7 @@
 	var count_quest=0,total_quest=1;next_quest=0
 var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
     $(document).ready(function(){
+		viewStudSubj();
 		var ctx = $("#subjChart");
 		chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -1146,12 +1147,12 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
     });
 	}
 
-	function viewRecordStudHistory(subj_id,accnt_id,type){
+	function viewRecordStudHistory(subj_id,accnt_id){
 		$('#studRecordPractice').DataTable( {
             "ajax": {
                     url : "<?php echo base_url("Main/testHistory"); ?>",
                     type : 'POST',
-					data: {subj_id:subj_id,accnt_id:accnt_id,type:type}
+					data: {subj_id:subj_id,accnt_id:accnt_id,type:1}
              },
              responsive: true,
 			  "destroy": true
@@ -1196,6 +1197,17 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 	}
 
+	function viewStudSubj(){
+		$('#students_subj').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/viewStudSubj"); ?>",
+                    type : 'POST'
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
+	}
 
 
     </script>
