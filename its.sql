@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 05, 2023 at 01:50 PM
+-- Generation Time: Jun 06, 2023 at 12:28 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -68,9 +68,9 @@ CREATE TABLE `exam` (
 --
 
 INSERT INTO `exam` (`exam_id`, `subj_id`, `accnt_id`, `exam_type`, `exam_status`, `exam_trial`, `exam_set_trial`) VALUES
-(1, 1, 1, 1, 1, '4', '10'),
+(1, 1, 1, 1, 1, '3', '10'),
 (2, 1, 1, 2, 1, '1', '1'),
-(3, 2, 1, 1, 0, '8', '10');
+(3, 2, 1, 0, 0, '0', '10');
 
 -- --------------------------------------------------------
 
@@ -140,6 +140,14 @@ CREATE TABLE `lesson_status` (
   `ls_status` int(11) NOT NULL COMMENT '1=subtopic is finished'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `lesson_status`
+--
+
+INSERT INTO `lesson_status` (`ls_id`, `subj_id`, `accnt_id`, `ls_status`) VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -166,6 +174,16 @@ CREATE TABLE `scores` (
   `score` int(11) NOT NULL COMMENT 'total correct answer',
   `score_type` int(11) NOT NULL COMMENT '1=practice exam; 2=summative;\r\n3=final'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `scores`
+--
+
+INSERT INTO `scores` (`score_id`, `subj_id`, `accnt_id`, `num_of_items`, `score`, `score_type`) VALUES
+(1, 1, 1, 10, 6, 1),
+(2, 1, 1, 10, 6, 1),
+(3, 1, 1, 10, 7, 1),
+(4, 1, 1, 30, 10, 2);
 
 -- --------------------------------------------------------
 
@@ -202,6 +220,16 @@ CREATE TABLE `test_history` (
   `subj_id` int(11) NOT NULL,
   `accnt_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `test_history`
+--
+
+INSERT INTO `test_history` (`th_ID`, `th_Type`, `subj_id`, `accnt_id`) VALUES
+(1, 1, 1, 1),
+(2, 1, 1, 1),
+(3, 1, 1, 1),
+(4, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -324,6 +352,62 @@ CREATE TABLE `test_report` (
   `th_ID` int(11) NOT NULL,
   `score_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `test_report`
+--
+
+INSERT INTO `test_report` (`testr_ID`, `testr_StudAns`, `testr_Status`, `testr_TimeQuest`, `testr_Type`, `testq_id`, `accnt_id`, `th_ID`, `score_id`) VALUES
+(1, 'The error sum of squares is zero.', 2, '00:00:02', 1, 12, 1, 1, 1),
+(2, 'A larger standard error for that slope coefficient.', 2, '00:00:02', 1, 18, 1, 1, 1),
+(3, 'Switching from a 95% confidence interval to a 99% confidence interval.', 1, '00:00:02', 1, 2, 1, 1, 1),
+(4, 'The expected value of the slope coefficient for income.', 2, '00:00:01', 1, 10, 1, 1, 1),
+(5, 'Increase the mean.', 1, '00:00:01', 1, 7, 1, 1, 1),
+(6, 'Lower the R2 .', 2, '00:00:02', 1, 14, 1, 1, 1),
+(7, 'E(b  ̃ 2) > −10.', 1, '00:00:01', 1, 6, 1, 1, 1),
+(8, 'Multicollinearity problem.', 1, '00:00:01', 1, 19, 1, 1, 1),
+(9, 'The sample range.', 1, '00:00:03', 1, 16, 1, 1, 1),
+(10, 'The sign of the estimated slope coefficient will be the same as the sign of the correlation between GPA and SAT score.', 1, '00:00:03', 1, 15, 1, 1, 1),
+(11, 'The magnitude of the slope coefficient will be equal to the magnitude of the correlation between GPA and SAT score.', 2, '00:00:03', 1, 15, 1, 2, 2),
+(12, 'A smaller F statistic for the regression.', 2, '00:00:02', 1, 18, 1, 2, 2),
+(13, 'R = β1 + β2A + β2 A2 + ε.', 1, '00:00:01', 1, 8, 1, 2, 2),
+(14, 'The R 2 for the regression will either stay the same or increase.', 2, '00:00:02', 1, 1, 1, 2, 2),
+(15, 'The sample range.', 1, '00:00:01', 1, 16, 1, 2, 2),
+(16, 'Increase the mean.', 1, '00:00:01', 1, 7, 1, 2, 2),
+(17, 'The magnitude of the standard error for the slope coefficient for income.', 1, '00:00:04', 1, 10, 1, 2, 2),
+(18, ' Our test statistic was negative.', 2, '00:00:01', 1, 3, 1, 2, 2),
+(19, 'Switching from a 95% confidence interval to a 99% confidence interval.', 1, '00:00:03', 1, 2, 1, 2, 2),
+(20, 'x is measured with some random error.', 1, '00:00:02', 1, 4, 1, 2, 2),
+(21, 'A larger standard error for that slope coefficient.', 2, '00:00:04', 1, 18, 1, 3, 3),
+(22, 'The sample range.', 1, '00:00:01', 1, 16, 1, 3, 3),
+(23, 'The error sum of squares is larger than the total sum of squares.', 1, '00:00:02', 1, 12, 1, 3, 3),
+(24, 'x is measured with some random error.', 1, '00:00:04', 1, 4, 1, 3, 3),
+(25, 'Lower the R2 .', 2, '00:00:02', 1, 14, 1, 3, 3),
+(26, 'The expected value of the slope coefficient for income.', 2, '00:00:02', 1, 10, 1, 3, 3),
+(27, 'E(b  ̃ 2) > −10.', 1, '00:00:01', 1, 6, 1, 3, 3),
+(28, 'The sign of the estimated slope coefficient will be the same as the sign of the correlation between GPA and SAT score.', 1, '00:00:02', 1, 15, 1, 3, 3),
+(29, 'All of the above.', 1, '00:00:02', 1, 11, 1, 3, 3),
+(30, 'Multicollinearity problem.', 1, '00:00:01', 1, 19, 1, 3, 3),
+(31, 'Increase the mean.', 1, '00:00:02', 2, 7, 1, 4, 4),
+(32, 'The sample range.', 1, '00:00:01', 2, 16, 1, 4, 4),
+(33, 'Both (a) and (b).', 2, '00:00:01', 2, 10, 1, 4, 4),
+(34, 'The sample mean is 15 hours.', 2, '00:00:01', 2, 11, 1, 4, 4),
+(35, 'Centered at the population mean.', 1, '00:00:01', 2, 20, 1, 4, 4),
+(36, 'E(b  ̃ 2) > −10.', 1, '00:00:02', 2, 6, 1, 4, 4),
+(37, 'The error sum of squares is zero.', 2, '00:00:01', 2, 12, 1, 4, 4),
+(38, 'x is measured with some random error.', 1, '00:00:02', 2, 4, 1, 4, 4),
+(39, 'Both (a) and (b) are true.', 2, '00:00:01', 2, 1, 1, 4, 4),
+(40, 'None of the above.', 1, '00:00:02', 2, 17, 1, 4, 4),
+(41, 'Multicollinearity problem.', 1, '00:00:01', 2, 19, 1, 4, 4),
+(42, 'R = β1 + β2A + β2 A2 + ε.', 1, '00:00:01', 2, 8, 1, 4, 4),
+(43, 'Lower the R2 .', 2, '00:00:03', 2, 14, 1, 4, 4),
+(44, 'Choosing an incorrect functional form for the regression equation.', 2, '00:00:01', 2, 13, 1, 4, 4),
+(45, 'We can reject the null hypothesis that β2 ≥ 0 at a 2.5% significance level.', 2, '00:00:03', 2, 3, 1, 4, 4),
+(46, 'Switching from a 95% confidence interval to a 99% confidence interval.', 1, '00:00:01', 2, 2, 1, 4, 4),
+(47, 'A larger value for the ratio of the coefficient to its standard error.', 1, '00:00:02', 2, 18, 1, 4, 4),
+(48, 'Not enough information.', 2, '00:00:02', 2, 9, 1, 4, 4),
+(49, 'It could be greater than, less than or equal to the R2 of the restricted model.', 2, '00:00:03', 2, 5, 1, 4, 4),
+(50, 'The magnitude of the slope coefficient will be equal to the magnitude of the correlation between GPA and SAT score.', 2, '00:00:02', 2, 15, 1, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -479,7 +563,7 @@ ALTER TABLE `finals_report`
 -- AUTO_INCREMENT for table `lesson_status`
 --
 ALTER TABLE `lesson_status`
-  MODIFY `ls_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ls_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `requests`
@@ -491,7 +575,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -503,7 +587,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `test_history`
 --
 ALTER TABLE `test_history`
-  MODIFY `th_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `th_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `test_quest`
@@ -515,7 +599,7 @@ ALTER TABLE `test_quest`
 -- AUTO_INCREMENT for table `test_report`
 --
 ALTER TABLE `test_report`
-  MODIFY `testr_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `testr_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `views`
