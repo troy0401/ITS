@@ -2,7 +2,7 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="<?php echo base_url('Main/Subject'); ?>"><img src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/images/icon/its.png')?>" alt="logo"></a>
+                    <a href="<?php echo base_url('Main/'); ?>"><img src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/images/icon/its.png')?>" alt="logo"></a>
                 </div>
             </div>
             <div class="main-menu">
@@ -15,9 +15,12 @@
                             <li>
                              <li><a href="<?php echo base_url('Main/Records'); ?>"><i class="ti-book"></i> <span>Student Records</span></a></li>
                             <li>
-						<?php }else{?>
+						<?php }elseif($type==2){?>
 							<li><a href="<?php echo base_url('Main/Student');?>"><i class="ti-archive"></i> <span>Home</span></a></li>
-							<?php } ?>
+							<?php }else{ ?>
+
+								<li><a href="<?php echo base_url('Main/Admin');?>"><i class="ti-archive"></i> <span>Home</span></a></li>
+								<?php } ?>
 							<!--
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Sidebar

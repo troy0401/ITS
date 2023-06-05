@@ -56,6 +56,66 @@ var startTime, endTime, durationInSeconds, timer,countdown
              responsive: true
         } );
 
+		$('#accounts').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/accounts"); ?>",
+                    type : 'POST'
+             },
+             responsive: true
+        } );
+
+		$('#profile_form').submit(function(e){
+        e.preventDefault();
+           $.ajax({
+            type: 'POST',
+            url: base_url+'Main/changeProfile',
+            data: new FormData(this),
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(response){ //console.log(response);
+                $('#profile_form')[0].reset();
+                $('#profile').modal('hide');
+				alert("Update Success");
+				location.reload();
+          }
+      });
+    });
+
+		$('#form_account').submit(function(e){//Add Subject/Subtopic
+			e.preventDefault();
+			var data = [];
+			$("#form_account input").each(function(){
+				data.push(this.value);
+			});
+			var type=$("#acc_type1").val();
+			$.post(base_url+'Main/addAccount',
+				{data:data,type:type},function(result){
+					$('#form_account')[0].reset();
+					$('#addAccount').modal('hide');
+					$('#accounts').DataTable().ajax.reload();
+					alert("Insert Success");
+			},'json');
+		});
+
+		$('#edit_account').submit(function(e){//Add Subject/Subtopic
+			e.preventDefault();
+			var data = [];
+			$("#edit_account input").each(function(){
+				data.push(this.value);
+			});
+			var id=$("#edit_account").data("index");
+			var type=$("#acc_type").val();
+			$.post(base_url+'Main/updateAccount',
+				{data:data,id:id,type:type},function(result){
+					$('#edit_account')[0].reset();
+					$('#viewAccount').modal('hide');
+					$('#accounts').DataTable().ajax.reload();
+					alert("Update Success");
+			},'json');
+		});
+
 		$('#form_subj').submit(function(e){//Add Subject/Subtopic
 			e.preventDefault();
 			var data = [];
@@ -926,6 +986,16 @@ var startTime, endTime, durationInSeconds, timer,countdown
              responsive: true,
 			 "destroy": true
         } );
+	}
+
+	function updateAccountForm(id){
+		$("#edit_account").data("index",id);
+		$.post(base_url+'Main/getStudDetails',{id:id},
+			function(result){
+				$($("#edit_account input")[0]).val(result[0]['accnt_name']);
+				$($("#edit_account input")[1]).val(result[0]['accnt_user']);
+				$($("#edit_account input")[2]).val(result[0]['accnt_pass']);
+		},'json');
 	}
 
 

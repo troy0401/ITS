@@ -105,7 +105,25 @@ class Main extends CI_Controller {
             'accnt_user'=>$email,
             'accnt_pass'=>password_hash($pass, PASSWORD_DEFAULT),
             'accnt_name'=>$name,
-			'accnt_type'=>2
+			'accnt_type'=>2,
+			'accnt_img'=>'avatar.png'
+        );
+        if($this->model->insert_into("account", $data)){
+           echo json_encode(true);
+        }
+    }
+
+    public function addAccount(){
+		$post = $this->input->post('data');
+        $name=$post[0];
+        $email=$post[1];
+        $pass=$post[2];
+        $data = array(
+            'accnt_user'=>$email,
+            'accnt_pass'=>password_hash($pass, PASSWORD_DEFAULT),
+            'accnt_name'=>$name,
+			'accnt_type'=>$this->input->post('type'),
+			'accnt_img'=>'avatar.png'
         );
         if($this->model->insert_into("account", $data)){
            echo json_encode(true);
@@ -127,12 +145,14 @@ class Main extends CI_Controller {
                         $acc_id = $a->accnt_id;
                         $accnt = $a->accnt_name;
 						$type = $a->accnt_type;
+						$img = $a->accnt_img;
 
                     }
                     $newdata = array(
 					  'accnt_id'=>$acc_id,
                       'accnt_name'=>$accnt,
-					  'accnt_type'=>$type
+					  'accnt_type'=>$type,
+					  'accnt_img'=>$img,
                     );
 
                     //$this->model->update_where('accounts', $data, 'account_id', $acc_id);
@@ -265,6 +285,44 @@ class Main extends CI_Controller {
            echo json_encode(true);
         }
 	}
+
+	public function accounts()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $accnt = $this->model->select_all("account");
+
+          $data = array();
+
+          foreach($accnt->result() as $a) {
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $a->accnt_name,
+					$a->accnt_user,
+					'<div class="btn-group" role="group">
+                                                <button id="btnGroupDrop" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                See Actions
+                                            </button>
+                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#viewAccount" onclick=updateAccountForm('.$a->accnt_id.')>Update</a>
+                                                <a class="dropdown-item"  data-toggle="modal" data-target="#delAccount" onclick=delAccountForm('.$a->accnt_id.')>Delete</a>
+                                            </div>
+                                        </div>'
+      );
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $accnt->num_rows(),
+                 "recordsFiltered" => $accnt->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
 
 	public function students()//admin view of modules
      {
@@ -803,11 +861,50 @@ class Main extends CI_Controller {
 		echo json_encode(true);
 	}
 
+	public function getStudDetails(){
+		$stud=$this->model->select_table_with_id("account","accnt_id",$this->input->post('id'));
+		echo json_encode($stud->result());
+	}
+
+	 public function updateAccount(){
+
+		$post = $this->input->post('data');
+		$data = array(
+            'accnt_name'=>$post[0],
+			'accnt_user'=>$post[1],
+			'accnt_pass'=>$post[2],
+			'accnt_type'=>$this->input->post('type')
+		);
+
+		if($this->model->update_where('account', $data, 'accnt_id', $this->input->post('id'))){
+           echo json_encode(true);
+        }
+	}
+
+	  public function changeProfile(){
+                $config['upload_path']          = './uploads/';
+                $config['allowed_types']        = 'gif|png|jpg';
+                $config['max_size']             = 5000;
+                $this->load->library('upload', $config);
+                $this->upload->do_upload('userfile');
+                 $data = array(
+                    'accnt_img'=>$this->upload->data('file_name')
+                    );
+				  $this->session->unset_userdata('accnt_img');
+                $data['accnt_img'] = $this->upload->data('file_name');
+                $this->session->set_userdata('accnt_img', $data['accnt_img']);
+
+        if($this->model->update_where('account', $data, 'accnt_id', $this->session->userdata('accnt_id'))){
+           echo json_encode($this->upload->data('file_name'));
+        }
+    }
+
 	public function Logout(){
     $data = array(
 					'accnt_id'=>'',
 					'accnt_name'=>'',
-					'accnt_type'=>''
+					'accnt_type'=>'',
+					'accnt_img'=>''
                     );
     $this->session->unset_userdata($data);
     $this->session->sess_destroy();
