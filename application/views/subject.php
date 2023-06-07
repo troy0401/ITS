@@ -219,35 +219,14 @@
                                             </div>
 										<form id="form_quest" class="needs-validation" autocomplete="off">
                                             <div class="modal-body">
-                                            <div class="form-row">
-                                                <div class="col-md-12 mb-3">
-                                                    <label for="validationCustom01">Test Question</label>
-                                                    <textarea class="form-control" id="validationCustom01" placeholder="Subject name" required></textarea>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Answer</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" required>
-                                                </div>
-                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Hint</label>
-                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Test Hint" required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 1</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 2</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 3</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 4</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
+                                            <div class="col-md-12 mb-3">
+													<label class="col-form-label">Select Question type</label>
+													<select onChange="displayQuestType(this.value);" class="form-control">
+														<option>Choose Type...</option>
+														<option value="1">Multiple Choice</option>
+														<option value="2">Fill in the Blank</option>
+													</select>
+											<div id="question_set"></div>
                                             </div>
                                             </div>
                                             <div class="modal-footer">
@@ -268,36 +247,7 @@
                                             </div>
 										<form id="editForm_quest" class="needs-validation" autocomplete="off">
                                             <div class="modal-body">
-                                            <div class="form-row">
-                                                <div class="col-md-12 mb-3">
-                                                    <label for="validationCustom01">Test Question</label>
-                                                    <textarea class="form-control" id="validationCustom01" placeholder="Subject name" required></textarea>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Answer</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" required>
-                                                </div>
-                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Hint</label>
-                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Test Hint" required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 1</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 2</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 3</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 4</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                            </div>
+													<div class="question_set"></div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -212,17 +212,33 @@ class Main extends CI_Controller {
 		//$minutes=$this->input->post('mod_test_time')*60;
 		$data = $this->input->post('data');
 		$id	=	$this->input->post('id');
+		if($data[0]==1){
         $data = array(
-                    "testq_0"=>$data[0],
-					"testq_1"=>$data[3],
-					"testq_2"=>$data[4],
-					"testq_3"=>$data[5],
-					"testq_4"=>$data[6],
-					"testq_ans"=>$data[1],
-					"testq_hint"=>$data[2],
-					"subj_id"=>$id
+                    "testq_0"=>$data[1],
+					"testq_1"=>$data[4],
+					"testq_2"=>$data[5],
+					"testq_3"=>$data[6],
+					"testq_4"=>$data[7],
+					"testq_ans"=>$data[2],
+					"testq_hint"=>$data[3],
+					"subj_id"=>$id,
+					"testq_type"=>$data[0]
 
                 );
+		}else{
+			 $data = array(
+                    "testq_0"=>$data[1],
+					"testq_1"=>'none',
+					"testq_2"=>'none',
+					"testq_3"=>'none',
+					"testq_4"=>'none',
+					"testq_ans"=>$data[2],
+					"testq_hint"=>$data[3],
+					"subj_id"=>$id,
+					"testq_type"=>$data[0]
+
+                );
+		}
 		 if($this->model->insert_into("test_quest", $data))
 		 {
            echo json_encode(true);
@@ -252,13 +268,14 @@ class Main extends CI_Controller {
             foreach($quest->result() as $q) {
 
                  $data[] = array(
-					"testq_0"  => $q->testq_0,
+					"testq_0"  => htmlspecialchars($q->testq_0),
 					"testq_1"  => $q->testq_1,
 					"testq_2"  => $q->testq_2,
 					"testq_3"  => $q->testq_3,
 					"testq_4"  => $q->testq_4,
 					"testq_ans"  => $q->testq_ans,
-					"testq_hint"  => $q->testq_hint
+					"testq_hint"  => $q->testq_hint,
+					"testq_type"	=> $q->testq_type
 
                  );
               }
@@ -294,10 +311,10 @@ class Main extends CI_Controller {
 			'testq_4'=>$post[6]
 
           );
-
-    if($this->model->update_where('test_quest', $data, 'testq_id', $this->input->post('id'))){
-           echo json_encode(true);
-        }
+/*
+    if($this->model->update_where('test_quest', $data, 'testq_id', $this->input->post('id'))){*/
+           echo json_encode(sizeof($post));
+       // }
 	}
 
 	public function accounts()//admin view of modules

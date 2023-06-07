@@ -228,13 +228,15 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 		$('#form_quest').submit(function(e){//Add Questionaire
 			e.preventDefault();
 			var data = [];
-			$("#form_quest input, #form_quest textarea").each(function(){
+			$("#form_quest input, #form_quest textarea, #form_quest select").each(function(){
 				data.push(this.value);
 			});
+			//console.log(data);
 			$.post(base_url+'Main/add_Quest',
 				{data:data,id:subject_id},function(result){
 					$('#form_quest')[0].reset();
 					$('#quest_modal').modal('hide');
+					$('#question_set').empty();
 					$('#dataQuest').DataTable().ajax.reload();
 					alert("Insert Success");
 			},'json');
@@ -251,6 +253,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					{data:data,id:id},function(result){
 						$('#editForm_quest')[0].reset();
 						$('#editQuest_modal').modal('hide');
+						$('.question_set').empty();
 						$('#dataQuest').DataTable().ajax.reload();
 						alert("Update Success");
 				},'json');
@@ -404,7 +407,13 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					data: {table:"test_quest",column:"subj_id",id:id}
              },
              responsive: true,
-			  "destroy": true
+			  "destroy": true,
+			  columnDefs: [
+				{
+					targets: 1,
+					render: $.fn.dataTable.render.text()
+				}
+    ]
         } );
 
 		  $('#dataTest').DataTable( {
@@ -502,13 +511,23 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 		$("#editForm_quest").data("index",id);
 		$.post(base_url+'Main/getQuest',
 					{id:id},function(result){
-					$($('#editForm_quest textarea')[0]).val(result[0]['testq_0']);
-					$($('#editForm_quest input')[0]).val(result[0]['testq_ans']);
-					$($('#editForm_quest input')[1]).val(result[0]['testq_hint']);
-					$($('#editForm_quest input')[2]).val(result[0]['testq_1']);
-					$($('#editForm_quest input')[3]).val(result[0]['testq_2']);
-					$($('#editForm_quest input')[4]).val(result[0]['testq_3']);
-					$($('#editForm_quest input')[5]).val(result[0]['testq_4']);
+					var mult_choice='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Question</label><textarea class="form-control" id="validationCustom01" placeholder="Subject name" required>'+result[0]['testq_0']+' </textarea></div>'+
+					'<div class="col-md-6 mb-3"><label for="validationCustom02">Answer</label>'+
+					'<input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" value="'+result[0]['testq_ans']+'" required></div>'+
+					'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label><input type="text" value="'+result[0]['testq_hint']+'" class="form-control" id="validationCustom03" placeholder="Test Hint" required></div>'+
+					'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 1</label><input type="text" value="'+result[0]['testq_1']+'" class="form-control" id="validationCustom03"  required></div>'+
+					'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 2</label><input type="text" value="'+result[0]['testq_2']+'" class="form-control" id="validationCustom03"  required></div>'+
+					'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 3</label><input type="text" value="'+result[0]['testq_3']+'" class="form-control" id="validationCustom03"  required></div>'+
+					'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 4</label><input type="text" value="'+result[0]['testq_4']+'" class="form-control" id="validationCustom03"  required></div></div>';
+					var fill_blank='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
+		'<textarea class="form-control" id="validationCustom01" placeholder="Question" required>'+result[0]['testq_0']+'</textarea></div>'+
+        '<div class="col-md-6 mb-3"><label for="validationCustom02">Answer</label>'+
+		'<input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" value="'+result[0]['testq_ans']+'" required></div>'+
+		'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
+		'<input type="text" class="form-control" value="'+result[0]['testq_hint']+'" id="validationCustom02" placeholder="Hint" required></div></div>';
+
+					var quest_list = result[0]['testq_type']==1 ? mult_choice : fill_blank;
+					$('.question_set').empty().append(quest_list);
 			},'json');
 	}
 
@@ -1207,6 +1226,35 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 			  "destroy": true
         } );
 
+	}
+
+	function displayQuestType(id){
+		var mult_choice='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
+		'<textarea class="form-control" id="validationCustom01" placeholder="Question" required></textarea>'+
+		'</div>'+
+		'<div class="col-md-6 mb-3">'+
+		'<label for="validationCustom02">Answer</label>'+
+		'<input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" required></div>'+
+		'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
+		'<input type="text" class="form-control" id="validationCustom03" placeholder="Test Hint" required></div>'+
+		'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 1</label>'+
+		'<input type="text" class="form-control" id="validationCustom03"  required></div>'+
+		'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 2</label>'+
+		'<input type="text" class="form-control" id="validationCustom03"  required></div>'+
+		'<div class="col-md-3 mb-3">'+
+		'<label for="validationCustom02">Choice 3</label>'+
+		'<input type="text" class="form-control" id="validationCustom03"  required></div>'+
+		'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 4</label>'+
+		'<input type="text" class="form-control" id="validationCustom03"  required></div></div>';
+		var fill_blank='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
+		'<textarea class="form-control" id="validationCustom01" placeholder="Question" required></textarea></div>'+
+        '<div class="col-md-6 mb-3"><label for="validationCustom02">Answer</label>'+
+		'<input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" required></div>'+
+		'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
+		'<input type="text" class="form-control" id="validationCustom02" placeholder="Hint" required></div></div>';
+
+		var quest_type=(id==1? mult_choice : fill_blank);
+		$('#question_set').empty().append(quest_type);
 	}
 
 
