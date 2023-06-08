@@ -665,6 +665,7 @@ class Main extends CI_Controller {
 		$this->model->update_where('exam', $data, 'exam_id', $this->input->post('exam_id'));
 		$quests=$this->model->test_questions($this->input->post('subj_id'),$this->input->post('test_items'));
 		echo json_encode($quests->result());
+
 	}
 
 	public function recordTestHistory(){
@@ -688,6 +689,109 @@ class Main extends CI_Controller {
 	}
 
 	public function submitAnswer(){
+		$attempt=0;
+		$testr_id;
+		$condition;
+		$check_prev=$this->model->select_tri_column("test_report","testq_id",$this->input->post('testq_id'),"accnt_id",$this->session->userdata('accnt_id'),"th_ID",$this->input->post('history_id'));
+		if($check_prev->num_rows()>0){
+			foreach($check_prev->result() as $cp){
+				$attempt=$cp->testr_Attempt;
+				$testr_id=$cp->testr_ID;
+			}
+		$attempt=$attempt+1;
+		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
+		if($attempt<10){
+				foreach($qry->result() as $q){
+					$result=0;
+					$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
+					if($compare===0){
+						$result=1;
+						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
+						foreach($sc_qry->result() as $sq){
+							$score=$sq->score + 1;
+							$data_score = array(
+								'score'=>$score,
+								'num_of_items'=>$this->input->post('test_items')
+							);
+							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
+						}
+						$condition=true;
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
+					}else{
+						$result=2;
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
+						$condition=false;
+					}
+				}
+			}else{
+				foreach($qry->result() as $q){
+					$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
+					if($compare===0){
+						$result=1;
+						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
+						foreach($sc_qry->result() as $sq){
+							$score=$sq->score + 1;
+							$data_score = array(
+								'score'=>$score,
+								'num_of_items'=>$this->input->post('test_items')
+							);
+							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
+						}
+						$condition=true;
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
+					}else{
+						$result=2;
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
+						$condition=true;
+					}
+				}
+			}
+		}else{
+			$exam_ans = array(
+				'testr_StudAns'=>$this->input->post('ans'),
+				'testr_TimeQuest'=>$this->input->post('duration'),
+				'testr_Type'=>$this->input->post('test_Type'),
+				'testq_id'=>$this->input->post('testq_id'),
+				'accnt_id'=>$this->session->userdata('accnt_id'),
+				'th_ID'=>$this->input->post('history_id'),
+				'score_ID'=>$this->input->post('score_id')
+			);
+			$id=$this->model->insert_into("test_report", $exam_ans);
+			$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
+				foreach($qry->result() as $q){
+					$result=0;
+					$attempt=1;
+					$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
+					if($compare===0){
+						$result=1;
+						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
+						foreach($sc_qry->result() as $sq){
+							$score=$sq->score + 1;
+							$data_score = array(
+								'score'=>$score,
+								'num_of_items'=>$this->input->post('test_items')
+							);
+							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
+						}
+						$condition=true;
+						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$this->model->update_where('test_report', $data, 'testr_ID', $id);
+					}else{
+						$result=2;
+						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$this->model->update_where('test_report', $data, 'testr_ID', $id);
+						$condition=false;
+					}
+				}	
+		}
+		echo json_encode($condition);
+	}
+
+	public function submitAnswer1(){
 		$exam_ans = array(
 			'testr_StudAns'=>$this->input->post('ans'),
 			'testr_TimeQuest'=>$this->input->post('duration'),
@@ -697,28 +801,28 @@ class Main extends CI_Controller {
 			'th_ID'=>$this->input->post('history_id'),
 			'score_ID'=>$this->input->post('score_id')
 		);
-		$id=$this->model->insert_into("test_report", $exam_ans);
-		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
-		foreach($qry->result() as $q){
-			$result=0;
-			if($this->input->post('ans')==$q->testq_ans){
-				$result=1;
-				$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
-				foreach($sc_qry->result() as $sq){
-					$score=$sq->score + 1;
-					$data_score = array(
-						'score'=>$score,
-						'num_of_items'=>$this->input->post('test_items')
-					);
-					$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
-				}
-			}else{
-				$result=2;
-			}
-		$data = array('testr_Status'=>$result);
-		$this->model->update_where('test_report', $data, 'testr_ID', $id);
-		}
-		echo json_encode(true);
+		// $id=$this->model->insert_into("test_report", $exam_ans);
+		// $qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
+		// foreach($qry->result() as $q){
+		// 	$result=0;
+		// 	if($this->input->post('ans')==$q->testq_ans){
+		// 		$result=1;
+		// 		$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
+		// 		foreach($sc_qry->result() as $sq){
+		// 			$score=$sq->score + 1;
+		// 			$data_score = array(
+		// 				'score'=>$score,
+		// 				'num_of_items'=>$this->input->post('test_items')
+		// 			);
+		// 			$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
+		// 		}
+		// 	}else{
+		// 		$result=2;
+		// 	}
+		// $data = array('testr_Status'=>$result);
+		// $this->model->update_where('test_report', $data, 'testr_ID', $id);
+		// }
+		echo json_encode($exam_ans);
 	}
 
 	public function getScore(){

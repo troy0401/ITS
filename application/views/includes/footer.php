@@ -288,9 +288,10 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 		 $('#submitExamForm').submit(function(e){//submit practice exam answer
             e.preventDefault();
+			var quest_type=$($("#submitExamForm input[type='hidden']")[7]).val();
              $.post(base_url+'Main/submitAnswer',
             {
-                ans:$($("#submitExamForm input[type='radio']:checked")[0]).val(),
+                ans:(quest_type == '1' ? $($("#submitExamForm input[type='radio']:checked")[0]).val() : $($("#submitExamForm textarea")[0]).val()),
                 testq_id:$($("#submitExamForm input[type='hidden']")[0]).val(),
                 test_Type:$($("#submitExamForm input[type='hidden']")[1]).val(),
 				duration:$($("#submitExamForm input[type='hidden']")[2]).val(),
@@ -300,9 +301,10 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 				score_id:$($("#submitExamForm input[type='hidden']")[5]).val(),
 				exam_id:$($("#submitExamForm input[type='hidden']")[6]).val()
             }, function(result){
-						stopTimer();
-						startTimer();
-                        if(count_quest>total_quest){
+						//stopTimer();
+						//startTimer();
+                        if(count_quest>=total_quest){
+							if(result==true){
                             $('#question'+next_quest+'').remove();
                             next_quest++;
                             $('#question'+next_quest+'').css({"display":"block"});
@@ -310,11 +312,15 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
                             var total_display=total_quest+" of "+count_quest;
                             $('#total_count').html(total_display);
                             $("#submitExamForm button[type=submit]").prop('disabled',true);
+							}else{
+								$('.hint'+next_quest+'').css({"display":"block"});
+								$('.button_handler').append('<button type="button" class="btn btn-warning">Skip</button>');
+							}
                           }else{
-							stopCountdown();
-                            stopTimer();
-                            //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
-							getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
+							//stopCountdown();
+                            //stopTimer();
+                            //--> not part of updated GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+							//getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
                             $('#question'+next_quest+'').remove();
                             $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
                             $('.submit_quiz').click(function(){
@@ -861,7 +867,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
                         '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>');
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>'+
+						'<h6 class="text-danger hint'+i+'" style="display:none;">[Incorrect]<br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
 						}else{
 						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
@@ -876,7 +883,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
-						'<textarea class="form-control" id="validationCustom01" placeholder="Answer" oninput="change(this.value);" required></textarea>');
+						'<textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="change(null);"></textarea>'+
+						'<h6 class="text-danger hint'+i+'" style="display:none;">[Incorrect]<br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
 						}
                       count_quest++;
                          }
