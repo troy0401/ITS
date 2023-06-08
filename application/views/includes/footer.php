@@ -124,6 +124,17 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
              responsive: true
         } );
 
+		$('#practiceExamStartForm').submit(function(e){
+			e.preventDefault();
+			var data = [];
+			$("#practiceExamStartForm input").each(function(){
+				data.push(this.value);
+			});
+			alert(data);
+			practiceExam($($("#practiceExamStartForm input[type='hidden']")[0]).val(),$($("#practiceExamStartForm input[type='hidden']")[1]).val(),$($("#practiceExamStartForm input[type='hidden']")[2]).val(),$($("#practiceExamStartForm input[type='hidden']")[3]).val(),$($("#practiceExamStartForm input[type='hidden']")[4]).val());
+			$('#practiceExamStartModal').modal('hide');
+		})
+
 		$('#profile_form').submit(function(e){
         e.preventDefault();
            $.ajax({
@@ -562,7 +573,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						var exam_setData = getExamSettings(subj_id,1);
 						var summexam_setData = getExamSettings(subj_id,2);
 
-						active=(learnExamData.length> 0 ? '<button type="button" onclick="practiceExam('+learnExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
+						active=(learnExamData.length> 0 ? '<button type="button" onclick="practiceExamStart('+learnExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button type="button" onclick="practiceExamStart('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
 
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+(learnExamData.length>0 ? '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
 
@@ -650,7 +661,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						var exam_setData = getExamSettings(subj_id,1);
 						var summexam_setData = getExamSettings(subj_id,2);
 
-						active=(learnExamData.length> 0 ? '<button type="button" onclick="practiceExam('+learnExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button type="button" onclick="practiceExam('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
+						active=(learnExamData.length> 0 ? '<button type="button" onclick="practiceExamStart('+learnExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button type="button" onclick="practiceExamStart('+practiceExamData[0]['exam_id']+','+subj_id+','+exam_setData[0]['exam_set_Items']+','+exam_setData[0]['exam_set_Time']+','+exam_setData[0]['exam_set_Type']+')" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
 
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+(learnExamData.length>0 ? '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
 
@@ -812,15 +823,28 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 			},'json');
 	}
 
+	function practiceExamStart(exam_id,subj_id,test_items,time,type){
+			$('#practiceExamStartModal').modal('show');
+			$($("#practiceExamStartForm input[type='hidden']")[0]).val(exam_id);
+			$($("#practiceExamStartForm input[type='hidden']")[1]).val(subj_id);
+			$($("#practiceExamStartForm input[type='hidden']")[2]).val(test_items);
+			$($("#practiceExamStartForm input[type='hidden']")[3]).val(time);
+			$($("#practiceExamStartForm input[type='hidden']")[4]).val(type);
+
+	}
+
 	function practiceExam(exam_id,subj_id,test_items,time,type){
 		$('#takeExam_modal').modal('show');
+		console.log(exam_id+','+subj_id+','+test_items+','+time+','+type);
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
 					function(result){
 					$('.question-list').empty();
-					countdownTimer(time);
-					startTimer();
+					//countdownTimer(time);
+					//startTimer();
 					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,1);
 					for(var i=0; i<result.length; i++){
+						console.log(result);
+						if(result[i]['testq_type']=='1'){
 						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
                         '<h4>'+result[i]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
@@ -832,11 +856,28 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+id['history_id']+'">'+
 						'<input type="hidden" value="'+id['score_id']+'">'+
 						'<input type="hidden" value="'+exam_id+'">'+
+						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>');
+						}else{
+						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
+						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
+                        '<h4>'+result[i]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
+                        '<div class="d-flex flex-row align-items-center question-title"><h3><b>Q.</b></h3>'+
+                        '<input type="hidden" value="'+result[i]['testq_id']+'">'+
+                        '<input type="hidden" value="'+type+'">'+
+						'<input type="hidden" value="">'+
+						'<input type="hidden" value="'+test_items+'">'+
+						'<input type="hidden" value="'+id['history_id']+'">'+
+						'<input type="hidden" value="'+id['score_id']+'">'+
+						'<input type="hidden" value="'+exam_id+'">'+
+						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
+                        '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
+						'<textarea class="form-control" id="validationCustom01" placeholder="Answer" oninput="change(this.value);" required></textarea>');
+						}
                       count_quest++;
                          }
                          var total_display=total_quest+" of "+count_quest;

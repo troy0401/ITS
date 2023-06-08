@@ -107,6 +107,33 @@
                                     </div>
                                 </div>
 
+                                <div id="practiceExamStartModal" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Start of exam</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <form id="practiceExamStartForm">
+                                            <div class="modal-body">
+                                                <div class="form-row">
+                                                    <h4>Please read the questions carefully. There are only <b>10</b> attempts per question. Click on <u>Next</u> button to proceed to the exam.</h4>
+                                                    <input value="" type="hidden">
+                                                    <input value="" type="hidden">
+                                                    <input value="" type="hidden">
+                                                    <input value="" type="hidden">
+                                                    <input value="" type="hidden">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer button_attempt">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Next</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                                  <div id="summExam_modal" class="modal fade bd-example-modal-lg"  data-backdrop="static" data-keyboard="false">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
