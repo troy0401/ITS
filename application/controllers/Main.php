@@ -819,27 +819,29 @@ class Main extends CI_Controller {
 			'th_ID'=>$this->input->post('history_id'),
 			'score_ID'=>$this->input->post('score_id')
 		);
-		// $id=$this->model->insert_into("test_report", $exam_ans);
-		// $qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
-		// foreach($qry->result() as $q){
-		// 	$result=0;
-		// 	if($this->input->post('ans')==$q->testq_ans){
-		// 		$result=1;
-		// 		$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
-		// 		foreach($sc_qry->result() as $sq){
-		// 			$score=$sq->score + 1;
-		// 			$data_score = array(
-		// 				'score'=>$score,
-		// 				'num_of_items'=>$this->input->post('test_items')
-		// 			);
-		// 			$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
-		// 		}
-		// 	}else{
-		// 		$result=2;
-		// 	}
-		// $data = array('testr_Status'=>$result);
-		// $this->model->update_where('test_report', $data, 'testr_ID', $id);
-		// }
+		$id=$this->model->insert_into("test_report", $exam_ans);
+		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
+		foreach($qry->result() as $q){
+			$result=0;
+			$attempt=1;
+			$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
+			if($compare===0){
+				$result=1;
+				$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
+				foreach($sc_qry->result() as $sq){
+					$score=$sq->score + 1;
+					$data_score = array(
+						'score'=>$score,
+						'num_of_items'=>$this->input->post('test_items')
+					);
+					$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
+				}
+			}else{
+				$result=2;
+			}
+		$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt);
+		$this->model->update_where('test_report', $data, 'testr_ID', $id);
+		}
 		echo json_encode($exam_ans);
 	}
 
@@ -991,7 +993,8 @@ class Main extends CI_Controller {
 		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
 		$result;
 		foreach($qry->result() as $q){
-			if($this->input->post('ans')==$q->testq_ans){
+			$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
+			if($compare===0){
 				$result=1;
 			}else{
 				$result=2;

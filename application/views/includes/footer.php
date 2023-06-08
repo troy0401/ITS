@@ -130,7 +130,6 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 			$("#practiceExamStartForm input").each(function(){
 				data.push(this.value);
 			});
-			alert(data);
 			practiceExam($($("#practiceExamStartForm input[type='hidden']")[0]).val(),$($("#practiceExamStartForm input[type='hidden']")[1]).val(),$($("#practiceExamStartForm input[type='hidden']")[2]).val(),$($("#practiceExamStartForm input[type='hidden']")[3]).val(),$($("#practiceExamStartForm input[type='hidden']")[4]).val());
 			$('#practiceExamStartModal').modal('hide');
 		})
@@ -336,9 +335,10 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 		 $('#submitSummExamForm').submit(function(e){//submit summative exam answer
             e.preventDefault();
-             $.post(base_url+'Main/submitAnswer',
+			var quest_type=$($("#submitSummExamForm input[type='hidden']")[7]).val();
+             $.post(base_url+'Main/submitAnswer1',
             {
-                ans:$($("#submitSummExamForm input[type='radio']:checked")[0]).val(),
+                ans:(quest_type == '1' ? $($("#submitSummExamForm input[type='radio']:checked")[0]).val() : $($("#submitSummExamForm textarea")[0]).val()),
                 testq_id:$($("#submitSummExamForm input[type='hidden']")[0]).val(),
                 test_Type:$($("#submitSummExamForm input[type='hidden']")[1]).val(),
 				duration:$($("#submitSummExamForm input[type='hidden']")[2]).val(),
@@ -377,9 +377,10 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 		 $('#submitFinalExamForm').submit(function(e){//submit summative exam answer
             e.preventDefault();
+			var quest_type=$($("#submitFinalExamForm input[type='hidden']")[3]).val();
              $.post(base_url+'Main/submitFinalsAnswer',
             {
-                ans:$($("#submitFinalExamForm input[type='radio']:checked")[0]).val(),
+                ans:(quest_type == '1' ? $($("#submitFinalExamForm input[type='radio']:checked")[0]).val() : $($("#submitFinalExamForm textarea")[0]).val()),
                 testq_id:$($("#submitFinalExamForm input[type='hidden']")[0]).val(),
 				duration:$($("#submitFinalExamForm input[type='hidden']")[1]).val(),
 				//score_id:$($("#submitExamForm input[type='hidden']")[3]).val(),
@@ -846,8 +847,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
 					function(result){
 					$('.question-list').empty();
-					//countdownTimer(time);
-					//startTimer();
+					countdownTimer(time);
+					startTimer();
 					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,1);
 					for(var i=0; i<result.length; i++){
 						console.log(result);
@@ -939,6 +940,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					startTimer();
 					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,2);
 					for(var i=0; i<result.length; i++){
+						if(result[i]['testq_type']=='1'){
 						$('.summ-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
                         '<h4>'+result[i]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
@@ -950,11 +952,28 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+id['history_id']+'">'+
 						'<input type="hidden" value="'+id['score_id']+'">'+
 						'<input type="hidden" value="'+exam_id+'">'+
+						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input onchange="summ_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>');
+                        '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>').outerHTML;
+						}else{
+						$('.summ-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
+						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
+                        '<h4>'+result[i]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
+                        '<div class="d-flex flex-row align-items-center question-title"><h3><b>Q.</b></h3>'+
+                        '<input type="hidden" value="'+result[i]['testq_id']+'">'+
+                        '<input type="hidden" value="'+exam_type+'">'+
+						'<input type="hidden" value="">'+
+						'<input type="hidden" value="'+exam_items+'">'+
+						'<input type="hidden" value="'+id['history_id']+'">'+
+						'<input type="hidden" value="'+id['score_id']+'">'+
+						'<input type="hidden" value="'+exam_id+'">'+
+						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
+                        '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
+						'<textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="summ_change(null);"></textarea>').outerHTML;
+						}
                       count_quest++;
                          }
                          var total_display=total_quest+" of "+count_quest;
@@ -1017,6 +1036,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					startTimer();
 					for(var i=0; i<result.length; i++){
 							for(var j=0; j<result[i].length; j++){
+								if(result[i][j]['testq_type']=='1'){
 								$('.final-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 								'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
 								'<h4>'+result[i][j]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
@@ -1024,12 +1044,25 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 								'<input type="hidden" value="'+result[i][j]['testq_id']+'">'+
 								'<input type="hidden" value="">'+
 								'<input type="hidden" value="'+finals_id[0]['finals_ID']+'">'+
+								'<input type="hidden" value="'+result[i][j]['testq_type']+'">'+
 								'<h5 class="mt-1 ml-2">'+result[i][j]['testq_0']+'</h5></div>'+
 								'<div class="ans ml-2"><label class="radio"> <input onchange="finals_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i][j]['testq_1']+'"> <span><b>'+result[i][j]['testq_1']+'</b></span></label></div>'+
 								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_2']+'"> <span><b>'+result[i][j]['testq_2']+'</b></span></label></div>'+
 								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_3']+'"> <span><b>'+result[i][j]['testq_3']+'</b></span></label></div>'+
 								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_4']+'"> <span><b>'+result[i][j]['testq_4']+'</b></span></label></div>');
-                      count_quest++;
+								}else{
+									$('.final-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
+								'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
+								'<h4>'+result[i][j]['subj_name']+'</h4><span id="total_count">(5 of 20)</span>'+
+								'<div class="d-flex flex-row align-items-center question-title"><h3><b>Q.</b></h3>'+
+								'<input type="hidden" value="'+result[i][j]['testq_id']+'">'+
+								'<input type="hidden" value="">'+
+								'<input type="hidden" value="'+finals_id[0]['finals_ID']+'">'+
+								'<input type="hidden" value="'+result[i][j]['testq_type']+'">'+
+								'<h5 class="mt-1 ml-2">'+result[i][j]['testq_0']+'</h5></div>'+
+								'<textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="finals_change(null);"></textarea>');
+						}
+								count_quest++;
 							}
 
                          }
