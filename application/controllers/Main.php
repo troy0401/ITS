@@ -301,6 +301,7 @@ class Main extends CI_Controller {
 	 public function editQuest(){
 
 	  $post = $this->input->post('data');
+	  if(sizeof($post)==7){
       $data = array(
             'testq_0'=>$post[0],
             'testq_1'=>$post[1],
@@ -309,12 +310,20 @@ class Main extends CI_Controller {
 			'testq_2'=>$post[4],
 			'testq_3'=>$post[5],
 			'testq_4'=>$post[6]
-
           );
-/*
-    if($this->model->update_where('test_quest', $data, 'testq_id', $this->input->post('id'))){*/
-           echo json_encode(sizeof($post));
-       // }
+		}else{
+		
+			$data = array(
+				'testq_0'=>$post[0],
+				'testq_ans'=>$post[1],
+				'testq_hint'=>$post[2]
+			  );
+		}
+
+    if($this->model->update_where('test_quest', $data, 'testq_id', $this->input->post('id')))
+	{
+           echo json_encode(true);
+	}
 	}
 
 	public function accounts()//admin view of modules
