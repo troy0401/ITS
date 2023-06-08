@@ -1180,6 +1180,7 @@ class Main extends CI_Controller {
                $data[] = array(
                     $q->testq_id,
 					$q->testq_0,
+					$q->testq_Attempts,
 					($q->testr_Status==2 ? '<p class="text-danger">'.$q->testr_StudAns.'</p>' : $q->testr_StudAns),
 					($q->testr_Status==2 ? $q->testq_hint : "Correct Answer"),
 					$q->testr_TimeQuest
