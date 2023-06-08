@@ -664,7 +664,25 @@ class Main extends CI_Controller {
 		$data = array('exam_trial'=>$change_trial);
 		$this->model->update_where('exam', $data, 'exam_id', $this->input->post('exam_id'));
 		$quests=$this->model->test_questions($this->input->post('subj_id'),$this->input->post('test_items'));
-		echo json_encode($quests->result());
+		foreach($quests->result() as $q){
+			$data1[]=array(
+				"subj_desc"=>htmlspecialchars($q->subj_desc),
+				"subj_file"=>htmlspecialchars($q->subj_file),
+				"subj_id"=>htmlspecialchars($q->subj_id),
+				"subj_name"=>htmlspecialchars($q->subj_name),
+				"testq_0"=>htmlspecialchars($q->testq_0),
+				"testq_1"=>htmlspecialchars($q->testq_1),
+				"testq_2"=>htmlspecialchars($q->testq_2),
+				"testq_3"=>htmlspecialchars($q->testq_3),
+				"testq_4"=>htmlspecialchars($q->testq_4),
+				"testq_ans"=>htmlspecialchars($q->testq_ans),
+				"testq_hint"=>htmlspecialchars($q->testq_hint),
+				"testq_id"=>htmlspecialchars($q->testq_id),
+				"testq_type"=>htmlspecialchars($q->testq_type)
+			);
+		}
+		
+		echo json_encode($data1);
 
 	}
 

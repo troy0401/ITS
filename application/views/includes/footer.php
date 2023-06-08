@@ -312,15 +312,16 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
                             var total_display=total_quest+" of "+count_quest;
                             $('#total_count').html(total_display);
                             $("#submitExamForm button[type=submit]").prop('disabled',true);
+							$("#submitExamForm button[type=button]").css({"display":"none"});	
 							}else{
 								$('.hint'+next_quest+'').css({"display":"block"});
-								$('.button_handler').append('<button type="button" class="btn btn-warning">Skip</button>');
+								$("#submitExamForm button[type=button]").css({"display":"block"});	
 							}
                           }else{
-							//stopCountdown();
-                            //stopTimer();
+							stopCountdown();
+                            stopTimer();
                             //--> not part of updated GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
-							//getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
+							getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
                             $('#question'+next_quest+'').remove();
                             $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
                             $('.submit_quiz').click(function(){

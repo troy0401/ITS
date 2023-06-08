@@ -81,7 +81,7 @@
                                             </div>
                                             <div class="modal-footer button_handler">
                                                 <button type="submit" disabled class="btn btn-primary">Submit</button>
-                                                <button type="button" onclick="skipQuest();" class="btn btn-warning">Skip</button>
+                                                <button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>
                                             </div>
                                              </form>
                                         </div>
