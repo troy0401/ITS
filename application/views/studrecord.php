@@ -509,6 +509,7 @@
 														<th>Student's Answer</th>
 														<th>Hint</th>
 														<th>Time per question</th>
+                                                        <th>Certainty</th>
 													</tr>
 												</thead>
 												<tbody>

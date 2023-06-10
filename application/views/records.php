@@ -503,12 +503,14 @@
 									<div class="data-tables">
 											<table id="studRecordHistPractice" class="text-center" width="100%">
 												<thead class="bg-light text-capitalize">
-													<tr>
+                                                <tr>
 														<th>Question No.</th>
 														<th>Test Question</th>
+                                                        <th>No. of Attempts</th>
 														<th>Student's Answer</th>
 														<th>Hint</th>
 														<th>Time per question</th>
+                                                        <th>Certainty</th>
 													</tr>
 												</thead>
 												<tbody>
