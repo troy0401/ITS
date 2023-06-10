@@ -160,6 +160,7 @@ class Main extends CI_Controller {
                         $accnt = $a->accnt_name;
 						$type = $a->accnt_type;
 						$img = $a->accnt_img;
+						$user = $a->accnt_user;
 
                     }
                     $newdata = array(
@@ -167,6 +168,7 @@ class Main extends CI_Controller {
                       'accnt_name'=>$accnt,
 					  'accnt_type'=>$type,
 					  'accnt_img'=>$img,
+					  'accnt_user'=>$user
                     );
 
                     //$this->model->update_where('accounts', $data, 'account_id', $acc_id);

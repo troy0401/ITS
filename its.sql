@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 10, 2023 at 08:39 AM
+-- Generation Time: Jun 10, 2023 at 07:01 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -68,7 +68,7 @@ CREATE TABLE `exam` (
 --
 
 INSERT INTO `exam` (`exam_id`, `subj_id`, `accnt_id`, `exam_type`, `exam_status`, `exam_trial`, `exam_set_trial`) VALUES
-(1, 1, 1, 1, 0, '1', '10');
+(1, 1, 1, 1, 0, '13', '30');
 
 -- --------------------------------------------------------
 
@@ -120,6 +120,7 @@ CREATE TABLE `finals_report` (
   `fr_studAns` text NOT NULL COMMENT 'answer',
   `fr_testStat` text NOT NULL COMMENT '1=right answer 0=wrong answer',
   `fr_TimeQuest` text NOT NULL COMMENT 'time per quest',
+  `finals_Items` int(11) NOT NULL,
   `testq_id` int(11) NOT NULL,
   `accnt_id` int(11) NOT NULL,
   `finals_ID` int(11) NOT NULL
@@ -177,7 +178,19 @@ CREATE TABLE `scores` (
 --
 
 INSERT INTO `scores` (`score_id`, `subj_id`, `accnt_id`, `num_of_items`, `score`, `score_type`) VALUES
-(1, 1, 1, 10, 5, 1);
+(1, 1, 1, 10, 3, 1),
+(2, 1, 1, 10, 4, 1),
+(3, 1, 1, 0, 0, 1),
+(4, 1, 1, 10, 1, 1),
+(5, 1, 1, 0, 0, 1),
+(6, 1, 1, 0, 0, 1),
+(7, 1, 1, 10, 6, 1),
+(8, 1, 1, 10, 4, 1),
+(9, 1, 1, 10, 1, 1),
+(10, 1, 1, 10, 3, 1),
+(11, 1, 1, 10, 3, 1),
+(12, 1, 1, 10, 5, 1),
+(13, 1, 1, 10, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -220,7 +233,19 @@ CREATE TABLE `test_history` (
 --
 
 INSERT INTO `test_history` (`th_ID`, `th_Type`, `subj_id`, `accnt_id`) VALUES
-(1, 1, 1, 1);
+(1, 1, 1, 1),
+(2, 1, 1, 1),
+(3, 1, 1, 1),
+(4, 1, 1, 1),
+(5, 1, 1, 1),
+(6, 1, 1, 1),
+(7, 1, 1, 1),
+(8, 1, 1, 1),
+(9, 1, 1, 1),
+(10, 1, 1, 1),
+(11, 1, 1, 1),
+(12, 1, 1, 1),
+(13, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -429,16 +454,86 @@ CREATE TABLE `test_report` (
 --
 
 INSERT INTO `test_report` (`testr_ID`, `testr_StudAns`, `testr_Status`, `testr_TimeQuest`, `testr_Type`, `testr_Attempt`, `testr_Cert`, `testq_id`, `accnt_id`, `th_ID`, `score_id`) VALUES
-(1, 'Our test statistic was negative.', 1, '00:00:03', 1, 1, '127', 3, 1, 1, 1),
-(2, 'Smaller than 5.', 1, '00:00:07', 1, 2, '127', 9, 1, 1, 1),
-(3, 'test', 0, '00:00:04', 1, 2, '127', 85, 1, 1, 1),
-(4, 'None of the above.', 1, '00:00:04', 1, 1, '127', 14, 1, 1, 1),
-(5, 'E(b  ̃ 2) > −10.', 1, '00:00:02', 1, 1, '127', 6, 1, 1, 1),
-(6, 'test', 0, '00:00:03', 1, 2, '127', 98, 1, 1, 1),
-(7, 'test', 0, '00:00:02', 1, 2, '127', 97, 1, 1, 1),
-(8, 'Neither (a) nor (b).', 0, '00:00:02', 1, 3, '127', 10, 1, 1, 1),
-(9, 'The R2 for the regression will either stay the same or increase.', 1, '00:00:02', 1, 1, '127', 1, 1, 1, 1),
-(10, 'test', 0, '00:00:05', 1, 1, '127', 89, 1, 1, 1);
+(1, 'x is measured with some random error.', 127, '00:00:03', 1, 1, '127', 4, 1, 1, 1),
+(2, 'test', 127, '00:00:02', 1, 2, '127', 91, 1, 1, 1),
+(3, 'test', 127, '00:00:14', 1, 1, '127', 82, 1, 1, 1),
+(4, 'None of the above.', 127, '00:00:03', 1, 1, '127', 14, 1, 1, 1),
+(5, 'All of the above.', 127, '00:00:02', 1, 2, '127', 2, 1, 1, 1),
+(6, 'test', 0, '00:00:03', 1, 2, '0', 97, 1, 2, 2),
+(7, 'tres', 0, '00:00:03', 1, 2, '0', 94, 1, 2, 2),
+(8, 'test', 127, '00:00:03', 1, 1, '127', 82, 1, 2, 2),
+(9, 'None of the above.', 1, '00:00:02', 1, 2, '1', 14, 1, 2, 2),
+(10, 'Random measurement error in y.', 127, '00:00:02', 1, 1, '127', 13, 1, 2, 2),
+(11, 'Multicollinearity problem.', 127, '00:00:02', 1, 1, '127', 19, 1, 2, 2),
+(12, 'The slope coefficient will be statistically significant.', 0, '00:00:01', 1, 2, '0', 15, 1, 2, 2),
+(13, 'The error sum of squares is positive.', 0, '00:00:02', 1, 2, '0', 12, 1, 2, 2),
+(14, 'test', 0, '00:00:02', 1, 2, '0', 98, 1, 2, 2),
+(15, 'test', 127, '00:00:02', 1, 1, '127', 93, 1, 2, 2),
+(16, 'Increase the mean.', 127, '00:00:04', 1, 1, '127', 7, 1, 4, 4),
+(17, 'test', 127, '00:00:08', 1, 1, '127', 93, 1, 4, 4),
+(18, 'All of the above.', 127, '00:00:09', 1, 1, '127', 11, 1, 7, 7),
+(19, 'x is measured with some random error.', 1, '00:00:04', 1, 2, '1', 4, 1, 7, 7),
+(20, 'test', 0, '00:00:07', 1, 2, '0', 93, 1, 7, 7),
+(21, '1234', 1, '00:00:48', 1, 2, '1', 81, 1, 7, 7),
+(22, 'test', 0, '00:00:06', 1, 2, '0', 92, 1, 7, 7),
+(23, 'E(b  ̃ 2) > −10.', 127, '00:00:05', 1, 1, '127', 6, 1, 7, 7),
+(24, 'The magnitude of the standard error for the slope coefficient for income.', 127, '00:00:04', 1, 1, '127', 10, 1, 7, 7),
+(25, 'test', 0, '00:00:04', 1, 2, '0', 88, 1, 7, 7),
+(26, 'Our test statistic was negative.', 127, '00:00:05', 1, 1, '127', 3, 1, 7, 7),
+(27, 'test', 127, '00:01:00', 1, 1, '127', 100, 1, 7, 7),
+(28, 'The magnitude of the standard error for the slope coefficient for income.', 1, '00:00:02', 1, 2, '1', 10, 1, 8, 8),
+(29, 'test', 0, '00:00:04', 1, 2, '0', 88, 1, 8, 8),
+(30, 'test', 0, '00:00:03', 1, 2, '0', 95, 1, 8, 8),
+(31, 'A larger standard error for that slope coefficient.', 0, '00:00:02', 1, 2, '0', 18, 1, 8, 8),
+(32, 'R = β1 + β2A + β2 A2 + ε.', 127, '00:00:01', 1, 1, '127', 8, 1, 8, 8),
+(33, 'The sample range.', 127, '00:00:04', 1, 1, '127', 16, 1, 8, 8),
+(34, 'test', 0, '00:00:04', 1, 2, '0', 97, 1, 8, 8),
+(35, 'test', 127, '00:00:24', 1, 1, '127', 82, 1, 8, 8),
+(36, 'test', 0, '00:00:08', 1, 2, '0', 94, 1, 8, 8),
+(37, 'test', 127, '00:00:05', 1, 1, '127', 101, 1, 8, 8),
+(38, 'test', 0, '00:00:09', 1, 2, '0', 87, 1, 9, 9),
+(39, 'test', 0, '00:00:02', 1, 2, '0', 84, 1, 9, 9),
+(40, 'None of the above.', 1, '00:00:07', 1, 2, '1', 17, 1, 9, 9),
+(41, 'test', 0, '00:00:03', 1, 2, '0', 91, 1, 10, 10),
+(42, 'test', 0, '00:00:02', 1, 2, '0', 88, 1, 10, 10),
+(43, 'tet', 0, '00:00:03', 1, 2, '0', 101, 1, 10, 10),
+(44, 'test', 0, '00:00:20', 1, 2, '0', 90, 1, 10, 10),
+(45, 'The magnitude of the standard error for the slope coefficient for income.', 127, '00:00:03', 1, 1, '127', 10, 1, 10, 10),
+(46, 'None of the above.', 127, '00:00:03', 1, 1, '127', 17, 1, 10, 10),
+(47, 'test', 0, '00:00:04', 1, 2, '0', 97, 1, 10, 10),
+(48, 'test', 0, '00:00:04', 1, 2, '0', 96, 1, 10, 10),
+(49, 'test', 0, '00:00:03', 1, 2, '0', 84, 1, 10, 10),
+(50, 'test', 127, '00:00:03', 1, 1, '127', 82, 1, 10, 10),
+(51, 'test', 0, '00:00:17', 1, 2, '0', 96, 1, 11, 11),
+(52, 'test', 0, '00:00:02', 1, 2, '0', 99, 1, 11, 11),
+(53, 'test', 0, '00:00:02', 1, 2, '0', 90, 1, 11, 11),
+(54, 'R = β1 + β2A + β2 A2 + ε.', 127, '00:00:01', 1, 1, '127', 8, 1, 11, 11),
+(55, 'test', 0, '00:00:03', 1, 2, '0', 88, 1, 11, 11),
+(56, 'test', 0, '00:00:02', 1, 2, '0', 86, 1, 11, 11),
+(57, 'test', 0, '00:00:02', 1, 2, '0', 98, 1, 11, 11),
+(58, 'test', 0, '00:00:02', 1, 2, '0', 85, 1, 11, 11),
+(59, 'The R2 for the regression will either stay the same or increase.', 127, '00:00:02', 1, 1, '127', 1, 1, 11, 11),
+(60, 'None of the above.', 127, '00:00:14', 1, 1, '127', 17, 1, 11, 11),
+(61, 'The magnitude of the standard error for the slope coefficient for income.', 127, '00:00:04', 1, 1, '127', 10, 1, 12, 12),
+(62, 'A larger standard error for that slope coefficient.', 0, '00:00:06', 1, 2, '0', 18, 1, 12, 12),
+(63, 'test', 0, '00:00:03', 1, 2, '0', 81, 1, 12, 12),
+(64, 'All of the above.', 0, '00:00:02', 1, 2, '0', 2, 1, 12, 12),
+(65, 'Our test statistic was negative.', 127, '00:00:02', 1, 1, '127', 3, 1, 12, 12),
+(66, 'test', 0, '00:00:03', 1, 2, '0', 83, 1, 12, 12),
+(67, 'E(b  ̃ 2) > −10.', 127, '00:00:01', 1, 1, '127', 6, 1, 12, 12),
+(68, 'x is measured with some random error.', 127, '00:00:04', 1, 1, '127', 4, 1, 12, 12),
+(69, 'The sample range.', 127, '00:00:03', 1, 1, '127', 16, 1, 12, 12),
+(70, 'werwer', 0, '00:00:03', 1, 3, '0', 82, 1, 12, 12),
+(71, 'test', 0, '00:00:03', 1, 2, '0', 85, 1, 13, 13),
+(72, 'All of the above.', 127, '00:00:02', 1, 1, '127', 11, 1, 13, 13),
+(73, 'The magnitude of the standard error for the slope coefficient for income.', 127, '00:00:03', 1, 1, '127', 10, 1, 13, 13),
+(74, 'test', 0, '00:00:04', 1, 2, '0', 89, 1, 13, 13),
+(75, 'None of the above.', 1, '00:00:02', 1, 2, '1', 14, 1, 13, 13),
+(76, 'Increase the mean.', 1, '00:00:03', 1, 2, '1', 7, 1, 13, 13),
+(77, 'test', 0, '00:00:04', 1, 2, '0', 101, 1, 13, 13),
+(78, 'test', 0, '00:00:02', 1, 2, '0', 99, 1, 13, 13),
+(79, 'test', 0, '00:00:02', 1, 2, '0', 92, 1, 13, 13),
+(80, 'test', 127, '00:02:19', 1, 1, '127', 82, 1, 13, 13);
 
 -- --------------------------------------------------------
 
@@ -606,7 +701,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -618,7 +713,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `test_history`
 --
 ALTER TABLE `test_history`
-  MODIFY `th_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `th_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `test_quest`
@@ -630,7 +725,7 @@ ALTER TABLE `test_quest`
 -- AUTO_INCREMENT for table `test_report`
 --
 ALTER TABLE `test_report`
-  MODIFY `testr_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `testr_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `views`
