@@ -18,6 +18,7 @@
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('accnt_name'); ?><i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" data-toggle="modal" data-target="#profile">Change Profile</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#viewprofile">View Profile</a>
                                 <a class="dropdown-item" href="<?php echo base_url('Main/Logout');?>">Log Out</a>
                             </div>
                         </div>
@@ -242,6 +243,39 @@
                                                 <button type="submit" class="btn btn-primary">Save changes</button>
                                             </div>
                                              </form>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div id="viewprofile" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Profile viewing</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+												<div class="card card-bordered">
+													<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/'.$this->session->userdata('accnt_img')); ?>" alt="image">
+													<div class="card-body">
+														<h5 class="title"><?php echo $this->session->userdata('accnt_name'); ?></h5>
+														<p class="card-text">
+														Username: <?php echo $this->session->userdata('accnt_user'); ?><br>
+														Account Type: <?php $accnt=$this->session->userdata('accnt_type');
+														if($accnt==1){
+															echo "Professor";
+														}else if($accnt==2){
+															echo "Student";
+														}else{
+															echo "Admin";
+														}?>
+														</p>
+													</div>
+												</div>
+												</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                     </div>
