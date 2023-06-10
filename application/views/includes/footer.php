@@ -888,7 +888,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+id['score_id']+'">'+
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
-                        '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
+                        '<h5><code class="text-dark">'+result[i]['testq_0']+'</code></h5></div>'+
 						'<textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="change(null);"></textarea>'+
 						'<h6 class="text-danger hint'+i+'" style="display:none;">[Incorrect]<br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
 						}
