@@ -300,33 +300,39 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 				score_id:$($("#submitExamForm input[type='hidden']")[5]).val(),
 				exam_id:$($("#submitExamForm input[type='hidden']")[6]).val()
             }, function(result){
-                        if(count_quest>total_quest){
+
 							if(result==true){
+								if(count_quest>total_quest){
 								stopTimer();
 								startTimer();
-								total_quest++;
-                            $('#question'+next_quest+'').remove();
-                            next_quest++;
-                            $('#question'+next_quest+'').css({"display":"block"});
-                            var total_display=total_quest+" of "+count_quest;
-                            $('#total_count').html(total_display);
-                            $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" disabled type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');	
+									total_quest++;
+									$('#question'+next_quest+'').remove();
+									next_quest++;
+									$('#question'+next_quest+'').css({"display":"block"});
+									var total_display=total_quest+" of "+count_quest;
+									$('#total_count').html(total_display);
+									$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" disabled type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
+										}else{
+
+									stopCountdown();
+									stopTimer();
+									//--> not part of updated GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+									getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
+									$('#question'+next_quest+'').remove();
+									$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+									$('.submit_quiz').click(function(){
+									$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
+									$('#takeExam_modal').modal('hide');
+									});
+								}
+
 							}else{
-								$('.hint'+next_quest+'').css({"display":"block"});
-								$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:block;" class="btn btn-warning">Skip</button>');
+									$('.hint'+next_quest+'').css({"display":"block"});
+									$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:block;" class="btn btn-warning">Skip</button>');
 							}
-                          }else{
-							stopCountdown();
-                            stopTimer();
-                            //--> not part of updated GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
-							getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
-                            $('#question'+next_quest+'').remove();
-                            $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
-                            $('.submit_quiz').click(function(){
-							$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
-                            $('#takeExam_modal').modal('hide');
-                            });
-                          }
+
+
+						  alert(total_quest);
 						  
             },'json');
         });
@@ -863,7 +869,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+id['score_id']+'">'+
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
-                        '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
+                        '<h5><code class="text-dark">'+result[i]['testq_0']+'</code></h5></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
@@ -1288,13 +1294,14 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 	function viewRecordStudHistoryQuestions1(th_id,type){
 		$('#studRecordHistSummative').DataTable( {
+			 responsive: true,
+			  destroy: true,
             "ajax": {
                     url : "<?php echo base_url("Main/testHistoryQuestions"); ?>",
                     type : 'POST',
 					data: {th_id:th_id,type:type}
-             },
-             responsive: true,
-			  "destroy": true
+             }
+
         } );
 
 	}
@@ -1369,7 +1376,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
             }, function(result){
 						stopTimer();
 						startTimer();
-                        if(count_quest>=total_quest){
+                        if(count_quest>total_quest){
                             $('#question'+next_quest+'').remove();
                             next_quest++;
                             $('#question'+next_quest+'').css({"display":"block"});

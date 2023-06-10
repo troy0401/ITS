@@ -1211,8 +1211,9 @@ class Main extends CI_Controller {
 
           $data = array();
 		  $count=0;
-          foreach($questions->result() as $q) {
+
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+          foreach($questions->result() as $q) {
 			  
                $data[] = array(
                     $count+1,
@@ -1245,9 +1246,9 @@ class Main extends CI_Controller {
 
           $questions = $this->model->select_finals($this->input->post('accnt_id'));
 
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
           $data = array();
           foreach($questions->result() as $q) {
-              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
                     $attempt=$attempt+1,
 					$q->testq_0,
