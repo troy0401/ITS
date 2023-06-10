@@ -1122,6 +1122,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 				for(var i=0; i<result.length; i++){
 				$('.drop_button').append('<a class="dropdown-item" data-toggle="modal" data-target="#viewRecordStud" onclick=viewRecordStudHistory('+accnt_id+','+result[i]['subj_id']+',1)>'+result[i]['subj_name']+'</a>');
 				}
+				$('.drop_button').append('<a class="dropdown-item" data-toggle="modal" data-target="#finalRecord" onclick=viewFinals('+accnt_id+')>Finals Record</a>');
+				
 		},'json');
 
 	}
@@ -1302,6 +1304,19 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
             "ajax": {
                     url : "<?php echo base_url("Main/viewStudSubj"); ?>",
                     type : 'POST'
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
+	}
+
+	function viewFinals(id){
+		$('#finalRecordTable').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/getFinalsReport"); ?>",
+                    type : 'POST',
+					data: {accnt_id:id}
              },
              responsive: true,
 			  "destroy": true

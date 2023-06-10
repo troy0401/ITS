@@ -1083,11 +1083,17 @@ class Main extends CI_Controller {
                 $this->load->library('upload', $config);
                 $this->upload->do_upload('userfile');
                  $data = array(
-                    'accnt_img'=>$this->upload->data('file_name')
+                    'accnt_img'=>$this->upload->data('file_name'),
+					'accnt_user'=>$this->input->post('username'),
+					'accnt_pass'=>password_hash($this->input->post('pass'), PASSWORD_DEFAULT),
+					'accnt_name'=>$this->input->post('fullname')
                     );
 				  $this->session->unset_userdata('accnt_img');
+				  $this->session->unset_userdata('accnt_name');
                 $data['accnt_img'] = $this->upload->data('file_name');
+				$data['accnt_name'] = $this->input->post('fullname');
                 $this->session->set_userdata('accnt_img', $data['accnt_img']);
+				$this->session->set_userdata('accnt_name', $data['accnt_name']);
 
         if($this->model->update_where('account', $data, 'accnt_id', $this->session->userdata('accnt_id'))){
            echo json_encode($this->upload->data('file_name'));
@@ -1214,6 +1220,39 @@ class Main extends CI_Controller {
 					($q->testr_Status==0 ? $q->testq_hint : "Correct Answer"),
 					$q->testr_TimeQuest
       );
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $questions->num_rows(),
+                 "recordsFiltered" => $questions->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
+	 public function getFinalsReport()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $questions = $this->model->select_finals($this->input->post('accnt_id'));
+
+          $data = array();
+          foreach($questions->result() as $q) {
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+               $data[] = array(
+                    $attempt=$attempt+1,
+					$q->testq_0,
+					$q->fr_studAns,
+					($q->fr_testStat==0 ? '<p class="text-danger">'.$q->fr_StudAns.'</p>' : $q->fr_StudAns),
+					($q->fr_testStat==0 ? $q->testq_hint : "Correct Answer"),
+					$q->fr_TimeQuest
+      );
+	  $attempt++;
            }
 
           $output = array(

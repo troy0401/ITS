@@ -303,6 +303,37 @@
                                     </div>
                                 </div>
 
+                                <div id="finalRecord" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Finals Report</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                           <div class="data-tables">
+											<table id="finalRecordTable" class="text-center" width="100%">
+												<thead class="bg-light text-capitalize">
+													<tr>
+														<th>Question No.</th>
+														<th>Given question</th>
+														<th>Student's Answer</th>
+                                                        <th>Correct Answer</th>
+                                                        <th>Time Spent</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div id="editExamSett_modal" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -340,7 +371,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Profile Picture</h5>
+                                                <h5 class="modal-title">Profile Settings</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
 										<form id="profile_form" class="needs-validation" autocomplete="off">
@@ -349,6 +380,18 @@
                                                 <div class="col-md-6 mb-3">
                                                     <label for="validationCustom01">Profile Picture</label>
                                                     <input type="file" name="userfile" accept="image/*" class="form-control"  required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom01">Name</label>
+                                                    <input type="text" name="fullname"  class="form-control"  required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom01">Username</label>
+                                                    <input type="email" name="username"  class="form-control"  required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom01">Password</label>
+                                                    <input type="password" name="pass"  class="form-control"  required>
                                                 </div>
                                             </div>
                                             </div>

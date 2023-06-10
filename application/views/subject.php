@@ -150,6 +150,36 @@
                                     </div>
                                 </div>
 
+                                <div id="finalRecord" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Grant Request</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                           <div class="data-tables">
+											<table id="studFinalRecord" class="text-center" width="100%">
+												<thead class="bg-light text-capitalize">
+													<tr>
+														<th>Subtopic Name</th>
+														<th>Question</th>
+														<th>Student Answer</th>
+                                                        <th>Time Spent</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div id="ViewSubj" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog modal-lg">

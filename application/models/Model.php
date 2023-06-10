@@ -98,6 +98,11 @@ class Model extends CI_Model
         return $qry;
     }
 
+    public function select_finals($id){
+        $qry = $this->db->query("SELECT a.*, b.*, c.* FROM finals a  LEFT JOIN finals_report b ON a.finals_ID=b.finals_ID LEFT JOIN test_quest c ON b.testq_id=c.testq_id WHERE a.accnt_id=$id");
+        return $qry;
+    }
+
      public function select_account($id)
     {
         $qry = $this->db->query("SELECT a.*, a.account_id, b.*, d.* FROM accounts a LEFT JOIN course b ON a.course_id=b.course_id LEFT JOIN rank d ON d.rank_id = a.rank_id WHERE a.account_id='$id'");
