@@ -1210,10 +1210,12 @@ class Main extends CI_Controller {
           $questions = $this->model->select_table_questions($this->input->post('th_id'),$this->input->post('type'));
 
           $data = array();
+		  $count=0;
           foreach($questions->result() as $q) {
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+			  
                $data[] = array(
-                    $q->testq_id,
+                    $count+1,
 					$q->testq_0,
 					$q->testr_Attempt,
 					($q->testr_Status==0 ? '<p class="text-danger">'.$q->testr_StudAns.'</p>' : $q->testr_StudAns),
@@ -1221,6 +1223,7 @@ class Main extends CI_Controller {
 					$q->testr_TimeQuest,
 					($q->testr_Cert==0? "Uncertain" : "Certain")
       );
+	  $count++;
            }
 
           $output = array(
