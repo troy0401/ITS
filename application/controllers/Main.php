@@ -1121,6 +1121,8 @@ class Main extends CI_Controller {
 		$array=array("passed"=>'',"failed"=> '');
 		$passed=0;
 		$fail=0;
+		$get_score;
+		if($count_items>0){
 		foreach($summ->result() as $sum){
 			$get_score=$this->model->select_table_with_id("scores","score_id",$sum->score_id);
 		}
@@ -1133,6 +1135,35 @@ class Main extends CI_Controller {
 				$array["failed"]=$fail=$fail+1;
 				}
 			}
+		}else{
+			$array["passed"]=0;
+			$array["failed"]=0;
+		}
+		echo json_encode($array);
+	}
+
+	public function getPassFailFinals(){
+		$finals=$this->model->getPassFailFinals();
+		$count_items=$finals->num_rows();
+		$array=array("passed"=>'',"failed"=> '');
+		$passed=0;
+		$fail=0;
+		$get_score;
+		if($count_items>0){
+		foreach($finals->result() as $f){
+			$get_score=$this->model->select_dual_column("finals_report","finals_ID",$f->finals_ID,"fr_testStat",1);
+		}
+				$s=$get_score->num_rows();
+				$final=$s/$count_items*100;
+				if($final>=70){
+				$array["passed"]=$passed=$passed+1;
+				}else{
+				$array["failed"]=$fail=$fail+1;
+				}
+		}else{
+			$array["passed"]=0;
+			$array["failed"]=0;
+		}
 		echo json_encode($array);
 	}
 

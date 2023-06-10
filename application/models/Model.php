@@ -24,6 +24,12 @@ class Model extends CI_Model
         return $query;
     }
 
+       public function getPassFailFinals()
+    {
+        $query = $this->db->query("SELECT a.*, b.* FROM finals a LEFT JOIN finals_report b ON a.finals_ID=b.finals_ID");
+        return $query;
+    }
+
        public function select_score_passed($id,$score,$type)
     {
         $query = $this->db->query("SELECT * FROM scores WHERE score >=$score AND subj_id=$id AND score_type=$type;");

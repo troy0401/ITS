@@ -35,7 +35,7 @@
                      <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title"><button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" data-target="#subj">Add Subject <i class="fa fa-plus"></i> </button><button type="button" class="btn btn-warning btn-xl mb-3" data-toggle="modal" data-target="#subj">Final Exam Statistics <i class="fa fa-pie-chart"></i> </button></h4>
+                                <h4 class="header-title"><button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" data-target="#subj">Add Subject <i class="fa fa-plus"></i> </button><button onclick="renderFinalChart();" type="button" class="btn btn-warning btn-xl mb-3" data-toggle="modal" data-target="#finalChart">Final Exam Statistics <i class="fa fa-pie-chart"></i> </button></h4>
                                 <div class="data-tables">
                                     <table id="subjTable" class="text-center">
                                         <thead class="bg-light text-capitalize">
@@ -449,6 +449,28 @@
 													</div>
 												</div>
 												</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div id="finalChart" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Profile Settings</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+										<form id="profile_form" class="needs-validation" autocomplete="off">
+                                            <div class="modal-body">
+												<div class="card h-full">
+													<div class="card-body">
+														<canvas id="viewFinalsChart" height="233"></canvas>
+													</div>
+												</div>
+                                            </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>

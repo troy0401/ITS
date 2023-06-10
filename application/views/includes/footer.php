@@ -1254,11 +1254,22 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
     });
 	}
 
+	function getChartDataFinals(status){
+		var result = $.ajax({
+		url:base_url+"Main/getPassFailFinals",
+		type:"POST",
+		data:{status:status},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+
+	}
+
 	function renderFinalChart(){
 		chart1.destroy();
-		var pass=getChartDataSummative(id,2);
-		var fail=getChartDataSummative(id,2);
-		var ctx = $("#subjChart1");
+		var stat=getChartDataFinals();
+		var ctx = $("#viewFinalsChart");
 		var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'pie',
@@ -1271,7 +1282,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					"red"
                 ],
                 borderColor: '#fff',
-                data: [Number(pass['passed']), Number(fail['failed'])],
+                data: [Number(stat['passed']), Number(stat['failed'])],
             }]
         },
         // Configuration options go here
@@ -1285,6 +1296,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
         }
     });
 	}
+
 
 	function viewRecordStudHistory(subj_id,accnt_id){
 		$('#studRecordPractice').DataTable( {
