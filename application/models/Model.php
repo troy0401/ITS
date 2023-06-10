@@ -98,6 +98,11 @@ class Model extends CI_Model
         return $qry;
     }
 
+    public function select_joinTestHistoryScore($id1,$id2,$id3){
+		$qry = $this->db->query("SELECT a.*, b.* FROM test_history a LEFT JOIN scores b ON a.th_ID=b.score_id WHERE a.subj_id=$id1 AND a.accnt_id=$id2 AND a.th_Type=$id3");
+		return $qry;
+	}
+
     public function select_finals($id){
         $qry = $this->db->query("SELECT a.*, b.*, c.* FROM finals a  LEFT JOIN finals_report b ON a.finals_ID=b.finals_ID LEFT JOIN test_quest c ON b.testq_id=c.testq_id WHERE a.accnt_id=$id");
         return $qry;

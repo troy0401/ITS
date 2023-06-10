@@ -331,8 +331,6 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 									$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:block;" class="btn btn-warning">Skip</button>');
 							}
 
-
-						  alert(total_quest);
 						  
             },'json');
         });
@@ -389,7 +387,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 				duration:$($("#submitFinalExamForm input[type='hidden']")[1]).val(),
 				//score_id:$($("#submitExamForm input[type='hidden']")[3]).val(),
 				final_id:$($("#submitFinalExamForm input[type='hidden']")[2]).val(),
-				accnt_id:<?php echo $this->session->userdata('accnt_id');?>
+				accnt_id:<?php echo $this->session->userdata('accnt_id');?>,
+				num_items:count_quest
             }, function(result){
 						stopTimer();
 						startTimer();
@@ -869,7 +868,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+id['score_id']+'">'+
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
-                        '<h5><code class="text-dark">'+result[i]['testq_0']+'</code></h5></div>'+
+                        '<h5>'+result[i]['testq_0']+'</h5></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
@@ -888,7 +887,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+id['score_id']+'">'+
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
-                        '<h5><code class="text-dark">'+result[i]['testq_0']+'</code></h5></div>'+
+                        '<h5>'+result[i]['testq_0']+'</h5></div>'+
 						'<textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="change(null);"></textarea>'+
 						'<h6 class="text-danger hint'+i+'" style="display:none;">[Incorrect]<br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
 						}
@@ -1255,6 +1254,38 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
     });
 	}
 
+	function renderFinalChart(){
+		chart1.destroy();
+		var pass=getChartDataSummative(id,2);
+		var fail=getChartDataSummative(id,2);
+		var ctx = $("#subjChart1");
+		var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'pie',
+        // The data for our dataset
+        data: {
+            labels: ["Passed", "Failed"],
+            datasets: [{
+                backgroundColor: [
+                    "green",
+					"red"
+                ],
+                borderColor: '#fff',
+                data: [Number(pass['passed']), Number(fail['failed'])],
+            }]
+        },
+        // Configuration options go here
+        options: {
+            legend: {
+                display: true
+            },
+            animation: {
+                easing: "easeInOutBack"
+            }
+        }
+    });
+	}
+
 	function viewRecordStudHistory(subj_id,accnt_id){
 		$('#studRecordPractice').DataTable( {
             "ajax": {
@@ -1280,15 +1311,21 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 
 	function viewRecordStudHistoryQuestions(th_id,type){
-		$('#studRecordHistPractice').DataTable( {
+		$('#studRecordHistPractice').DataTable({
             "ajax": {
                     url : "<?php echo base_url("Main/testHistoryQuestions"); ?>",
                     type : 'POST',
 					data: {th_id:th_id,type:type}
              },
              responsive: true,
-			  "destroy": true
-        } );
+			 "destroy": true,
+			 columnDefs: [
+				{
+					targets: 1,
+					render: $.fn.dataTable.render.text()
+				}
+    ]
+        });
 
 	}
 
@@ -1326,7 +1363,13 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					data: {accnt_id:id}
              },
              responsive: true,
-			  "destroy": true
+			  "destroy": true,
+			   columnDefs: [
+				{
+					targets: 1,
+					render: $.fn.dataTable.render.text()
+				}
+			]
         } );
 
 	}

@@ -141,38 +141,6 @@
                                     </div>
                                 </div>
 
-								 <div id="editSubj" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Update Subject</h5>
-                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                            </div>
-										<form id="form_editSubj" class="needs-validation" autocomplete="off">
-                                            <div class="modal-body">
-                                            <div class="form-row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom01">Subject Name</label>
-                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Subject name" required>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Subject Description</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Subject Description" required>
-                                                </div>
-                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">E-Learning Site (links)</label>
-                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Tutorial Links" required>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                             </form>
-                                        </div>
-                                    </div>
-                                </div>
 
                                  <div id="viewPracticeRequest" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog modal-lg">
@@ -235,137 +203,6 @@
                                 </div>
 
 
-                                 <div id="quest_modal" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Questionaire Details</h5>
-                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                            </div>
-										<form id="form_quest" class="needs-validation" autocomplete="off">
-                                            <div class="modal-body">
-                                            <div class="form-row">
-                                                <div class="col-md-12 mb-3">
-                                                    <label for="validationCustom01">Test Question</label>
-                                                    <textarea class="form-control" id="validationCustom01" placeholder="Subject name" required></textarea>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Answer</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" required>
-                                                </div>
-                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Hint</label>
-                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Test Hint" required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 1</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 2</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 3</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 4</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                             </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                 <div id="editQuest_modal" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Questionaire Details</h5>
-                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                            </div>
-										<form id="editForm_quest" class="needs-validation" autocomplete="off">
-                                            <div class="modal-body">
-                                            <div class="form-row">
-                                                <div class="col-md-12 mb-3">
-                                                    <label for="validationCustom01">Test Question</label>
-                                                    <textarea class="form-control" id="validationCustom01" placeholder="Subject name" required></textarea>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Answer</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" required>
-                                                </div>
-                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Hint</label>
-                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Test Hint" required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 1</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 2</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 3</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Choice 4</label>
-                                                    <input type="text" class="form-control" id="validationCustom03"  required>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                             </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="editExamSett_modal" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Exam Settings</h5>
-                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                            </div>
-										<form id="editExamSett_form" class="needs-validation" autocomplete="off">
-                                            <div class="modal-body">
-                                            <div class="form-row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom01">Exam Type</label>
-                                                    <input type="text" class="form-control" id="validationCustom01" disabled required>
-                                                </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Time Duration (minutes)</label>
-                                                    <input type="number" class="form-control" id="validationCustom02" placeholder="Subject Description" required>
-                                                </div>
-                                                 <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom02">Number of Items</label>
-                                                    <input type="number" class="form-control" id="validationCustom03" placeholder="Tutorial Links" required>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                             </form>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div id="profile" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -403,29 +240,6 @@
                                     </div>
                                     </div>
 
-                                <div id="studRequest_modal" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Attempt Request</h5>
-                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                            </div>
-										<form id="form_request" class="needs-validation" autocomplete="off">
-                                            <div class="modal-body">
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Number of Additional Attempt/s</label>
-                                                    <input type="number" class="form-control" id="validationCustom02" placeholder="Attempts" required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                             </form>
-                                        </div>
-                                    </div>
-                                </div>
-								</div>
-
 								<div id="viewRecordStud" class="modal fade bd-example-modal-lg">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -450,6 +264,7 @@
 													<tr>
 														<th>No. of Attempts</th>
 														<th>Exam Type</th>
+														<th>Score</th>
 														<th>Actions</th>
 													</tr>
 												</thead>
@@ -465,6 +280,7 @@
 													<tr>
 														<th>No. of Attempts</th>
 														<th>Exam Type</th>
+														<th>Score</th>
 														<th>Actions</th>
 													</tr>
 												</thead>
@@ -485,7 +301,7 @@
 
 
 								 <div id="viewRecordHistPractice" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Subject Details</h5>
@@ -506,7 +322,7 @@
 														<th>Question No.</th>
 														<th>Test Question</th>
                                                         <th>No. of Attempts</th>
-														<th>Student's Answer</th>
+														<th>Students Answer</th>
 														<th>Hint</th>
 														<th>Time per question</th>
                                                         <th>Certainty</th>

@@ -1016,7 +1016,8 @@ class Main extends CI_Controller {
 			'fr_TimeQuest'=>$this->input->post('duration'),
 			'testq_id'=>$this->input->post('testq_id'),
 			'accnt_id'=>$this->input->post('accnt_id'),
-			'finals_ID'=>$this->input->post('final_id')
+			'finals_ID'=>$this->input->post('final_id'),
+			'finals_Items'=>$this->input->post('num_items')
 		);
 		$id=$this->model->insert_into("finals_report", $exam_ans);
 		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
@@ -1140,7 +1141,7 @@ class Main extends CI_Controller {
         $length = intval($this->input->post("length"));
 
 
-          $rec = $this->model->select_tri_column("test_history","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'),"th_Type",$this->input->post('type'));
+          $rec = $this->model->select_joinTestHistoryScore($this->input->post('subj_id'),$this->input->post('accnt_id'),$this->input->post('type'));
 
           $data = array();
 		$attempt=0;
@@ -1149,6 +1150,7 @@ class Main extends CI_Controller {
                $data[] = array(
                     $attempt+1,
 					'Practice Exam',
+					$r->score,
                                                 '<button data-toggle="modal" data-target="#viewRecordHistPractice" onclick="viewRecordStudHistoryQuestions('.$r->th_ID.',1);" type="button" class="btn btn-primary">
                                                 View Test report
                                             </button>'
@@ -1173,7 +1175,7 @@ class Main extends CI_Controller {
         $length = intval($this->input->post("length"));
 
 
-          $rec = $this->model->select_tri_column("test_history","subj_id",$this->input->post('subj_id'),"accnt_id",$this->input->post('accnt_id'),"th_Type",$this->input->post('type'));
+          $rec = $this->model->select_joinTestHistoryScore($this->input->post('subj_id'),$this->input->post('accnt_id'),$this->input->post('type'));
 
           $data = array();
 		$attempt=0;
@@ -1181,8 +1183,9 @@ class Main extends CI_Controller {
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
                     $attempt+1,
-					'Summative Exam',
-                                                '<button data-toggle="modal" data-target="#viewRecordHistSummative" onclick="viewRecordStudHistoryQuestions1('.$r->th_ID.',2);" type="button" class="btn btn-primary">
+					'Practice Exam',
+					$r->score,
+                                                '<button data-toggle="modal" data-target="#viewRecordHistPractice" onclick="viewRecordStudHistoryQuestions('.$r->th_ID.',1);" type="button" class="btn btn-primary">
                                                 View Test report
                                             </button>'
       );
