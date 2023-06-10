@@ -126,7 +126,7 @@
                                                     <input value="" type="hidden">
                                                 </div>
                                             </div>
-                                            <div class="modal-footer button_attempt">
+                                            <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Next</button>
                                             </div>

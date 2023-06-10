@@ -304,17 +304,16 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 							if(result==true){
 								stopTimer();
 								startTimer();
+								total_quest++;
                             $('#question'+next_quest+'').remove();
                             next_quest++;
                             $('#question'+next_quest+'').css({"display":"block"});
-                            total_quest++;
                             var total_display=total_quest+" of "+count_quest;
                             $('#total_count').html(total_display);
-                            $("#submitExamForm button[type=submit]").prop('disabled',true);
-							$("#submitExamForm button[type=button]").css({"display":"none"});	
+                            $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" disabled type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');	
 							}else{
 								$('.hint'+next_quest+'').css({"display":"block"});
-								$("#submitExamForm button[type=button]").css({"display":"block"});	
+								$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:block;" class="btn btn-warning">Skip</button>');
 							}
                           }else{
 							stopCountdown();
@@ -324,12 +323,11 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
                             $('#question'+next_quest+'').remove();
                             $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
                             $('.submit_quiz').click(function(){
+							$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
                             $('#takeExam_modal').modal('hide');
-							$("#submitExamForm button[type=submit]").prop('disabled',true);
-							$("#submitExamForm button[type=button]").css({"display":"none"});
                             });
                           }
-
+						  
             },'json');
         });
 
@@ -674,8 +672,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						inactive='<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+(learnExamData.length>0 ? '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
 
 						request_button=(learnExamData.length>0 ? '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
-						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
-						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>');
+						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
+						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
 
 						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage1(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
 
@@ -1356,15 +1354,14 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
             }, function(result){
 						stopTimer();
 						startTimer();
-                        if(count_quest>total_quest){
+                        if(count_quest>=total_quest){
                             $('#question'+next_quest+'').remove();
                             next_quest++;
                             $('#question'+next_quest+'').css({"display":"block"});
                             total_quest++;
                             var total_display=total_quest+" of "+count_quest;
                             $('#total_count').html(total_display);
-                            $("#submitExamForm button[type=submit]").prop('disabled',true);
-							$("#submitExamForm button[type=button]").css({"display":"none"});
+                            $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" disabled type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
                           }else{
 							stopCountdown();
                             stopTimer();
@@ -1373,9 +1370,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
                             $('#question'+next_quest+'').remove();
                             $('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
                             $('.submit_quiz').click(function(){
+								$('.button_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
                                $('#takeExam_modal').modal('hide');
-                               $('.button_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
-
                             });
                           }
 

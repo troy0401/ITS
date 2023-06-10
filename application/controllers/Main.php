@@ -733,15 +733,26 @@ class Main extends CI_Controller {
 							);
 							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
 						}
+						// $output=system('/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py', $attempt,$result);
+						// echo $output;
+						$pythonCommand=system("/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py $attempt $result", $certainty);
+						//$certainty = shell_exec($pythonCommand);
+						//ob_end_clean(); //Use this instead of ob_flush()
 						$condition=true;
-						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt, 'testr_Cert'=>$certainty);
 						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
 					}else{
-						$result=2;
-						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						// $output=system('/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py', $attempt,$result);
+						// echo $ouput;
+						$result=0;
+						$pythonCommand=system("/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py $attempt $result", $certainty);
+						//$certainty = shell_exec($pythonCommand);
+						//ob_end_clean(); //Use this instead of ob_flush()
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$certainty);
 						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
 						$condition=false;
 					}
+					
 				}
 			}else{
 				foreach($qry->result() as $q){
@@ -757,12 +768,22 @@ class Main extends CI_Controller {
 							);
 							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
 						}
+						// $output=system('/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py', $attempt,$result);
+						// echo $output;
+						$pythonCommand=system("/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py $attempt $result", $certainty);
+						//$certainty = shell_exec($pythonCommand);
+						//ob_end_clean(); //Use this instead of ob_flush()
 						$condition=true;
-						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$certainty);
 						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
 					}else{
-						$result=2;
-						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$result=0;
+						// $ouput=system('/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py', $attempt,$result);
+						// echo $ouput;
+						$pythonCommand=system("/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py $attempt $result", $certainty);
+						//$certainty = shell_exec($pythonCommand);
+						//ob_end_clean(); //Use this instead of ob_flush()
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$certainty);
 						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
 						$condition=true;
 					}
@@ -795,12 +816,20 @@ class Main extends CI_Controller {
 							);
 							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
 						}
+						// $ouput=system('/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py', $attempt, $result);
+						// echo $ouput;
+						$pythonCommand=system("/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py $attempt $result", $certainty);
+						//$certainty = shell_exec($pythonCommand);
 						$condition=true;
-						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$certainty);
 						$this->model->update_where('test_report', $data, 'testr_ID', $id);
 					}else{
-						$result=2;
-						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt);
+						$result=0;
+						// $ouput=system('/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py', $attempt, $result);
+						// echo $ouput;
+						$pythonCommand=system("/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py $attempt $result", $certainty);
+						//$certainty = shell_exec($pythonCommand);
+						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$certainty);
 						$this->model->update_where('test_report', $data, 'testr_ID', $id);
 						$condition=false;
 					}
@@ -1180,9 +1209,9 @@ class Main extends CI_Controller {
                $data[] = array(
                     $q->testq_id,
 					$q->testq_0,
-					$q->testq_Attempts,
-					($q->testr_Status==2 ? '<p class="text-danger">'.$q->testr_StudAns.'</p>' : $q->testr_StudAns),
-					($q->testr_Status==2 ? $q->testq_hint : "Correct Answer"),
+					$q->testr_Attempt,
+					($q->testr_Status==0 ? '<p class="text-danger">'.$q->testr_StudAns.'</p>' : $q->testr_StudAns),
+					($q->testr_Status==0 ? $q->testq_hint : "Correct Answer"),
 					$q->testr_TimeQuest
       );
            }
