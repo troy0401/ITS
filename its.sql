@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 10, 2023 at 07:01 PM
+-- Generation Time: Jun 11, 2023 at 01:35 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -109,6 +109,13 @@ CREATE TABLE `finals` (
   `accnt_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `finals`
+--
+
+INSERT INTO `finals` (`finals_ID`, `accnt_id`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -125,6 +132,13 @@ CREATE TABLE `finals_report` (
   `accnt_id` int(11) NOT NULL,
   `finals_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `finals_report`
+--
+
+INSERT INTO `finals_report` (`fr_ID`, `fr_studAns`, `fr_testStat`, `fr_TimeQuest`, `finals_Items`, `testq_id`, `accnt_id`, `finals_ID`) VALUES
+(1, '1', '1', '001', 30, 5, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -677,13 +691,13 @@ ALTER TABLE `exam_settings`
 -- AUTO_INCREMENT for table `finals`
 --
 ALTER TABLE `finals`
-  MODIFY `finals_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `finals_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `finals_report`
 --
 ALTER TABLE `finals_report`
-  MODIFY `fr_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `fr_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lesson_status`
