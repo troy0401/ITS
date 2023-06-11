@@ -823,7 +823,7 @@ class Main extends CI_Controller {
 						}
 						// $ouput=system('/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py', $attempt, $result);
 						// echo $ouput;
-						$pythonCommand=system("/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py $attempt $result", $result);
+
 						//$result = shell_exec($pythonCommand);
 						$condition=true;
 						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$result);
@@ -832,7 +832,7 @@ class Main extends CI_Controller {
 						$result=0;
 						// $ouput=system('/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py', $attempt, $result);
 						// echo $ouput;
-						$pythonCommand=system("/usr/bin/python3 /opt/lampp/htdocs/ITS/python/main.py $attempt $result", $result);
+
 						//$result = shell_exec($pythonCommand);
 						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$result);
 						$this->model->update_where('test_report', $data, 'testr_ID', $id);

@@ -119,7 +119,7 @@
                                             <form id="practiceExamStartForm">
                                             <div class="modal-body">
                                                 <div class="form-row">
-                                                    <h4>Please read the questions carefully. There are only <b>10</b> attempts per question. Click on <u>Next</u> button to proceed to the exam.</h4>
+                                                    <h4>Please read the questions carefully. Answers must be in lowercase (except in code evaluation). Obeserve proper spacing. There are only <b>10</b> attempts per question. Click on <u>Next</u> button to proceed to the exam.</h4>
                                                     <input value="" type="hidden">
                                                     <input value="" type="hidden">
                                                     <input value="" type="hidden">

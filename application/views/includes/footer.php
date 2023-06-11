@@ -1135,6 +1135,29 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 	}
 
+	function viewRecordStudHistory(accnt_id,subj_id){
+		$('#studRecordPractice').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/testHistory"); ?>",
+                    type : 'POST',
+					data: {subj_id:subj_id,accnt_id:accnt_id,type:1}
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
+		$('#studRecordSummative').DataTable( {
+            "ajax": {
+                    url : "<?php echo base_url("Main/testHistory1"); ?>",
+                    type : 'POST',
+					data: {subj_id:subj_id,accnt_id:accnt_id,type:2}
+             },
+             responsive: true,
+			  "destroy": true
+        } );
+
+	}
+
 	function viewRecordStud(accnt_id,subj_id){
 		 $('#practiceStud').DataTable( {
             "ajax": {
@@ -1345,28 +1368,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 	}
 
 
-	function viewRecordStudHistory(subj_id,accnt_id){
-		$('#studRecordPractice').DataTable( {
-            "ajax": {
-                    url : "<?php echo base_url("Main/testHistory"); ?>",
-                    type : 'POST',
-					data: {subj_id:subj_id,accnt_id:accnt_id,type:1}
-             },
-             responsive: true,
-			  "destroy": true
-        } );
 
-		$('#studRecordSummative').DataTable( {
-            "ajax": {
-                    url : "<?php echo base_url("Main/testHistory1"); ?>",
-                    type : 'POST',
-					data: {subj_id:subj_id,accnt_id:accnt_id,type:2}
-             },
-             responsive: true,
-			  "destroy": true
-        } );
-
-	}
 
 
 	function viewRecordStudHistoryQuestions(th_id,type){
