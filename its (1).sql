@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 11, 2023 at 01:35 AM
+-- Generation Time: Jun 11, 2023 at 07:52 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -68,7 +68,9 @@ CREATE TABLE `exam` (
 --
 
 INSERT INTO `exam` (`exam_id`, `subj_id`, `accnt_id`, `exam_type`, `exam_status`, `exam_trial`, `exam_set_trial`) VALUES
-(1, 1, 1, 1, 0, '13', '30');
+(1, 1, 1, 1, 1, '14', '30'),
+(2, 1, 1, 2, 1, '1', '1'),
+(3, 2, 1, 1, 0, '0', '10');
 
 -- --------------------------------------------------------
 
@@ -158,7 +160,8 @@ CREATE TABLE `lesson_status` (
 --
 
 INSERT INTO `lesson_status` (`ls_id`, `subj_id`, `accnt_id`, `ls_status`) VALUES
-(1, 1, 1, 0);
+(1, 1, 1, 1),
+(2, 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -204,7 +207,9 @@ INSERT INTO `scores` (`score_id`, `subj_id`, `accnt_id`, `num_of_items`, `score`
 (10, 1, 1, 10, 3, 1),
 (11, 1, 1, 10, 3, 1),
 (12, 1, 1, 10, 5, 1),
-(13, 1, 1, 10, 5, 1);
+(13, 1, 1, 10, 5, 1),
+(14, 1, 1, 10, 8, 1),
+(15, 1, 1, 30, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -216,18 +221,19 @@ CREATE TABLE `subject` (
   `subj_id` int(11) NOT NULL,
   `subj_name` varchar(255) NOT NULL,
   `subj_desc` text NOT NULL,
-  `subj_file` text NOT NULL COMMENT 'link of learning resources'
+  `subj_file` text NOT NULL COMMENT 'link of learning resources',
+  `subj_file2` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `subject`
 --
 
-INSERT INTO `subject` (`subj_id`, `subj_name`, `subj_desc`, `subj_file`) VALUES
-(1, 'Subtopic 1', 'Description1', 'https://www.youtube.com/watch?v=cvhyJT9c0ac'),
-(2, 'Subtopic 2', 'Description 2', 'https://www.youtube.com/watch?v=SwaVN0epc0w'),
-(3, 'dhgfhgfg', 'rhtfhf', 'ygjjjhk'),
-(4, 'Subtopic 4', 'Description 4', 'https://www.youtube.com/watch?v=8hly31xKli0');
+INSERT INTO `subject` (`subj_id`, `subj_name`, `subj_desc`, `subj_file`, `subj_file2`) VALUES
+(1, 'Subtopic 1', 'Description1', 'https://www.youtube.com/watch?v=cvhyJT9c0ac', 'https://www.techtarget.com/searchenterpriseai/definition/machine-learning-ML'),
+(2, 'Subtopic 2', 'Description 2', 'https://www.youtube.com/watch?v=SwaVN0epc0w', ''),
+(3, 'dhgfhgfg', 'rhtfhf', 'ygjjjhk', ''),
+(4, 'Subtopic 4', 'Description 4', 'https://www.youtube.com/watch?v=8hly31xKli0', '');
 
 -- --------------------------------------------------------
 
@@ -259,7 +265,9 @@ INSERT INTO `test_history` (`th_ID`, `th_Type`, `subj_id`, `accnt_id`) VALUES
 (10, 1, 1, 1),
 (11, 1, 1, 1),
 (12, 1, 1, 1),
-(13, 1, 1, 1);
+(13, 1, 1, 1),
+(14, 1, 1, 1),
+(15, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -547,7 +555,47 @@ INSERT INTO `test_report` (`testr_ID`, `testr_StudAns`, `testr_Status`, `testr_T
 (77, 'test', 0, '00:00:04', 1, 2, '0', 101, 1, 13, 13),
 (78, 'test', 0, '00:00:02', 1, 2, '0', 99, 1, 13, 13),
 (79, 'test', 0, '00:00:02', 1, 2, '0', 92, 1, 13, 13),
-(80, 'test', 127, '00:02:19', 1, 1, '127', 82, 1, 13, 13);
+(80, 'test', 127, '00:02:19', 1, 1, '127', 82, 1, 13, 13),
+(81, 'Centered at the population mean.', 127, '00:00:02', 1, 1, '127', 20, 1, 14, 14),
+(82, 'test', 0, '00:00:02', 1, 2, '0', 84, 1, 14, 14),
+(83, 'All of the above.', 127, '00:00:03', 1, 1, '127', 11, 1, 14, 14),
+(84, 'Random measurement error in y.', 1, '00:00:03', 1, 2, '1', 94, 1, 14, 14),
+(85, 'x is measured with some random error.', 127, '00:00:02', 1, 1, '127', 4, 1, 14, 14),
+(86, 'Switching from a 95% confidence interval to a 99% confidence interval.', 127, '00:00:17', 1, 1, '127', 83, 1, 14, 14),
+(87, 'E(b  ̃ 2) > −10.', 127, '00:00:02', 1, 1, '127', 6, 1, 14, 14),
+(88, 'test', 0, '00:00:02', 1, 2, '0', 95, 1, 14, 14),
+(89, 'Multicollinearity problem.', 127, '00:00:23', 1, 1, '127', 100, 1, 14, 14),
+(90, 'None of the above.', 1, '00:00:02', 1, 2, '1', 14, 1, 14, 14),
+(91, 'test', 2, '00:00:04', 2, 1, '', 90, 1, 15, 15),
+(92, 'test', 2, '00:00:03', 2, 1, '', 97, 1, 15, 15),
+(93, 'test', 2, '00:00:02', 2, 1, '', 89, 1, 15, 15),
+(94, 'The sample range.', 1, '00:00:02', 2, 1, '', 16, 1, 15, 15),
+(95, 'test', 2, '00:00:02', 2, 1, '', 88, 1, 15, 15),
+(96, 'test', 2, '00:00:02', 2, 1, '', 100, 1, 15, 15),
+(97, 'test', 2, '00:00:04', 2, 1, '', 98, 1, 15, 15),
+(98, 'The R2 for the regression will either stay the same or increase.', 1, '00:00:02', 2, 1, '', 1, 1, 15, 15),
+(99, 'Not enough information.', 2, '00:00:01', 2, 1, '', 9, 1, 15, 15),
+(100, 'A smaller F statistic for the regression.', 2, '00:00:01', 2, 1, '', 18, 1, 15, 15),
+(101, 'Switching from a 95% confidence interval to a 99% confidence interval.', 1, '00:00:01', 2, 1, '', 2, 1, 15, 15),
+(102, 'The magnitude of the slope coefficient will be equal to the magnitude of the correlation between GPA and SAT score.', 2, '00:00:01', 2, 1, '', 15, 1, 15, 15),
+(103, 'y is measured with some random error.', 2, '00:00:01', 2, 1, '', 4, 1, 15, 15),
+(104, 'The skewness for the sample is zero.', 2, '00:00:01', 2, 1, '', 11, 1, 15, 15),
+(105, 'Equal to the R2 of the restricted model.', 2, '00:00:01', 2, 1, '', 5, 1, 15, 15),
+(106, 'test', 2, '00:00:03', 2, 1, '', 99, 1, 15, 15),
+(107, 'test', 2, '00:00:03', 2, 1, '', 93, 1, 15, 15),
+(108, 'test', 2, '00:00:04', 2, 1, '', 85, 1, 15, 15),
+(109, 'test', 2, '00:00:02', 2, 1, '', 84, 1, 15, 15),
+(110, 'test', 2, '00:00:02', 2, 1, '', 96, 1, 15, 15),
+(111, 'The error sum of squares is zero.', 2, '00:00:02', 2, 1, '', 12, 1, 15, 15),
+(112, 'test', 2, '00:00:02', 2, 1, '', 87, 1, 15, 15),
+(113, 'test', 2, '00:00:02', 2, 1, '', 83, 1, 15, 15),
+(114, 'The expected value of the slope coefficient for income.', 2, '00:00:02', 2, 1, '', 10, 1, 15, 15),
+(115, 'Centered at the population mean.', 1, '00:00:01', 2, 1, '', 20, 1, 15, 15),
+(116, 'Our test statistic was negative.', 1, '00:00:03', 2, 1, '', 3, 1, 15, 15),
+(117, 'Choosing an incorrect functional form for the regression equation.', 2, '00:00:01', 2, 1, '', 13, 1, 15, 15),
+(118, 'Lower the R2 .', 2, '00:00:01', 2, 1, '', 14, 1, 15, 15),
+(119, 'test', 2, '00:00:02', 2, 1, '', 101, 1, 15, 15),
+(120, 'test', 2, '00:00:02', 2, 1, '', 95, 1, 15, 15);
 
 -- --------------------------------------------------------
 
@@ -679,7 +727,7 @@ ALTER TABLE `account`
 -- AUTO_INCREMENT for table `exam`
 --
 ALTER TABLE `exam`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `exam_settings`
@@ -703,7 +751,7 @@ ALTER TABLE `finals_report`
 -- AUTO_INCREMENT for table `lesson_status`
 --
 ALTER TABLE `lesson_status`
-  MODIFY `ls_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ls_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `requests`
@@ -715,7 +763,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -727,7 +775,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `test_history`
 --
 ALTER TABLE `test_history`
-  MODIFY `th_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `th_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `test_quest`
@@ -739,7 +787,7 @@ ALTER TABLE `test_quest`
 -- AUTO_INCREMENT for table `test_report`
 --
 ALTER TABLE `test_report`
-  MODIFY `testr_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `testr_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `views`

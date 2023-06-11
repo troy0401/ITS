@@ -1173,6 +1173,16 @@ class Main extends CI_Controller {
 		echo json_encode($array);
 	}
 
+	public function getCertainty(){
+		$certain=$this->model->getCertaintyStat($this->input->post('subj'),1);
+		$uncertain=$this->model->getCertaintyStat($this->input->post('subj'),0);
+		$array=array("certain"=>'',"uncertain"=> '');
+			$array["certain"]=$certain->num_rows();
+			$array["uncertain"]=$uncertain->num_rows();
+
+		echo json_encode($array);
+	}
+
 	public function testHistory()//admin view of modules
      {
         $draw = intval($this->input->post("draw"));

@@ -41,6 +41,11 @@ class Model extends CI_Model
 		return $query;
 	}
 
+	public function getCertaintyStat($subj,$type){
+		$query = $this->db->query("SELECT a.*, b.* FROM test_report a left join test_history b on a.th_ID=b.th_ID WHERE b.subj_id=$subj and a.testr_Type=1 and a.testr_Cert=$type");
+		return $query;
+	}
+
        public function select_score_failed($id,$score,$type)
     {
         $query = $this->db->query("SELECT * FROM scores WHERE score <=$score AND subj_id=$id AND score_type=$type;");

@@ -1257,10 +1257,22 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
     });
 	}
 
+	function getChartDataCert(subj,type){
+		var result = $.ajax({
+		url:base_url+"Main/getCertainty",
+		type:"POST",
+		data:{subj:subj,type:type},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+
+	}
+
 	function renderSubjCertChart(id){
 		chart1.destroy();
-		var pass=getChartDataSummative(id,2);
-		var fail=getChartDataSummative(id,2);
+		var pass=getChartDataCert(id,1);
+		var fail=getChartDataCert(id,1);
 		var ctx = $("#subjCertChart");
 		var chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -1274,7 +1286,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					"red"
                 ],
                 borderColor: '#fff',
-                data: [Number(pass['passed']), Number(fail['failed'])],
+                data: [Number(pass['certain']), Number(fail['uncertain'])],
             }]
         },
         // Configuration options go here

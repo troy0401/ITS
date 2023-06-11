@@ -369,7 +369,7 @@
                                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#test2" role="tab" aria-controls="profile" aria-selected="false">Summative Exam</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="cert-tab" data-toggle="tab" href="#cert_sub" role="tab" aria-controls="profile" aria-selected="false">Summative Exam</a>
+                                        <a class="nav-link" id="cert-tab" data-toggle="tab" href="#cert_sub" role="tab" aria-controls="profile" aria-selected="false">Certainty</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content mt-3" id="myTabContent">
