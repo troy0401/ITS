@@ -1285,7 +1285,7 @@ class Main extends CI_Controller {
         $start = intval($this->input->post("start"));
         $length = intval($this->input->post("length"));
 
-
+		$attempt=0;
           $questions = $this->model->select_finals($this->input->post('accnt_id'));
 
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
@@ -1295,7 +1295,7 @@ class Main extends CI_Controller {
                     $attempt=$attempt+1,
 					$q->testq_0,
 					$q->fr_studAns,
-					($q->fr_testStat==0 ? '<p class="text-danger">'.$q->fr_StudAns.'</p>' : $q->fr_StudAns),
+					($q->fr_testStat==0 ? '<p class="text-danger">'.$q->fr_studAns.'</p>' : $q->fr_studAns),
 					($q->fr_testStat==0 ? $q->testq_hint : "Correct Answer"),
 					$q->fr_TimeQuest
       );
