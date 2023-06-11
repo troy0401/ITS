@@ -369,6 +369,7 @@
 													<tr>
 														<th>No. of Attempts</th>
 														<th>Exam Type</th>
+														<th>Score</th>
 														<th>Actions</th>
 													</tr>
 												</thead>
@@ -384,6 +385,7 @@
 													<tr>
 														<th>No. of Attempts</th>
 														<th>Exam Type</th>
+														<th>Score</th>
 														<th>Actions</th>
 													</tr>
 												</thead>
@@ -404,7 +406,7 @@
 
 
                                 <div id="viewRecordHistSummative" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Subject Details</h5>
@@ -444,7 +446,7 @@
                                 </div>
 
 								 <div id="viewRecordHistPractice" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Subject Details</h5>
@@ -453,7 +455,7 @@
                                             <div class="modal-body">
 												<ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#test1" role="tab" aria-controls="home" aria-selected="true">Practice Exam</a>
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#test1" role="tab" aria-controls="home" aria-selected="true">Summative Exam</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content mt-3" id="myTabContent">

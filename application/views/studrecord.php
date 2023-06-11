@@ -35,7 +35,7 @@
                      <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
-                            <button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" onclick="viewFinals(<?php echo $this->session->userdata('accnt_id'); ?>);" data-target="#finalRecord">Final Exam records <i class="fa fa-book"></i> </button>
+                            <button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" onclick="viewFinals(<?php echo $this->session->userdata('accnt_id'); ?>);" data-target="#finalRecord">Final Exam records <i class="fa fa-book"></i><h5 class="final_score"></h5> </button>
                                 <div class="data-tables">
                                     <table id="students_subj" class="text-center">
                                         <thead class="bg-light text-capitalize">

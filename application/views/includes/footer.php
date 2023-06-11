@@ -41,6 +41,7 @@
 var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
     $(document).ready(function(){
 		viewStudSubj();
+		final_score(<?php echo $this->session->userdata('accnt_id');?>);
 		var ctx = $("#subjChart");
 		chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -1221,6 +1222,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
         }
     });
 		 renderSubjChart1(id);
+		 renderSubjCertChart(id);
 	}
 
 	function renderSubjChart1(id){
@@ -1234,6 +1236,38 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
         // The data for our dataset
         data: {
             labels: ["Passed", "Failed"],
+            datasets: [{
+                backgroundColor: [
+                    "green",
+					"red"
+                ],
+                borderColor: '#fff',
+                data: [Number(pass['passed']), Number(fail['failed'])],
+            }]
+        },
+        // Configuration options go here
+        options: {
+            legend: {
+                display: true
+            },
+            animation: {
+                easing: "easeInOutBack"
+            }
+        }
+    });
+	}
+
+	function renderSubjCertChart(id){
+		chart1.destroy();
+		var pass=getChartDataSummative(id,2);
+		var fail=getChartDataSummative(id,2);
+		var ctx = $("#subjCertChart");
+		var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'pie',
+        // The data for our dataset
+        data: {
+            labels: ["Certain", "Uncertain"],
             datasets: [{
                 backgroundColor: [
                     "green",
@@ -1454,6 +1488,12 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
                           }
 
             },'json');
+	}
+
+	function final_score(id){
+		$.post(base_url+'Main/getFinalScore',{accnt_id:id}, function(result){
+			$('.final_score').empty().append('['+result['total']+'/'+result['items']+']');
+			},'json');
 	}
 
 

@@ -1222,7 +1222,7 @@ class Main extends CI_Controller {
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
                     $attempt+1,
-					'Practice Exam',
+					'Summative Exam',
 					$r->score,
                                                 '<button data-toggle="modal" data-target="#viewRecordHistPractice" onclick="viewRecordStudHistoryQuestions('.$r->th_ID.',1);" type="button" class="btn btn-primary">
                                                 View Test report
@@ -1341,6 +1341,28 @@ class Main extends CI_Controller {
           echo json_encode($output);
           exit();
      }
+
+     public function getFinalScore(){
+		 $score_details=$this->model->select_table_with_id("finals_report","accnt_id",$this->input->post('accnt_id'));
+		 $array=array("total"=>'',"items"=> '');
+		 $items;
+		 $f_ID;
+		 if($score_details->num_rows()>0){
+		 foreach($score_details->result() as $sd){
+			 $items=$sd->finals_Items;
+			 $f_ID=$sd->finals_ID;
+		}
+		$get_score=$this->model->select_dual_column("finals_report","finals_ID",$f_ID,"fr_testStat",1);
+		$get_score->num_rows();
+
+		$array["total"]=$get_score->num_rows();
+		$array["items"]=$items;
+		 }else{
+		$array["total"]=0;
+		$array["items"]=0;
+		}
+		echo json_encode($array);
+	}
 
 
 

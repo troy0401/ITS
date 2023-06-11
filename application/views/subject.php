@@ -368,6 +368,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#test2" role="tab" aria-controls="profile" aria-selected="false">Summative Exam</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="cert-tab" data-toggle="tab" href="#cert_sub" role="tab" aria-controls="profile" aria-selected="false">Summative Exam</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content mt-3" id="myTabContent">
                                     <div class="tab-pane fade show active" id="test1" role="tabpanel" aria-labelledby="home-tab">
@@ -381,6 +384,14 @@
                                    <div class="card h-full">
 										<div class="card-body">
 											<canvas id="subjChart1" height="233"></canvas>
+										</div>
+									</div>
+
+									</div>
+									<div class="tab-pane fade" id="cert_sub" role="tabpanel" aria-labelledby="profile-tab">
+                                   <div class="card h-full">
+										<div class="card-body">
+											<canvas id="subjCertChart" height="233"></canvas>
 										</div>
 									</div>
 
