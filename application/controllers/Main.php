@@ -465,10 +465,10 @@ class Main extends CI_Controller {
                                                 See Actions
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#ViewSubj" onclick=ViewSubj('.$r->subj_id.')>View Subject</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#ViewSubj" onclick=ViewSubj('.$r->subj_id.')>Exam Settings</a>
                                                 <a class="dropdown-item" onclick="viewStudentRequests('.$r->subj_id.')" data-toggle="modal" data-target="#viewPracticeRequest">View requesting attempts</a>
-                                                <a class="dropdown-item"  data-toggle="modal" data-target="#editSubj" onclick=editSubj('.$r->subj_id.')>Edit</a>
-                                                <a class="dropdown-item"  data-toggle="modal" data-target="#viewSubjRecModal" onclick="renderSubjChart('.$r->subj_id.')" >View Subject Records</a>
+                                                <a class="dropdown-item"  data-toggle="modal" data-target="#editSubj" onclick=editSubj('.$r->subj_id.')>Edit Subtopic Details</a>
+                                                <a class="dropdown-item"  data-toggle="modal" data-target="#viewSubjRecModal" onclick="renderSubjChart('.$r->subj_id.')" >View Subtopic Analytics</a>
                                             </div>
                                         </div>'
       );

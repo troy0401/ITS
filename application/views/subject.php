@@ -8,10 +8,10 @@
                 <div class="row align-items-center">
                     <div class="col-sm-6">
                         <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">Subject</h4>
+                            <h4 class="page-title pull-left">Home</h4>
                             <ul class="breadcrumbs pull-left">
-                                <li><a href="index.html">Home</a></li>
-                                <li><span>Subject</span></li>
+                                <!--<li><a href="index.html">Home</a></li>
+                                <li><span>Subject</span></li>-->
                             </ul>
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                             <img class="avatar user-thumb" src="<?php echo base_url('uploads/'.$this->session->userdata('accnt_img'))?>" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('accnt_name'); ?><i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" data-toggle="modal" data-target="#profile">Change Profile</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#profile">Edit Profile</a>
                                  <a class="dropdown-item" data-toggle="modal" data-target="#viewprofile">View Profile</a>
                                 <a class="dropdown-item" href="<?php echo base_url('Main/Logout');?>">Log Out</a>
                             </div>
@@ -35,12 +35,12 @@
                      <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title"><button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" data-target="#subj">Add Subject <i class="fa fa-plus"></i> </button><button onclick="renderFinalChart();" type="button" class="btn btn-warning btn-xl mb-3" data-toggle="modal" data-target="#finalChart">Final Exam Statistics <i class="fa fa-pie-chart"></i> </button></h4>
+                                <h4 class="header-title"><button type="button" class="btn btn-primary btn-xl mb-3" data-toggle="modal" data-target="#subj">Add Subtopic <i class="fa fa-plus"></i> </button><button onclick="renderFinalChart();" type="button" class="btn btn-warning btn-xl mb-3" data-toggle="modal" data-target="#finalChart">Final Exam Analytics <i class="fa fa-pie-chart"></i> </button></h4>
                                 <div class="data-tables">
                                     <table id="subjTable" class="text-center">
                                         <thead class="bg-light text-capitalize">
                                             <tr>
-                                                <th>Subject Title</th>
+                                                <th>Subtopic Title</th>
                                                 <th>Description</th>
                                                 <th>Link</th>
                                                 <th>Actions</th>
@@ -60,19 +60,19 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Subject Details</h5>
+                                                <h5 class="modal-title">Subtopic Details</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
 										<form id="form_subj" class="needs-validation" autocomplete="off">
                                             <div class="modal-body">
                                             <div class="form-row">
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom01">Subject Name</label>
-                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Subject name" required>
+                                                    <label for="validationCustom01">Subtopic Name</label>
+                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Subtopic name" required>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Subject Description</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Subject Description" required>
+                                                    <label for="validationCustom02">Subtopic Description</label>
+                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Subtopic Description" required>
                                                 </div>
                                                  <div class="col-md-6 mb-3">
                                                     <label for="validationCustom02">E-Learning Site 1 (links)</label>
@@ -97,19 +97,19 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Update Subject</h5>
+                                                <h5 class="modal-title">Update Subtopic</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
 										<form id="form_editSubj" class="needs-validation" autocomplete="off">
                                             <div class="modal-body">
                                             <div class="form-row">
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom01">Subject Name</label>
-                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Subject name" required>
+                                                    <label for="validationCustom01">Subtopic Name</label>
+                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="Subtopic name" required>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">Subject Description</label>
-                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Subject Description" required>
+                                                    <label for="validationCustom02">Subtopic Description</label>
+                                                    <input type="text" class="form-control" id="validationCustom02" placeholder="Subtopic Description" required>
                                                 </div>
                                                  <div class="col-md-6 mb-3">
                                                     <label for="validationCustom02">E-Learning Site 1 (links)</label>
@@ -194,7 +194,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Subject Details</h5>
+                                                <h5 class="modal-title">Exam Settings</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
                                             <div class="modal-body">
@@ -357,7 +357,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Subject Details</h5>
+                                                <h5 class="modal-title">Analytics</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
                                             <div class="modal-body">
@@ -479,7 +479,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Final Exam Statistics</h5>
+                                                <h5 class="modal-title">Final Exam Analytics</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
 										<form id="profile_form" class="needs-validation" autocomplete="off">
