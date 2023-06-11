@@ -75,7 +75,11 @@
                                                     <input type="text" class="form-control" id="validationCustom02" placeholder="Subject Description" required>
                                                 </div>
                                                  <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">E-Learning Site (links)</label>
+                                                    <label for="validationCustom02">E-Learning Site 1 (links)</label>
+                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Tutorial Links" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom02">E-Learning Site 2 (links)</label>
                                                     <input type="text" class="form-control" id="validationCustom03" placeholder="Tutorial Links" required>
                                                 </div>
                                             </div>
@@ -108,7 +112,11 @@
                                                     <input type="text" class="form-control" id="validationCustom02" placeholder="Subject Description" required>
                                                 </div>
                                                  <div class="col-md-6 mb-3">
-                                                    <label for="validationCustom02">E-Learning Site (links)</label>
+                                                    <label for="validationCustom02">E-Learning Site 1 (links)</label>
+                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Tutorial Links" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom02">E-Learning Site 2 (links)</label>
                                                     <input type="text" class="form-control" id="validationCustom03" placeholder="Tutorial Links" required>
                                                 </div>
                                             </div>

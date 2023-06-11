@@ -188,7 +188,8 @@ class Main extends CI_Controller {
         $data = array(
                     "subj_name"=>$data[0],
 					"subj_desc"=>$data[1],
-					"subj_file"=>$data[2]
+					"subj_file"=>$data[2],
+					"subj_file2"=>$data[3]
                 );
          $id=$this->model->insert_into("subject", $data);
 		 $practice=array(
@@ -256,7 +257,8 @@ class Main extends CI_Controller {
                  $data[] = array(
 					"subj_name"  => $s->subj_name,
 					"subj_desc"  => $s->subj_desc,
-					"subj_file" => $s->subj_file
+					"subj_file" => $s->subj_file,
+					"subj_file2" => $s->subj_file2
 
                  );
               }
@@ -292,7 +294,8 @@ class Main extends CI_Controller {
       $data = array(
             'subj_name'=>$post[0],
             'subj_desc'=>$post[1],
-			'subj_file'=>$post[2]
+			'subj_file'=>$post[2],
+			'subj_file2'=>$post[3]
           );
 
     if($this->model->update_where('subject', $data, 'subj_id', $this->input->post('id'))){

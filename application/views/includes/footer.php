@@ -526,6 +526,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					$($('#form_editSubj input')[0]).val(result[0]['subj_name']);
 					$($('#form_editSubj input')[1]).val(result[0]['subj_desc']);
 					$($('#form_editSubj input')[2]).val(result[0]['subj_file']);
+					$($('#form_editSubj input')[3]).val(result[0]['subj_file2']);
 			},'json');
 	}
 
@@ -566,12 +567,12 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 	function Load_sub(id){ //load first subject
 			$.post(base_url+'Main/subjects',
 					function(result){
-						$('#subtopics').append('<button type="button" onclick="ViewSubjStud('+result[0]['subj_id']+',\''+result[0]['subj_name'] +'\',\''+result[0]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[0]['subj_name']+' ('+result[0]['subj_desc']+')</button>');
+						$('#subtopics').append('<button type="button" onclick="ViewSubjStud('+result[0]['subj_id']+',\''+result[0]['subj_name'] +'\',\''+result[0]['subj_file'] +'\',\''+result[0]['subj_file2'] +'\')" class="list-group-item list-group-item-action">'+result[0]['subj_name']+' ('+result[0]['subj_desc']+')</button>');
 						Load_sub1(<?php echo $this->session->userdata('accnt_id');?>);
 			},'json');
 	}
 
-	function ViewSubjStud(id,name,link){
+	function ViewSubjStud(id,name,link,link2){
 		checkSubtopicStatForStud(id,<?php echo $this->session->userdata('accnt_id');?>);
 		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive,request_button;
 		var redirect_button;
@@ -592,7 +593,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
 						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>');
 
-						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
+						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+(link2.length<1 ? '<p>bleh</p>' : '<button type="button" onclick="redirectPage(\''+link2 +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>') : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+(link2.length<1 ? '<p>bleh</p>' : '<button type="button" onclick="redirectPage(\''+link2 +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'));
 
 
 						//button=learnExamData.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
@@ -651,16 +652,16 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 					for(var i=1; i<result.length; i++){
 						var checks=checkActiveSubj(result[i]['subj_id'],<?php echo $this->session->userdata('accnt_id'); ?>);
 						if(checks>0){
-						$('#subtopics').append('<button id="subj_id'+result[i]['subj_id']+'" type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
+						$('#subtopics').append('<button id="subj_id'+result[i]['subj_id']+'" type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\',\''+result[i]['subj_file2'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
 						}else{
-						$('#subtopics').append('<button id="subj_id'+result[i]['subj_id']+'" disabled type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
+						$('#subtopics').append('<button id="subj_id'+result[i]['subj_id']+'" disabled type="button" onclick="ViewSubjStudCont('+result[i]['subj_id']+',\''+result[i]['subj_name'] +'\',\''+result[i]['subj_file'] +'\',\''+result[i]['subj_file2'] +'\')" class="list-group-item list-group-item-action">'+result[i]['subj_name']+' ('+result[i]['subj_desc']+')</button>');
 						}
 					}
 					renderFinals(<?php echo $this->session->userdata('accnt_id'); ?>);
 			},'json');
 	}
 
-		function ViewSubjStudCont(id,name,link){
+		function ViewSubjStudCont(id,name,link,link2){
 		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive,request_button;
 		var redirect_button,summ_button;
 		$('.subject_title').html(name);
@@ -680,7 +681,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
 						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
 
-						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage1(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
+						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage1(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+link2.length<1 ? '' : '<button type="button" onclick="redirectPage1(\''+link2 +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+link2.length<1 ? '' : '<button type="button" onclick="redirectPage(\''+link2 +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
 
 
 						//button=learnExamData.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
