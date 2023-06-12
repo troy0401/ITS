@@ -309,7 +309,8 @@ class Main extends CI_Controller {
 					"testq_4"  => $q->testq_4,
 					"testq_ans"  => $q->testq_ans,
 					"testq_hint"  => $q->testq_hint,
-					"testq_type"	=> $q->testq_type
+					"testq_type"	=> $q->testq_type,
+					"testq_img"	=> $q->testq_img
 
                  );
               }
@@ -334,24 +335,31 @@ class Main extends CI_Controller {
 	}
 
 	 public function editQuest(){
-
-	  $post = $this->input->post('data');
-	  if(sizeof($post)==7){
+	if($this->input->post('img')!==''){
+				$config['upload_path']          = './uploads/exam_images';
+                $config['allowed_types']        = 'gif|png|jpg';
+                $config['max_size']             = 5000;
+                $this->load->library('upload', $config);
+                $this->upload->do_upload('img');
+		}
+	  if($this->input->post('type')==1){
       $data = array(
-            'testq_0'=>$post[0],
-            'testq_1'=>$post[1],
-			'testq_hint'=>$post[2],
-			'testq_1'=>$post[3],
-			'testq_2'=>$post[4],
-			'testq_3'=>$post[5],
-			'testq_4'=>$post[6]
+            'testq_0'=>$this->input->post('quest'),
+            'testq_ans'=>$this->input->post('ans'),
+			'testq_hint'=>$this->input->post('hint'),
+			'testq_1'=>$this->input->post('choice1'),
+			'testq_2'=>$this->input->post('choice2'),
+			'testq_3'=>$this->input->post('choice3'),
+			'testq_4'=>$this->input->post('choice4'),
+			'testq_img'=>$this->upload->data('file_name')
           );
 		}else{
 		
 			$data = array(
-				'testq_0'=>$post[0],
-				'testq_ans'=>$post[1],
-				'testq_hint'=>$post[2]
+				'testq_0'=>$this->input->post('quest'),
+				'testq_ans'=>$this->input->post('ans'),
+				'testq_hint'=>$this->input->post('hint'),
+				'testq_img'=>$this->upload->data('file_name')
 			  );
 		}
 
@@ -530,6 +538,8 @@ class Main extends CI_Controller {
                $data[] = array(
 					$i++,
                     $q->testq_0,
+					($q->testq_img=='' ? 'No uploaded image' : '<a data-toggle="modal" onclick=viewImage(\''.$q->testq_img.'\')  data-target="#viewImage" class="btn btn-warning btn-circle btn-sm" title="View">
+					<i class="fa fa-eye"></i></a>'),
 					'<a data-toggle="modal" onclick=editQuest('.$q->testq_id.')  data-target="#editQuest_modal" class="btn btn-warning btn-circle btn-sm" title="Edit">
 					<i class="fa fa-edit"></i>
 					</a>'

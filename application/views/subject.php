@@ -215,6 +215,7 @@
 													<tr>
 														<th>Question No.</th>
 														<th>Questionaire list</th>
+														<th>Image Attachment</th>
 														<th>Actions</th>
 													</tr>
 												</thead>
@@ -496,6 +497,46 @@
                                         </div>
                                     </div>
                                     </div>
+
+                                     <div id="viewprofile" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Profile viewing</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+													<div class="card card-bordered img">
+
+													</div>
+												</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div id="viewImage" class="modal fade bd-example-modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Exam Attachment</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+													<div class="card card-bordered img">
+
+													</div>
+												</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+
 
 
                                 <!--Ending for Modals -->
