@@ -8,10 +8,8 @@
                 <div class="row align-items-center">
                     <div class="col-sm-6">
                         <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">Subject</h4>
+                            <h4 class="page-title pull-left">Home</h4>
                             <ul class="breadcrumbs pull-left">
-                                <li><a href="<?php echo base_url('Main/Admin')?>">Home</a></li>
-                                <li><span>Subject</span></li>
                             </ul>
                         </div>
                     </div>
@@ -20,7 +18,7 @@
                             <img class="avatar user-thumb" src="<?php echo base_url('uploads/'.$this->session->userdata('accnt_img'))?>" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata('accnt_name'); ?><i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" data-toggle="modal" data-target="#profile">Change Profile</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#profile">Edit Profile</a>
                                 <a class="dropdown-item" data-toggle="modal" data-target="#viewprofile">View Profile</a>
                                 <a class="dropdown-item" href="<?php echo base_url('Main/Logout');?>">Log Out</a>
                             </div>
