@@ -723,7 +723,8 @@ class Main extends CI_Controller {
 				"testq_ans"=>htmlspecialchars($q->testq_ans),
 				"testq_hint"=>htmlspecialchars($q->testq_hint),
 				"testq_id"=>htmlspecialchars($q->testq_id),
-				"testq_type"=>htmlspecialchars($q->testq_type)
+				"testq_type"=>htmlspecialchars($q->testq_type),
+				"testq_img"=>htmlspecialchars($q->testq_img),
 			);
 		}
 		
@@ -1152,7 +1153,7 @@ class Main extends CI_Controller {
 			$pass=$this->model->select_score_passed($this->input->post('subj'),$this->input->post('score'),$this->input->post('type'));
 			$data=$pass->num_rows();
 		}else{
-			$fail=$this->model->select_score_passed($this->input->post('subj'),$this->input->post('score'),$this->input->post('type'));
+			$fail=$this->model->select_score_failed($this->input->post('subj'),$this->input->post('score'),$this->input->post('type'));
 			$data=$fail->num_rows();
 		}
 		echo json_encode($data);
@@ -1376,7 +1377,7 @@ class Main extends CI_Controller {
               //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
                $data[] = array(
 					$s->subj_name,
-                                                '<button data-toggle="modal" data-target="#viewRecordStud" onclick="viewRecordStudHistory('.$s->subj_id.','.$this->session->userdata('accnt_id').');" type="button" class="btn btn-primary">
+                                                '<button data-toggle="modal" data-target="#viewRecordStud" onclick="viewRecordStudHistory('.$this->session->userdata('accnt_id').','.$s->subj_id.');" type="button" class="btn btn-primary">
                                                 View Test report
                                             </button>'
       );

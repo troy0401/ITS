@@ -897,7 +897,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
                         '<h5>'+result[i]['testq_0']+'</h5></div>'+
-                        '<div class="ans ml-2"><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
+						(result[i]['testq_img']==''? '' :'<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+result[i]['testq_img']+'" alt="image">')+
+                        '<div class="ans ml-2"><br><label class="radio"> <input onchange="change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>'+
@@ -916,7 +917,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
                         '<h5>'+result[i]['testq_0']+'</h5></div>'+
-						'<textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="change(null);"></textarea>'+
+						(result[i]['testq_img']==''? '' :'<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+result[i]['testq_img']+'" alt="image">')+
+						'<br><textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="change(null);"></textarea>'+
 						'<h6 class="text-danger hint'+i+'" style="display:none;">[Incorrect]<br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
 						}
                       count_quest++;
@@ -985,6 +987,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
+						(result[i]['testq_img']==''? '' :'<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+result[i]['testq_img']+'" alt="image">')+
                         '<div class="ans ml-2"><label class="radio"> <input onchange="summ_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i]['testq_1']+'"> <span><b>'+result[i]['testq_1']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="summ_change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
@@ -1003,7 +1006,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 						'<input type="hidden" value="'+exam_id+'">'+
 						'<input type="hidden" value="'+result[i]['testq_type']+'">'+
                         '<h5 class="mt-1 ml-2">'+result[i]['testq_0']+'</h5></div>'+
-						'<textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="summ_change(null);"></textarea>').outerHTML;
+						(result[i]['testq_img']==''? '' :'<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+result[i]['testq_img']+'" alt="image">')+
+						'<br><textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="summ_change(null);"></textarea>').outerHTML;
 						}
                       count_quest++;
                          }
@@ -1077,7 +1081,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 								'<input type="hidden" value="'+finals_id[0]['finals_ID']+'">'+
 								'<input type="hidden" value="'+result[i][j]['testq_type']+'">'+
 								'<h5 class="mt-1 ml-2">'+result[i][j]['testq_0']+'</h5></div>'+
-								'<div class="ans ml-2"><label class="radio"> <input onchange="finals_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i][j]['testq_1']+'"> <span><b>'+result[i][j]['testq_1']+'</b></span></label></div>'+
+								(result[i]['testq_img']==''? '' :'<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+result[i]['testq_img']+'" alt="image">')+
+								'<br><div class="ans ml-2"><label class="radio"> <input onchange="finals_change(this.value);" type="radio" name="answer'+i+'" value="'+result[i][j]['testq_1']+'"> <span><b>'+result[i][j]['testq_1']+'</b></span></label></div>'+
 								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_2']+'"> <span><b>'+result[i][j]['testq_2']+'</b></span></label></div>'+
 								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_3']+'"> <span><b>'+result[i][j]['testq_3']+'</b></span></label></div>'+
 								'<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="finals_change(this.value);" value="'+result[i][j]['testq_4']+'"> <span><b>'+result[i][j]['testq_4']+'</b></span></label></div>');
@@ -1091,7 +1096,8 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 								'<input type="hidden" value="'+finals_id[0]['finals_ID']+'">'+
 								'<input type="hidden" value="'+result[i][j]['testq_type']+'">'+
 								'<h5 class="mt-1 ml-2">'+result[i][j]['testq_0']+'</h5></div>'+
-								'<textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="finals_change(null);"></textarea>');
+								(result[i]['testq_img']==''? '' :'<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+result[i]['testq_img']+'" alt="image">')+
+								'<br><textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="finals_change(null);"></textarea>');
 						}
 								count_quest++;
 							}

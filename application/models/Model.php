@@ -32,9 +32,10 @@ class Model extends CI_Model
 
        public function select_score_passed($id,$score,$type)
     {
-        $query = $this->db->query("SELECT * FROM scores WHERE score >=$score AND subj_id=$id AND score_type=$type;");
+        $query = $this->db->query("SELECT * FROM scores WHERE score >=$score AND subj_id=$id AND score_type=$type");
         return $query;
     }
+
 
     public function getSummativeStat($subj,$type){
 		$query = $this->db->query("SELECT a.*, b.* FROM `test_history` a left join test_report b on a.th_ID=b.th_ID WHERE a.subj_id=$subj and a.th_Type=$type");
