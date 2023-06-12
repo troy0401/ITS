@@ -1,9 +1,10 @@
  </div>
+		<!--Github Account troy0401-->
         <!-- main content area end -->
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>© Copyright <?php echo date('Y'); ?>. All rights reserved.</p>
+                <p>© <?php echo date('Y'); ?>. All rights reserved.</p>
             </div>
         </footer>
         <!-- footer area end-->
