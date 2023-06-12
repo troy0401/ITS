@@ -238,19 +238,34 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 		$('#form_quest').submit(function(e){//Add Questionaire
 			e.preventDefault();
-			var data = [];
-			$("#form_quest input, #form_quest textarea, #form_quest select").each(function(){
-				data.push(this.value);
-			});
+// 			var data = [];
+// 			$("#form_quest input, #form_quest textarea, #form_quest select").each(function(){
+// 				data.push(this.value);
+// 			});
+			var form=new FormData(this);
+			form.append('id',subject_id);
+
 			//console.log(data);
-			$.post(base_url+'Main/add_Quest',
-				{data:data,id:subject_id},function(result){
-					$('#form_quest')[0].reset();
-					$('#quest_modal').modal('hide');
-					$('#question_set').empty();
-					$('#dataQuest').DataTable().ajax.reload();
-					alert("Insert Success");
-			},'json');
+			$.ajax({
+            type: 'POST',
+            url: base_url+'Main/add_Quest',
+            data: form,
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(response){ //console.log(response);
+			$('#form_quest')[0].reset();
+			$('#quest_modal').modal('hide');
+			$('#question_set').empty();
+			$('#dataQuest').DataTable().ajax.reload();
+				alert("Insert Success");
+          }
+      });
+// 			$.post(base_url+'Main/add_Quest',
+// 				{data:data,id:subject_id},function(result){
+//
+// 			},'json');
 		});
 
 		$('#editForm_quest').submit(function(e){//Edit Questionaire
@@ -1437,28 +1452,52 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 	function displayQuestType(id){
 		var mult_choice='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
-		'<textarea class="form-control" id="validationCustom01" placeholder="Question" required></textarea>'+
+		'<textarea class="form-control" id="validationCustom01" name="quest"  placeholder="Question" required></textarea>'+
 		'</div>'+
+		'<div class="col-md-12 mb-3">'+
+		'<label for="validationCustom02">Question Attachemtn</label>'+
+		'<input type="file" name="image" accept="image/*" class="form-control" id="validationCustom02" placeholder="Image Output"></div>'+
 		'<div class="col-md-6 mb-3">'+
 		'<label for="validationCustom02">Answer</label>'+
-		'<input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" required></div>'+
+		'<input type="text" name="ans" class="form-control" id="validationCustom02" placeholder="Test Answer" required></div>'+
 		'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
-		'<input type="text" class="form-control" id="validationCustom03" placeholder="Test Hint" required></div>'+
+		'<input type="text" name="hint" class="form-control" id="validationCustom03" placeholder="Test Hint" required></div>'+
 		'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 1</label>'+
-		'<input type="text" class="form-control" id="validationCustom03"  required></div>'+
+		'<input type="text" name="choice1" class="form-control" id="validationCustom03"  required></div>'+
 		'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 2</label>'+
-		'<input type="text" class="form-control" id="validationCustom03"  required></div>'+
+		'<input type="text" name="choice2" class="form-control" id="validationCustom03"  required></div>'+
 		'<div class="col-md-3 mb-3">'+
 		'<label for="validationCustom02">Choice 3</label>'+
-		'<input type="text" class="form-control" id="validationCustom03"  required></div>'+
+		'<input type="text" name="choice3" class="form-control" id="validationCustom03"  required></div>'+
 		'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 4</label>'+
-		'<input type="text" class="form-control" id="validationCustom03"  required></div></div>';
+		'<input type="text" name="choice4" class="form-control" id="validationCustom03"  required></div>'+
+		'<div class="col-md-6 mb-3">'+
+		'<label for="validationCustom02">Constraints</label>'+
+		'<input type="text" name="const1" class="form-control" id="validationCustom02" placeholder="Constraint 1" required>'+
+		'<input type="text" name="const2" class="form-control" id="validationCustom02" placeholder="Constraint 2" required>'+
+		'<input type="text" name="const3" class="form-control" id="validationCustom02" placeholder="Constraint 3" required></div>'+
+		'<div class="col-md-6 mb-3"><label for="validationCustom02">Feedback</label>'+
+		'<input type="text" name="feed1" class="form-control" id="validationCustom03" placeholder="Feedback 1" required>'+
+		'<input type="text" name="feed2" class="form-control" id="validationCustom03" placeholder="Feedback 2" required>'+
+		'<input type="text" name="feed3" class="form-control" id="validationCustom03" placeholder="Feedback 3" required></div></div>';
 		var fill_blank='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
-		'<textarea class="form-control" id="validationCustom01" placeholder="Question" required></textarea></div>'+
+		'<textarea name="quest" class="form-control" id="validationCustom01" placeholder="Question" required></textarea></div>'+
+		'<div class="col-md-12 mb-3">'+
+		'<label for="validationCustom02">Question Attachment</label>'+
+		'<input type="file" accept="image/*" name="image" class="form-control" id="validationCustom02" placeholder="Image Output"></div>'+
         '<div class="col-md-6 mb-3"><label for="validationCustom02">Answer</label>'+
-		'<input type="text" class="form-control" id="validationCustom02" placeholder="Test Answer" required></div>'+
+		'<input type="text" class="form-control" name="ans" id="validationCustom02" placeholder="Test Answer" required></div>'+
 		'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
-		'<input type="text" class="form-control" id="validationCustom02" placeholder="Hint" required></div></div>';
+		'<input type="text" name="hint" class="form-control" id="validationCustom02" placeholder="Hint" required></div>'+
+		'<div class="col-md-6 mb-3">'+
+		'<label for="validationCustom02">Constraints</label>'+
+		'<input type="text" name="const1" class="form-control" id="validationCustom02" placeholder="Constraint 1" required>'+
+		'<input type="text" name="const2" class="form-control" id="validationCustom02" placeholder="Constraint 2" required>'+
+		'<input type="text" name="const3" class="form-control" id="validationCustom02" placeholder="Constraint 3" required></div>'+
+		'<div class="col-md-6 mb-3"><label for="validationCustom02">Feedback</label>'+
+		'<input type="text" class="form-control" name="feed1" id="validationCustom03" placeholder="Feedback 1" required>'+
+		'<input type="text" class="form-control" name="feed2" id="validationCustom03" placeholder="Feedback 2" required>'+
+		'<input type="text" class="form-control" name="feed3" id="validationCustom03" placeholder="Feedback 3" required></div></div>';
 
 		var quest_type=(id==1? mult_choice : fill_blank);
 		$('#question_set').empty().append(quest_type);

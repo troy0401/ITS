@@ -213,39 +213,69 @@ class Main extends CI_Controller {
 
     public function add_Quest(){
 		//$minutes=$this->input->post('mod_test_time')*60;
-		$data = $this->input->post('data');
-		$id	=	$this->input->post('id');
-		if($data[0]==1){
-        $data = array(
-                    "testq_0"=>$data[1],
-					"testq_1"=>$data[4],
-					"testq_2"=>$data[5],
-					"testq_3"=>$data[6],
-					"testq_4"=>$data[7],
-					"testq_ans"=>$data[2],
-					"testq_hint"=>$data[3],
-					"subj_id"=>$id,
-					"testq_type"=>$data[0]
-
-                );
-		}else{
-			 $data = array(
-                    "testq_0"=>$data[1],
-					"testq_1"=>'none',
-					"testq_2"=>'none',
-					"testq_3"=>'none',
-					"testq_4"=>'none',
-					"testq_ans"=>$data[2],
-					"testq_hint"=>$data[3],
-					"subj_id"=>$id,
-					"testq_type"=>$data[0]
-
-                );
+ 		//$data = $this->input->post('data');
+ 		$id	=	$this->input->post('id');
+		if($this->input->post('image')!==''){
+				$config['upload_path']          = './uploads/exam_images';
+                $config['allowed_types']        = 'gif|png|jpg';
+                $config['max_size']             = 5000;
+                $this->load->library('upload', $config);
+                $this->upload->do_upload('image');
 		}
-		 if($this->model->insert_into("test_quest", $data))
-		 {
-           echo json_encode(true);
-		 }
+ 		if($this->input->post('type')==1){
+
+         $data = array(
+					"testq_0"=>$this->input->post('quest'),
+ 					"testq_1"=>$this->input->post('choice1'),
+ 					"testq_2"=>$this->input->post('choice2'),
+ 					"testq_3"=>$this->input->post('choice3'),
+ 					"testq_4"=>$this->input->post('choice4'),
+ 					"testq_ans"=>$this->input->post('ans'),
+ 					"testq_hint"=>$this->input->post('hint'),
+ 					"subj_id"=>$this->input->post('id'),
+ 					"testq_type"=>$this->input->post('type'),
+					"testq_img"=>$this->upload->data('file_name')
+
+                 );
+ 		}else{
+ 			 $data = array(
+					"testq_0"=>$this->input->post('quest'),
+ 					"testq_1"=>'none',
+ 					"testq_2"=>'none',
+ 					"testq_3"=>'none',
+ 					"testq_4"=>'none',
+ 					"testq_ans"=>$this->input->post('ans'),
+ 					"testq_hint"=>$this->input->post('hint'),
+ 					"subj_id"=>$this->input->post('id'),
+ 					"testq_type"=>$this->input->post('type'),
+					"testq_img"=>$this->upload->data('file_name')
+                 );
+ 		}
+		 $id=$this->model->insert_into("test_quest", $data);
+		 $const1=array(
+				"testq_id"=>$id,
+				"subj_id"=>$this->input->post('id'),
+				"const"=>$this->input->post('const1'),
+				"feed"=>$this->input->post('feed1')
+			);
+		 $const2=array(
+				"testq_id"=>$id,
+				"subj_id"=>$this->input->post('id'),
+				"const"=>$this->input->post('const2'),
+				"feed"=>$this->input->post('feed2')
+			);
+		 $const3=array(
+				"testq_id"=>$id,
+				"subj_id"=>$this->input->post('id'),
+				"const"=>$this->input->post('const3'),
+				"feed"=>$this->input->post('feed3')
+			);
+		 $this->model->insert_into("constraints", $const1);
+		 $this->model->insert_into("constraints", $const2);
+		 $this->model->insert_into("constraints", $const3);
+		 echo json_encode(true);
+
+
     }
 
       public function getSubj(){
