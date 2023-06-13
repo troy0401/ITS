@@ -746,8 +746,7 @@ class Main extends CI_Controller {
 		if($attempt<10){
 				foreach($qry->result() as $q){
 					$result=0;
-					$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
-					if($compare===0){
+					if($this->input->post('ans')==$q->testq_ans){
 						$result=1;
 						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
 						foreach($sc_qry->result() as $sq){
@@ -781,8 +780,7 @@ class Main extends CI_Controller {
 				}
 			}else{
 				foreach($qry->result() as $q){
-					$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
-					if($compare===0){
+					if($this->input->post('ans')==$q->testq_ans){
 						$result=1;
 						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
 						foreach($sc_qry->result() as $sq){
@@ -878,8 +876,7 @@ class Main extends CI_Controller {
 		foreach($qry->result() as $q){
 			$result=0;
 			$attempt=1;
-			$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
-			if($compare===0){
+			if($this->input->post('ans')==$q->testq_ans){
 				$result=1;
 				$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
 				foreach($sc_qry->result() as $sq){
@@ -891,7 +888,7 @@ class Main extends CI_Controller {
 					$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
 				}
 			}else{
-				$result=2;
+				$result=0;
 			}
 		$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt);
 		$this->model->update_where('test_report', $data, 'testr_ID', $id);
@@ -1254,7 +1251,7 @@ class Main extends CI_Controller {
                     $attempt+1,
 					'Summative Exam',
 					$r->score,
-                                                '<button data-toggle="modal" data-target="#viewRecordHistPractice" onclick="viewRecordStudHistoryQuestions('.$r->th_ID.',2);" type="button" class="btn btn-primary">
+                                                '<button data-toggle="modal" data-target="#viewRecordHistSummative" onclick="viewRecordStudHistoryQuestions1('.$r->th_ID.',2);" type="button" class="btn btn-primary">
                                                 View Test report
                                             </button>'
       );
@@ -1295,6 +1292,41 @@ class Main extends CI_Controller {
 					($q->testr_Status==0 ? $q->testq_hint : "Correct Answer"),
 					$q->testr_TimeQuest,
 					($q->testr_Cert==0? "Uncertain" : "Certain")
+      );
+	  $count++;
+           }
+
+          $output = array(
+               "draw" => $draw,
+                 "recordsTotal" => $questions->num_rows(),
+                 "recordsFiltered" => $questions->num_rows(),
+                 "data" => $data
+            );
+          echo json_encode($output);
+          exit();
+     }
+
+      public function testHistoryQuestions1()//admin view of modules
+     {
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+
+
+          $questions = $this->model->select_table_questions($this->input->post('th_id'),$this->input->post('type'));
+
+          $data = array();
+		  $count=0;
+
+              //$minutes=floor(((int)$r->mod_exam_time / 60) % 60);
+          foreach($questions->result() as $q) {
+
+               $data[] = array(
+                    $count+1,
+					$q->testq_0,
+					($q->testr_Status==0 ? '<p class="text-danger">'.$q->testr_StudAns.'</p>' : $q->testr_StudAns),
+					($q->testr_Status==0 ? $q->testq_hint : "Correct Answer"),
+					$q->testr_TimeQuest
       );
 	  $count++;
            }

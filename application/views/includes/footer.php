@@ -1428,7 +1428,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 			 responsive: true,
 			  destroy: true,
             "ajax": {
-                    url : "<?php echo base_url("Main/testHistoryQuestions"); ?>",
+                    url : "<?php echo base_url("Main/testHistoryQuestions1"); ?>",
                     type : 'POST',
 					data: {th_id:th_id,type:type}
              }
