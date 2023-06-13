@@ -140,7 +140,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Practice Exam</h5>
+                                                <h5 class="modal-title">Summative Exam</h5>
                                             </div>
 										<form id="submitSummExamForm" class="needs-validation" autocomplete="off">
                                             <div class="modal-body summ-list">
@@ -177,7 +177,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Practice Exam</h5>
+                                                <h5 class="modal-title">Final Exam</h5>
                                             </div>
 										<form id="submitFinalExamForm" class="needs-validation" autocomplete="off">
                                             <div class="modal-body final-list">
