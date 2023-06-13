@@ -455,7 +455,7 @@
                                             <div class="modal-body">
 												<ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#test1" role="tab" aria-controls="home" aria-selected="true">Summative Exam</a>
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#test1" role="tab" aria-controls="home" aria-selected="true">Practice Exam</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content mt-3" id="myTabContent">

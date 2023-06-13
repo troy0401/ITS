@@ -1275,7 +1275,7 @@ class Main extends CI_Controller {
                     $attempt+1,
 					'Summative Exam',
 					$r->score,
-                                                '<button data-toggle="modal" data-target="#viewRecordHistPractice" onclick="viewRecordStudHistoryQuestions('.$r->th_ID.',1);" type="button" class="btn btn-primary">
+                                                '<button data-toggle="modal" data-target="#viewRecordHistPractice" onclick="viewRecordStudHistoryQuestions('.$r->th_ID.',2);" type="button" class="btn btn-primary">
                                                 View Test report
                                             </button>'
       );
