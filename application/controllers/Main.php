@@ -251,28 +251,7 @@ class Main extends CI_Controller {
 					"testq_img"=>$this->upload->data('file_name')
                  );
  		}
-		 $id=$this->model->insert_into("test_quest", $data);
-		 $const1=array(
-				"testq_id"=>$id,
-				"subj_id"=>$this->input->post('id'),
-				"const"=>$this->input->post('const1'),
-				"feed"=>$this->input->post('feed1')
-			);
-		 $const2=array(
-				"testq_id"=>$id,
-				"subj_id"=>$this->input->post('id'),
-				"const"=>$this->input->post('const2'),
-				"feed"=>$this->input->post('feed2')
-			);
-		 $const3=array(
-				"testq_id"=>$id,
-				"subj_id"=>$this->input->post('id'),
-				"const"=>$this->input->post('const3'),
-				"feed"=>$this->input->post('feed3')
-			);
-		 $this->model->insert_into("constraints", $const1);
-		 $this->model->insert_into("constraints", $const2);
-		 $this->model->insert_into("constraints", $const3);
+		 $this->model->insert_into("test_quest", $data);
 		 echo json_encode(true);
 
 

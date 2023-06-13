@@ -1488,16 +1488,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 		'<label for="validationCustom02">Choice 3</label>'+
 		'<input type="text" name="choice3" class="form-control" id="validationCustom03"  required></div>'+
 		'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 4</label>'+
-		'<input type="text" name="choice4" class="form-control" id="validationCustom03"  required></div>'+
-		'<div class="col-md-6 mb-3">'+
-		'<label for="validationCustom02">Constraints</label>'+
-		'<input type="text" name="const1" class="form-control" id="validationCustom02" placeholder="Constraint 1" required>'+
-		'<input type="text" name="const2" class="form-control" id="validationCustom02" placeholder="Constraint 2" required>'+
-		'<input type="text" name="const3" class="form-control" id="validationCustom02" placeholder="Constraint 3" required></div>'+
-		'<div class="col-md-6 mb-3"><label for="validationCustom02">Feedback</label>'+
-		'<input type="text" name="feed1" class="form-control" id="validationCustom03" placeholder="Feedback 1" required>'+
-		'<input type="text" name="feed2" class="form-control" id="validationCustom03" placeholder="Feedback 2" required>'+
-		'<input type="text" name="feed3" class="form-control" id="validationCustom03" placeholder="Feedback 3" required></div></div>';
+		'<input type="text" name="choice4" class="form-control" id="validationCustom03"  required></div></div>';
 		var fill_blank='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
 		'<textarea name="quest" class="form-control" id="validationCustom01" placeholder="Question" required></textarea></div>'+
 		'<div class="col-md-12 mb-3">'+
@@ -1506,16 +1497,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
         '<div class="col-md-6 mb-3"><label for="validationCustom02">Answer</label>'+
 		'<input type="text" class="form-control" name="ans" id="validationCustom02" placeholder="Test Answer" required></div>'+
 		'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
-		'<input type="text" name="hint" class="form-control" id="validationCustom02" placeholder="Hint" required></div>'+
-		'<div class="col-md-6 mb-3">'+
-		'<label for="validationCustom02">Constraints</label>'+
-		'<input type="text" name="const1" class="form-control" id="validationCustom02" placeholder="Constraint 1" required>'+
-		'<input type="text" name="const2" class="form-control" id="validationCustom02" placeholder="Constraint 2" required>'+
-		'<input type="text" name="const3" class="form-control" id="validationCustom02" placeholder="Constraint 3" required></div>'+
-		'<div class="col-md-6 mb-3"><label for="validationCustom02">Feedback</label>'+
-		'<input type="text" class="form-control" name="feed1" id="validationCustom03" placeholder="Feedback 1" required>'+
-		'<input type="text" class="form-control" name="feed2" id="validationCustom03" placeholder="Feedback 2" required>'+
-		'<input type="text" class="form-control" name="feed3" id="validationCustom03" placeholder="Feedback 3" required></div></div>';
+		'<input type="text" name="hint" class="form-control" id="validationCustom02" placeholder="Hint" required></div></div>';
 
 		var quest_type=(id==1? mult_choice : fill_blank);
 		$('#question_set').empty().append(quest_type);
