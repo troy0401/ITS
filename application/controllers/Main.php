@@ -1018,8 +1018,7 @@ class Main extends CI_Controller {
 		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
 		$result;
 		foreach($qry->result() as $q){
-			$compare=strcasecmp($this->input->post('ans'),$q->testq_ans);
-			if($compare===0){
+			if($this->input->post('ans')==$q->testq_ans){
 				$result=1;
 			}else{
 				$result=2;
@@ -1261,8 +1260,8 @@ class Main extends CI_Controller {
                     $count+1,
 					$q->testq_0,
 					$q->testr_Attempt,
-					($q->testr_Status==0 ? '<p class="text-danger">'.$q->testr_StudAns.'</p>' : $q->testr_StudAns),
-					($q->testr_Status==0 ? $q->testq_hint : "Correct Answer"),
+					($q->testr_Status==2 ? '<p class="text-danger">'.$q->testr_StudAns.'</p>' : $q->testr_StudAns),
+					($q->testr_Status==2 ? $q->testq_hint : "Correct Answer"),
 					$q->testr_TimeQuest,
 					($q->testr_Cert==0? "Uncertain" : "Certain")
       );
