@@ -1092,7 +1092,7 @@ class Main extends CI_Controller {
 		$data = array(
             'accnt_name'=>$post[0],
 			'accnt_user'=>$post[1],
-			'accnt_pass'=>$post[2],
+			'accnt_pass'=>password_hash($post[2], PASSWORD_DEFAULT),
 			'accnt_type'=>$this->input->post('type')
 		);
 
