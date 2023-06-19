@@ -188,7 +188,6 @@
 														<th>Given question</th>
 														<th>Student's Answer</th>
                                                         <th>Correct Answer</th>
-                                                         <th>Status</th>
                                                         <th>Time Spent</th>
 													</tr>
 												</thead>
