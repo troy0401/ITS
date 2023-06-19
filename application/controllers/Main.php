@@ -1359,8 +1359,8 @@ class Main extends CI_Controller {
                     $attempt=$attempt+1,
 					$q->testq_0,
 					$q->fr_studAns,
-					($q->fr_testStat==0 ? '<p class="text-danger">'.$q->fr_studAns.'</p>' : $q->fr_studAns),
-					($q->fr_testStat==0 ? $q->testq_hint : "Correct Answer"),
+					($q->fr_testStat==2 ? '<p class="text-danger">'.$q->fr_studAns.'</p>' : $q->fr_studAns),
+					($q->fr_testStat==2 ? $q->testq_hint : "Correct Answer"),
 					$q->fr_TimeQuest
       );
 	  $attempt++;
