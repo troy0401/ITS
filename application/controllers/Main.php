@@ -176,7 +176,9 @@ class Main extends CI_Controller {
                     //echo json_encode($newdata);
                     //redirect(base_url().'masterfile/dashboard/');
 					echo json_encode($ac->accnt_type);
-                }
+                }else{
+					echo json_encode(false);
+				}
             }
 		}else{
                     echo json_encode(false);
