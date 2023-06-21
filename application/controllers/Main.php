@@ -1332,7 +1332,6 @@ class Main extends CI_Controller {
 					($q->fr_testStat==2 ? '<p class="text-danger">'.$q->testq_ans.'</p>' : 'Correct Answer'),
 					$q->fr_TimeQuest
       );
-	  $attempt++;
            }
 
           $output = array(
