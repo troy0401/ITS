@@ -39,7 +39,8 @@
     var base_url='<?php echo base_url(); ?>'
     var subject_id;
 	var count_quest=0,total_quest=1;next_quest=0
-var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
+	var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1;
+	var quiz_type;
     $(document).ready(function(){
 		viewStudSubj();
 		final_score(<?php echo $this->session->userdata('accnt_id');?>);
@@ -348,8 +349,9 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 									$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
 									$('#takeExam_modal').modal('hide');
 									});
+									quiz_type='';
 								}
-
+								
 							}else{
 									$('.hint'+next_quest+'').css({"display":"block"});
 									$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:block;" class="btn btn-warning">Skip</button>');
@@ -396,6 +398,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
                                $('.summbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
 
                             });
+							quiz_type='';
                           }
 
             },'json');
@@ -436,6 +439,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
                                $('.finalbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
 
                             });
+							quiz_type='';
                           }
 
             },'json');
@@ -501,7 +505,42 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 			if (seconds <= 0) {
 			clearInterval(countdown);
 			console.log("Countdown timer has ended");
-			} else {
+			if(quiz_type==1){
+									stopCountdown();
+									stopTimer();
+									//--> not part of updated GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+									getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
+									$('#question'+next_quest+'').remove();
+									$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+									$('.submit_quiz').click(function(){
+										$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
+										$('#takeExam_modal').modal('hide');
+									}
+			} else if(quiz_type==2) {
+				stopCountdown();
+                            stopTimer();
+                            //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+							getScoreSummative($($("#submitSummExamForm input[type='hidden']")[5]).val(),$($("#submitSummExamForm input[type='hidden']")[6]).val());//score_id and exam_id
+                            $('#question'+next_quest+'').remove();
+                            $('.summbutton_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+                            $('.submit_quiz').click(function(){
+                               $('#summExam_modal').modal('hide');
+                               $('.summbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
+
+                            });
+			}else{
+							stopCountdown();
+                            stopTimer();
+                            //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
+							getScoreFinals($($("#submitFinalExamForm input[type='hidden']")[2]).val());//score_id and exam_id
+                            $('#question'+next_quest+'').remove();
+                            $('.finalbutton_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+                            $('.submit_quiz').click(function(){
+                               $('#finalExam_modal').modal('hide');
+                               $('.finalbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
+
+                            });
+			}
 			seconds--;
 			}
 		}, 1000);
@@ -874,6 +913,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 	}
 
 	function practiceExam(exam_id,subj_id,test_items,time,type){
+		quiz_type=1;
 		$('#takeExam_modal').modal('show');
 		console.log(exam_id+','+subj_id+','+test_items+','+time+','+type);
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
@@ -930,6 +970,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 	}
 
 	function getScorePractice(score_id,exam_id){
+		quiz_type='';
       $.post(base_url+'Main/getScore',{score_id:score_id}, function(result){
           var score=result[0]['score'];
           var final= score/count_quest*100;
@@ -967,6 +1008,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 	function takeSummExam(exam_id,subj_id,exam_items,exam_time,exam_type){
 		$('#summExam_modal').modal('show');
+		quiz_type=2;
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:exam_items},
 					function(result){
 					$('.summ-list').empty();
@@ -1064,6 +1106,7 @@ var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1
 
 	function takeFinals(accnt_id){
 		$('#finalExam_modal').modal('show');
+		quiz_type=3;
 		$.post(base_url+'Main/getFinals',{accnt_id:accnt_id},
 					function(result){
 					var finals_id=getFinalsID(accnt_id);
