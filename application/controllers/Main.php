@@ -1156,13 +1156,14 @@ class Main extends CI_Controller {
 						$items=$sc->finals_Items;
 
 					}
-			}
-		$final=$s/$items*100;
+					$final=$score/$items*100;
 					if($final>=70){
 					$array["passed"]=$passed=$passed+1;
 					}else{
 					$array["failed"]=$fail=$fail+1;
 					}
+			}
+
 		}else{
 			$array["passed"]=0;
 			$array["failed"]=0;

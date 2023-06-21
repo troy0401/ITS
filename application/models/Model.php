@@ -26,7 +26,7 @@ class Model extends CI_Model
 
        public function getPassFailFinals()
     {
-        $query = $this->db->query("SELECT a.*, b.* FROM finals a LEFT JOIN finals_report b ON a.finals_ID=b.finals_ID");
+        $query = $this->db->query("SELECT* FROM finals");
         return $query;
     }
 
