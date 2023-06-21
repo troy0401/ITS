@@ -515,7 +515,7 @@
 									$('.submit_quiz').click(function(){
 										$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
 										$('#takeExam_modal').modal('hide');
-									}
+									});
 			} else if(quiz_type==2) {
 				stopCountdown();
                             stopTimer();
@@ -542,6 +542,7 @@
                             });
 			}
 			seconds--;
+			count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
 			}
 		}, 1000);
 	}
