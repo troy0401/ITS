@@ -738,6 +738,7 @@ class Main extends CI_Controller {
 		$testr_id;
 		$condition;
 		$result=0;
+		$cert=0;
 		$check_prev=$this->model->select_tri_column("test_report","testq_id",$this->input->post('testq_id'),"accnt_id",$this->session->userdata('accnt_id'),"th_ID",$this->input->post('history_id'));
 		if($check_prev->num_rows()>0){
 			foreach($check_prev->result() as $cp){
@@ -750,6 +751,7 @@ class Main extends CI_Controller {
 				foreach($qry->result() as $q){
 					if($this->input->post('ans')==$q->testq_ans){
 						$result=1;
+						$cert=1;
 						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
 						foreach($sc_qry->result() as $sq){
 							$score=$sq->score + 1;
@@ -760,11 +762,12 @@ class Main extends CI_Controller {
 							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
 						}
 						$condition=true;
-						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt, 'testr_Cert'=>$result);
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt, 'testr_Cert'=>$cert);
 						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
 					}else{
 						$result=2;
-						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$result);
+						$cert=0;
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$cert);
 						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
 						$condition=false;
 					}
@@ -774,6 +777,7 @@ class Main extends CI_Controller {
 				foreach($qry->result() as $q){
 					if($this->input->post('ans')==$q->testq_ans){
 						$result=1;
+						$cert=1;
 						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
 						foreach($sc_qry->result() as $sq){
 							$score=$sq->score + 1;
@@ -784,11 +788,12 @@ class Main extends CI_Controller {
 							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
 						}
 						$condition=true;
-						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$result);
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$cert);
 						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
 					}else{
 						$result=2;
-						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$result);
+						$cert=0;
+						$data = array('testr_StudAns'=>$this->input->post('ans'),'testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$cert);
 						$this->model->update_where('test_report', $data, 'testr_ID', $testr_id);
 						$condition=true;
 					}
@@ -810,6 +815,7 @@ class Main extends CI_Controller {
 					$attempt=1;
 					if($this->input->post('ans')==$q->testq_ans){
 						$result=1;
+						$cert=1;
 						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
 						foreach($sc_qry->result() as $sq){
 							$score=$sq->score + 1;
@@ -820,11 +826,12 @@ class Main extends CI_Controller {
 							$this->model->update_where('scores', $data_score, 'score_id', $this->input->post('score_id'));
 						}
 						$condition=true;
-						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$result);
+						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$cert);
 						$this->model->update_where('test_report', $data, 'testr_ID', $id);
 					}else{
 						$result=2;
-						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$result);
+						$cert=0;
+						$data = array('testr_Status'=>$result,'testr_Attempt'=>$attempt,'testr_Cert'=>$cert);
 						$this->model->update_where('test_report', $data, 'testr_ID', $id);
 						$condition=false;
 					}
