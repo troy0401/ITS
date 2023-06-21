@@ -737,6 +737,7 @@ class Main extends CI_Controller {
 		$attempt=0;
 		$testr_id;
 		$condition;
+		$result=0;
 		$check_prev=$this->model->select_tri_column("test_report","testq_id",$this->input->post('testq_id'),"accnt_id",$this->session->userdata('accnt_id'),"th_ID",$this->input->post('history_id'));
 		if($check_prev->num_rows()>0){
 			foreach($check_prev->result() as $cp){
@@ -747,7 +748,6 @@ class Main extends CI_Controller {
 		$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
 		if($attempt<10){
 				foreach($qry->result() as $q){
-					$result=0;
 					if($this->input->post('ans')==$q->testq_ans){
 						$result=1;
 						$sc_qry=$this->model->select_table_with_id("scores","score_id",$this->input->post('score_id'));
@@ -807,7 +807,6 @@ class Main extends CI_Controller {
 			$id=$this->model->insert_into("test_report", $exam_ans);
 			$qry=$this->model->select_table_with_id("test_quest","testq_id",$this->input->post('testq_id'));
 				foreach($qry->result() as $q){
-					$result=0;
 					$attempt=1;
 					if($this->input->post('ans')==$q->testq_ans){
 						$result=1;
