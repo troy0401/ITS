@@ -1004,7 +1004,7 @@
 					$('.summ-list').empty();
 					countdownTimer(exam_time);
 					startTimer();
-					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,2);
+					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,2,result.length);
 					for(var i=0; i<result.length; i++){
 						if(result[i]['testq_type']=='1'){
 						$('.summ-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
