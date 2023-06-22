@@ -348,7 +348,6 @@
 									$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
 									$('#takeExam_modal').modal('hide');
 									});
-									quiz_type='';
 								}
 								
 							}else{
@@ -397,7 +396,6 @@
                                $('.summbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
 
                             });
-							quiz_type='';
                           }
 
             },'json');
@@ -438,7 +436,6 @@
                                $('.finalbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
 
                             });
-							quiz_type='';
                           }
 
             },'json');
