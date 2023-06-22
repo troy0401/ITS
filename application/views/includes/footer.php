@@ -504,15 +504,7 @@
 			if (seconds <= 0) {
 			clearInterval(countdown);
 			console.log("Countdown timer has ended");
-			}
-			seconds--;
-		}, 1000);
-	}
-
-	function stopCountdown() {
-	clearInterval(countdown);
-	$('.timer').empty();
-	if(quiz_type==1){
+			if(quiz_type==1){
 		stopTimer();
 		getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
 		$('#question'+next_quest+'').remove();
@@ -541,6 +533,14 @@
             });
 	}
 	count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
+			}
+			seconds--;
+		}, 1000);
+	}
+
+	function stopCountdown() {
+	clearInterval(countdown);
+	$('.timer').empty();
 	}
 
 	function startTimer() {
@@ -825,11 +825,11 @@
 	return result;
 	}
 
-	function recordTestHistory(subj_id,accnt_id,type){ //records attempts history
+	function recordTestHistory(subj_id,accnt_id,type,items){ //records attempts history
 	var result = $.ajax({
 		url:base_url+"Main/recordTestHistory",
 		type:"POST",
-		data:{subj_id:subj_id,accnt_id:accnt_id,exam_type:type},
+		data:{subj_id:subj_id,accnt_id:accnt_id,exam_type:type,items:items},
 		dataType:"json",
 		async:false
 	}).responseJSON;
@@ -913,7 +913,7 @@
 					$('.question-list').empty();
 					countdownTimer(time);
 					startTimer();
-					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,1);
+					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,1,result.length);
 					for(var i=0; i<result.length; i++){
 						console.log(result);
 						if(result[i]['testq_type']=='1'){

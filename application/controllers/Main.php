@@ -723,6 +723,7 @@ class Main extends CI_Controller {
 			"subj_id"=>$this->input->post('subj_id'),
 			"accnt_id"=>$this->input->post('accnt_id'),
 			"score_type"=>$this->input->post('exam_type')
+			"num_of_items"=>$this->input->post('items'),
 		);
 		$history_id=$this->model->insert_into("test_history", $test_history);
 		$score_id=$this->model->insert_into("scores", $score_data);
