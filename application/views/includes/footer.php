@@ -1101,8 +1101,6 @@
 				$('#subtopics').append('<button id="finals_subject" onclick="takeFinals('+accnt_id+')" type="button" class="list-group-item list-group-item-action">Final Summative Exam</button>');
 				}else if(result==null){
 				$('#subtopics').append('<button disabled type="button" class="list-group-item list-group-item-action">Final Summative Exam</button>');
-				}else{
-					$('#subtopics').append('<button disabled type="button" class="list-group-item list-group-item-action">Final Summative Exam</button>');	
 				}
 
 		},'json');
