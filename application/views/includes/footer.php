@@ -509,44 +509,6 @@
 	function stopCountdown() {
 	clearInterval(countdown);
 	$('.timer').empty();
-	// if(quiz_type==1){
-			// 						stopCountdown();
-			// 						stopTimer();
-			// 						//--> not part of updated GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
-			// 						getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
-			// 						$('#question'+next_quest+'').remove();
-			// 						$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
-			// 						$('.submit_quiz').click(function(){
-			// 							$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
-			// 							$('#takeExam_modal').modal('hide');
-			// 						});
-			// } else if(quiz_type==2) {
-			// 	stopCountdown();
-            //                 stopTimer();
-            //                 //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
-			// 				getScoreSummative($($("#submitSummExamForm input[type='hidden']")[5]).val(),$($("#submitSummExamForm input[type='hidden']")[6]).val());//score_id and exam_id
-            //                 $('#question'+next_quest+'').remove();
-            //                 $('.summbutton_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
-            //                 $('.submit_quiz').click(function(){
-            //                    $('#summExam_modal').modal('hide');
-            //                    $('.summbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
-
-            //                 });
-			// }else{
-			// 				stopCountdown();
-            //                 stopTimer();
-            //                 //GetScore($($("#submitExamForm input[type='hidden']")[1]).val(),$($("#submitExamForm input[type='hidden']")[2]).val());
-			// 				getScoreFinals($($("#submitFinalExamForm input[type='hidden']")[2]).val());//score_id and exam_id
-            //                 $('#question'+next_quest+'').remove();
-            //                 $('.finalbutton_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
-            //                 $('.submit_quiz').click(function(){
-            //                    $('#finalExam_modal').modal('hide');
-            //                    $('.finalbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
-
-            //                 });
-			// }
-
-			//count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
 	}
 
 	function startTimer() {
