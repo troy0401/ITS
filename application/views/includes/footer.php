@@ -40,7 +40,6 @@
     var subject_id;
 	var count_quest=0,total_quest=1;next_quest=0
 	var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1;
-	var quiz_type;
     $(document).ready(function(){
 		viewStudSubj();
 		final_score(<?php echo $this->session->userdata('accnt_id');?>);
@@ -915,7 +914,6 @@
 	}
 
 	function practiceExam(exam_id,subj_id,test_items,time,type){
-		quiz_type=1;
 		$('#takeExam_modal').modal('show');
 		console.log(exam_id+','+subj_id+','+test_items+','+time+','+type);
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
@@ -972,7 +970,6 @@
 	}
 
 	function getScorePractice(score_id,exam_id){
-		quiz_type='';
       $.post(base_url+'Main/getScore',{score_id:score_id}, function(result){
           var score=result[0]['score'];
           var final= score/count_quest*100;
@@ -1010,7 +1007,6 @@
 
 	function takeSummExam(exam_id,subj_id,exam_items,exam_time,exam_type){
 		$('#summExam_modal').modal('show');
-		quiz_type=2;
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:exam_items},
 					function(result){
 					$('.summ-list').empty();
@@ -1108,7 +1104,6 @@
 
 	function takeFinals(accnt_id){
 		$('#finalExam_modal').modal('show');
-		quiz_type=3;
 		$.post(base_url+'Main/getFinals',{accnt_id:accnt_id},
 					function(result){
 					var finals_id=getFinalsID(accnt_id);
