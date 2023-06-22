@@ -40,6 +40,7 @@
     var subject_id;
 	var count_quest=0,total_quest=1;next_quest=0
 	var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1;
+	var quiz_type;
     $(document).ready(function(){
 		viewStudSubj();
 		final_score(<?php echo $this->session->userdata('accnt_id');?>);
@@ -361,6 +362,7 @@
 
 		 $('#submitSummExamForm').submit(function(e){//submit summative exam answer
             e.preventDefault();
+			quiz_type=2;
 			var quest_type=$($("#submitSummExamForm input[type='hidden']")[7]).val();
              $.post(base_url+'Main/submitAnswer1',
             {
@@ -403,6 +405,7 @@
 
 		 $('#submitFinalExamForm').submit(function(e){//submit summative exam answer
             e.preventDefault();
+			quiz_type=3;
 			var quest_type=$($("#submitFinalExamForm input[type='hidden']")[3]).val();
              $.post(base_url+'Main/submitFinalsAnswer',
             {
@@ -501,14 +504,43 @@
 			if (seconds <= 0) {
 			clearInterval(countdown);
 			console.log("Countdown timer has ended");
-			seconds--;
 			}
+			seconds--;
 		}, 1000);
 	}
 
 	function stopCountdown() {
 	clearInterval(countdown);
 	$('.timer').empty();
+	if(quiz_type==1){
+		stopTimer();
+		getScorePractice($($("#submitExamForm input[type='hidden']")[5]).val(),$($("#submitExamForm input[type='hidden']")[6]).val());//score_id and exam_id
+		$('#question'+next_quest+'').remove();
+		$('.button_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+		$('.submit_quiz').click(function(){
+			$('.button_handler').empty().append('<button disabled class="btn btn-primary submit_quiz" type="submit">Submit</button><button type="button" onclick="skipQuest();" style="display:none;" class="btn btn-warning">Skip</button>');
+			$('#takeExam_modal').modal('hide');
+		});
+	}else if(quiz_type==2){
+		stopTimer();
+		getScoreSummative($($("#submitSummExamForm input[type='hidden']")[5]).val(),$($("#submitSummExamForm input[type='hidden']")[6]).val());//score_id and exam_id
+        $('#question'+next_quest+'').remove();
+        $('.summbutton_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+        $('.submit_quiz').click(function(){
+            $('#summExam_modal').modal('hide');
+            $('.summbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
+        });
+	}else if(quiz_type==3){
+		stopTimer();
+		getScoreFinals($($("#submitFinalExamForm input[type='hidden']")[2]).val());//score_id and exam_id
+        $('#question'+next_quest+'').remove();
+        $('.finalbutton_handler').empty().append('<button class="btn btn-primary submit_quiz" type="button">Close</button>');
+        $('.submit_quiz').click(function(){
+            $('#finalExam_modal').modal('hide');
+            $('.finalbutton_handler').empty().append('<button type="submit" disabled class="btn btn-primary">Submit</button>');
+            });
+	}
+	count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
 	}
 
 	function startTimer() {
@@ -874,6 +906,7 @@
 
 	function practiceExam(exam_id,subj_id,test_items,time,type){
 		$('#takeExam_modal').modal('show');
+		quiz_type=1;
 		console.log(exam_id+','+subj_id+','+test_items+','+time+','+type);
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
 					function(result){
