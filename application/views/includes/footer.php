@@ -907,7 +907,7 @@
 	function practiceExam(exam_id,subj_id,test_items,time,type){
 		$('#takeExam_modal').modal('show');
 		quiz_type=1;
-		console.log(exam_id+','+subj_id+','+test_items+','+time+','+type);
+		//console.log(exam_id+','+subj_id+','+test_items+','+time+','+type);
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
 					function(result){
 					$('.question-list').empty();
@@ -915,7 +915,7 @@
 					startTimer();
 					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,1,result.length);
 					for(var i=0; i<result.length; i++){
-						console.log(result);
+						//console.log(result);
 						if(result[i]['testq_type']=='1'){
 						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
