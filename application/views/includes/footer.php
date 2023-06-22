@@ -506,7 +506,6 @@
 			clearInterval(countdown);
 			console.log("Countdown timer has ended");
 			seconds--;
-			count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
 			}
 		}, 1000);
 	}
@@ -550,6 +549,8 @@
 
             //                 });
 			// }
+
+			//count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
 	}
 
 	function startTimer() {
