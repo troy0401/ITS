@@ -40,7 +40,7 @@
     var subject_id;
 	var count_quest=0,total_quest=1;next_quest=0
 	var startTime, endTime, durationInSeconds, timer,countdown,chart,chart1;
-	var quiz_type;
+	var quiz_type,quiz_items;
     $(document).ready(function(){
 		viewStudSubj();
 		final_score(<?php echo $this->session->userdata('accnt_id');?>);
@@ -907,12 +907,14 @@
 	function practiceExam(exam_id,subj_id,test_items,time,type){
 		$('#takeExam_modal').modal('show');
 		quiz_type=1;
+		
 		//console.log(exam_id+','+subj_id+','+test_items+','+time+','+type);
 		$.post(base_url+'Main/getQuestionsExam',{exam_id:exam_id,subj_id:subj_id,test_items:test_items},
 					function(result){
 					$('.question-list').empty();
 					countdownTimer(time);
 					startTimer();
+					quiz_items=result.length;
 					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,1,result.length);
 					for(var i=0; i<result.length; i++){
 						//console.log(result);
@@ -974,7 +976,7 @@
               '<h3 class="text-danger text-center">You Failed!</h3>');
 				updatePracticeButtons(exam_id,0);
           }
-          count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
+          count_quest=0,prev_quest=0,next_quest=0,total_quest=1,quiz_items=0;
 
       },'json');
     }
@@ -1004,6 +1006,7 @@
 					$('.summ-list').empty();
 					countdownTimer(exam_time);
 					startTimer();
+					quiz_items=result.length;
 					var id =recordTestHistory(subj_id,<?php echo $this->session->userdata('accnt_id')?>,2,result.length);
 					for(var i=0; i<result.length; i++){
 						if(result[i]['testq_type']=='1'){
@@ -1064,7 +1067,7 @@
               '<h3 class="text-danger text-center">You Failed!</h3>');
 				//updatePracticeButtons(exam_id,0);
           }
-          count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
+          count_quest=0,prev_quest=0,next_quest=0,total_quest=1,quiz_items=0;
 
       },'json');
     }
@@ -1102,6 +1105,7 @@
 					$('.final-list').empty();
 					countdownTimer(3600);
 					startTimer();
+					quiz_items=result.length;
 					for(var i=0; i<result.length; i++){
 							for(var j=0; j<result[i].length; j++){
 								if(result[i][j]['testq_type']=='1'){
@@ -1166,7 +1170,7 @@
               '<h3 class="text-danger text-center">You Failed!</h3>');
 				//updatePracticeButtons(exam_id,0);
           }
-          count_quest=0,prev_quest=0,next_quest=0,total_quest=1;
+          count_quest=0,prev_quest=0,next_quest=0,total_quest=1,quiz_items=0;
 		  $("#finals_subject").prop('disabled',true);
 
       },'json');
