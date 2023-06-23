@@ -966,7 +966,7 @@
 	function getScorePractice(score_id,exam_id){
       $.post(base_url+'Main/getScore',{score_id:score_id}, function(result){
           var score=result[0]['score'];
-          var final= score/count_quest*100;
+          var final= score/quiz_items*100;
           if(final>=70){
             $('.question-list').html('<h2 class="text-center">Your score:'+result[0]['score']+'/'+result[0]['num_of_items']+'</h2>'+
               '<h3 class="text-success text-center">You Passed!</h3>');
@@ -1056,7 +1056,7 @@
 	function getScoreSummative(score_id,exam_id){
       $.post(base_url+'Main/getScore',{score_id:score_id}, function(result){
           var score=result[0]['score'];
-          var final= score/count_quest*100;
+          var final= score/quiz_items*100;
 		  addNewLesson(exam_id); //add new subtopic for student
           if(final>=70){
             $('.summ-list').html('<h2 class="text-center">Your score:'+result[0]['score']+'/'+count_quest+'</h2>'+
@@ -1160,7 +1160,7 @@
 	function getScoreFinals(final_id){
       $.post(base_url+'Main/getScoreFinals',{final_id:final_id}, function(result){
           var score=result;
-          var final= score/count_quest*100;
+          var final= score/quiz_items*100;
           if(final>=70){
             $('.final-list').html('<h2 class="text-center">Your score:'+result+'/'+count_quest+'</h2>'+
               '<h3 class="text-success text-center">You Passed!</h3>');
