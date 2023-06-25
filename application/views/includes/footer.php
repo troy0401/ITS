@@ -810,9 +810,8 @@
 
 	function redirectPage(page,id,subj_id,name){
 		window.open(page, '_blank');
-		//alert(page);
-		//$('#viewLearningModal').modal('show');
-		//$('.video-view').empty().append('<iframe width="1000" heigth="1000" src="'+page+'"></iframe>');
+		$('#viewLearningModal').modal('show');
+		$('.video-view').empty().append('<iframe width="1000" heigth="1000" src="'+page+'"></iframe>');
 		updateSummativeExamButton(id);
 		ViewSubjStud(subj_id,name,page1,page2)
 	}
