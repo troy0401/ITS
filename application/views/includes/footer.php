@@ -727,7 +727,7 @@
 		page1=link;
 		page2=link2;
 		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive,request_button;
-		var redirect_button,summ_button;
+		var redirect_button,redirect_button2,summ_button;
 		$('.subject_title').html(name);
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
