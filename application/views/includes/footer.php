@@ -636,6 +636,7 @@
 		var subj_id=id,accnt_id=<?php echo $this->session->userdata('accnt_id');?>, button,active,inactive,request_button;
 		var redirect_button;
 		$('.subject_title').html(name);
+		alert(link+' '+link2);
 		$.post(base_url+'Main/lesson',{subj_id:id,accnt_id:accnt_id},
 					function(result){
 						var learnExamData = checkSubjSession(subj_id,accnt_id,0)
@@ -740,7 +741,7 @@
 						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+learnExamData[0]['exam_trial']+'/'+learnExamData[0]['exam_set_trial']+']</span></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
 						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button><button disabled type="button" class="btn btn-warning mb-3">Attempts <span class="badge badge-light">['+practiceExamData[0]['exam_trial']+'/'+practiceExamData[0]['exam_set_trial']+']</span></button>');
 
-					redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+(link2=='' ? '' : '<button type="button" onclick="redirectPage(\''+link2 +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>') : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+(link2=='' ? '' : '<button type="button" onclick="redirectPage(\''+link2 +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'));
+					redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\',\''+link2 +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+(link2=='' ? '' : '<button type="button" onclick="redirectPage(\''+link2 +'\',\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>') : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+(link2=='' ? '' : '<button type="button" onclick="redirectPage(\''+link2 +'\',\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'));
 
 
 						//button=learnExamData.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
@@ -802,13 +803,13 @@
 	}
 
 
-	function redirectPage(page,id,subj_id,name){
+	function redirectPage(page,page2,id,subj_id,name){
 		window.open(page, '_blank');
 		//alert(page);
 		//$('#viewLearningModal').modal('show');
 		//$('.video-view').empty().append('<iframe width="1000" heigth="1000" src="'+page+'"></iframe>');
 		updateSummativeExamButton(id);
-		ViewSubjStud(subj_id,name,page)
+		ViewSubjStud(subj_id,name,page,page2)
 	}
 
 	// function redirectPage1(page,id,subj_id,name){
