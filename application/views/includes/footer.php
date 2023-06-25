@@ -804,6 +804,7 @@
 
 	function redirectPage(page,id,subj_id,name){
 		//window.open(page, '_blank');
+		//alert(page);
 		$('#viewLearningModal').modal('show');
 		$('.video-view').empty().append('<iframe class="videoModal" src="'+page+'" frameborder="0" allowfullscreen></iframe>');
 		updateSummativeExamButton(id);
