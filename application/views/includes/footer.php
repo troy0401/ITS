@@ -653,8 +653,8 @@
 						'<button type="button" onclick="showRequestModal('+learnExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>' : '<button disabled type="button" class="btn btn-success btn-lg mb-3">Take Exam <i class="fa fa-edit"></i></button>'+
 						'<button type="button" onclick="showRequestModal('+practiceExamData[0]['exam_id']+')" class="btn btn-danger btn-lg mb-3">Request Additional attempt <i class="fa fa-send-o"></i></button>');
 
-						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\',\''+link2 +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+(link2=='' ? '' : '<button type="button" onclick="redirectPage(\''+link2 +'\',\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>') : '<button type="button" onclick="redirectPage(\''+link2 +'\',\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'+(link2=='' ? '' : '<button type="button" onclick="redirectPage(\''+link2 +'\',\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'));
-
+						redirect_button=(learnExamData.length>0 ? '<button type="button" onclick="redirectPage(\''+link +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>' : '<button type="button" onclick="redirectPage(\''+link +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>');
+						redirect_button2=(learnExamData.length>0 ? (link2==''? '': '<br><button type="button" onclick="redirectPage1(\''+link2 +'\','+learnExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>') : (link2==''? '': '<br><button type="button" onclick="redirectPage1(\''+link2 +'\','+practiceExamData[0]['exam_id']+','+subj_id+',\''+name +'\')" class="btn btn-info btn-lg btn-block">View Learning Material <i class="fa fa-eye"></i></button>'));
 
 						//button=learnExamData.length>0 ? Number(practiceExamData[0]['exam_type']) == 1 ? Number(practiceExamData[0]['exam_status']) == 0 ? Number(practiceExamData[0]['exam_set_trial'])> Number(practiceExamData[0]['exam_trial']) ? active : request_button : inactive: inactive : inactive;
 						if(learnExamData.length>0){
@@ -692,7 +692,7 @@
 
 						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
 						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
-						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+redirect_button+
+						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+redirect_button+ +redirect_button2+
 						'</div></div></div>'+
 						'<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion22">Practice Exam</a>'+
 						'</div><div id="accordion22" class="collapse" data-parent="#accordion2">'+
@@ -812,11 +812,11 @@
 		ViewSubjStud(subj_id,name,page,page2)
 	}
 
-	// function redirectPage1(page,id,subj_id,name){
-	// 	window.open(page, '_blank');
-	// 	updateSummativeExamButton(id);
-	// 	ViewSubjStudCont(subj_id,name,page)
-	// }
+	function redirectPage1(page,id,subj_id,name){
+		window.open(page, '_blank');
+		updateSummativeExamButton(id);
+		ViewSubjStudCont(subj_id,name,page)
+	}
 
 	function checkSubjSession(subj_id,accnt_id,type){ //lock subtopics if previous subtopics are not yet finished (subtopic 1 only)
 			var result = $.ajax({
