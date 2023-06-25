@@ -281,7 +281,7 @@
                                     </div>
 
                                     <div id="viewLearningModal" class="modal fade bd-example-modal-lg">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Learning Material</h5>
