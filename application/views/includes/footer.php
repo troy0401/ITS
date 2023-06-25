@@ -803,7 +803,7 @@
 	}
 
 
-	function redirectPage(page,page2,id,subj_id,name){
+	function redirectPage(page,id,subj_id,name){
 		window.open(page, '_blank');
 		//alert(page);
 		//$('#viewLearningModal').modal('show');
