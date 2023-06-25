@@ -793,7 +793,7 @@
 
 						$('#subtopic_details').empty().append('<div id="accordion2" class="according accordion-s2">'+
 						'<div class="card"><div class="card-header"><a class="card-link" data-toggle="collapse" href="#accordion21">Learning Material </a>'+
-						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+redirect_button+ +redirect_button2+
+						'</div><div id="accordion21" class="collapse show" data-parent="#accordion2"><div class="card-body">'+redirect_button+''+redirect_button2+
 						'</div></div></div>'+
 						'<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#accordion22">Practice Exam</a>'+
 						'</div><div id="accordion22" class="collapse" data-parent="#accordion2">'+
