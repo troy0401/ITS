@@ -107,7 +107,7 @@
 				$("#reg input").each(function(){
 				data.push(this.value);
 			});
-				$.post(base_url+'Main/add_Account',
+				$.post(base_url+'Main/add_account',
 					 {data:data}, function(result){
 						$('#reg')[0].reset();
 						alert('Account Registered!')
