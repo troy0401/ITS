@@ -108,9 +108,11 @@
 					window.location=base_url+'Main/Subject';
 					}else if(data=='3'){
 						window.location=base_url+'Main/Admin';
+					}else if(data==null){
+						alert("Account is not yet activated");
 					}else{
-						alert("Invalid Username or Password");
-					}
+                        alert("Invalid Username or Password");
+                    }
 				},'json');
 			});
 			});
