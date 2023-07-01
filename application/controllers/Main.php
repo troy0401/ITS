@@ -141,6 +141,10 @@ class Main extends CI_Controller {
         $name=$post[0];
         $email=$post[1];
 		$pw=$post[3];
+		$check_email=$this->model->select_table_with_id('account','accnt_user',$email);
+		if($check_email->num_rows()>1){
+			echo json_encode(false);
+		}else{
         $data = array(
             'accnt_user'=>$email,
             'accnt_pass'=>password_hash($pw, PASSWORD_DEFAULT),
@@ -159,6 +163,7 @@ class Main extends CI_Controller {
 		$this->email->message('The OTP for this account is <b>'.$randomString.'</b>.');
 		$this->email->send();
 		echo json_encode($this->email->print_debugger());
+	}
 	}
 
     public function addAccount(){

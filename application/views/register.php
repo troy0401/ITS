@@ -152,7 +152,11 @@
 			});
 				$.post(base_url+'Main/add_TempAcc',
 					 {data:data}, function(result){
+                        if(result==false){
+                            alert('Account already existed. Please use another one.')
+                        }else{
                           $('#otpModal').modal('show');
+                        }
 					 },'json');
                      
                 });
