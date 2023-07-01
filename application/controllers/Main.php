@@ -114,10 +114,9 @@ class Main extends CI_Controller {
 		$post = $this->input->post('data');
         $name=$post[0];
         $email=$post[1];
-        $pass=$post[2];
         $data = array(
             'accnt_user'=>$email,
-            'accnt_pass'=>password_hash($pass, PASSWORD_DEFAULT),
+            //'accnt_pass'=>password_hash($pass, PASSWORD_DEFAULT),
             'accnt_name'=>$name,
 			'accnt_type'=>2,
 			'accnt_img'=>'avatar.png'

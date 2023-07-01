@@ -56,9 +56,15 @@
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" id="exampleInputEmail1" required>
+                            <input type="email" id="email1" required>
                             <i class="ti-email"></i>
                             <div class="text-danger"></div>
+                        </div>
+                        <div class="form-gp">
+                            <label for="exampleInputEmail1">Confirm Email address</label>
+                            <input type="email" oninput="valEmail(this.value);" id="email2" required>
+                            <i class="ti-email"></i>
+                            <div class="text-danger val_output"></div>
                         </div>
                         <!-- <div class="form-gp">
                             <label for="exampleInputPassword1">Password</label>
@@ -114,6 +120,16 @@
 					 },'json');
                 });
             });
+
+    function valEmail(val){
+        var mail1=$('#email1').val();
+        if(val==mail1){
+            $("#reg button[type=submit]").prop('disabled',false);
+        }else{
+            $('.val_output').empty().append('Email addresses are not the same');
+            $("#reg button[type=submit]").prop('disabled',true);
+        }
+    }
     </script>
 </body>
 
