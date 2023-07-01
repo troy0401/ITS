@@ -60,12 +60,12 @@
                             <i class="ti-email"></i>
                             <div class="text-danger"></div>
                         </div>
-                        <div class="form-gp">
+                        <!-- <div class="form-gp">
                             <label for="exampleInputPassword1">Password</label>
                             <input type="password" id="exampleInputPassword1" required>
                             <i class="ti-lock"></i>
                             <div class="text-danger"></div>
-                        </div>
+                        </div> -->
                         <div class="submit-btn-area">
                             <button id="form_submit" type="submit">Submit <i class="ti-arrow-right"></i></button>
                         </div>
