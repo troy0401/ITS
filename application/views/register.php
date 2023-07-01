@@ -123,10 +123,11 @@
 
     function valEmail(val){
         var mail1=$('#email1').val();
+        $('.val_output').empty();
         if(val==mail1){
             $("#reg button[type=submit]").prop('disabled',false);
         }else{
-            $('.val_output').empty().append('Email addresses are not the same');
+            $('.val_output').append('Email addresses are not the same');
             $("#reg button[type=submit]").prop('disabled',true);
         }
     }
