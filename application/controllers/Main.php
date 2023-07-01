@@ -1451,7 +1451,7 @@ class Main extends CI_Controller {
 	}
 
 	public function updateAccountStatus(){
-		$accnt=$this->model->select_table_with_id("account","accnt_id",$this->input->post('id'));
+		$accnt=$this->model->select_table_with_id("account","accnt_id",$this->input->post('accnt_id'));
 		$stat='';
 		foreach($accnt->result() as $ac){
 			if($ac->accnt_stat==0){
