@@ -122,17 +122,16 @@ class Main extends CI_Controller {
 			'accnt_type'=>2,
 			'accnt_img'=>'avatar.png'
         );
-        if($this->model->insert_into("account", $data)){
-           echo json_encode(true);
-        }
+		$this->model->insert_into("account", $data);
 
 		$from_email = "inteltutoringsys@gmail.com"; 
 		$to_email = $email; 
-		$this->email->from($from_email, 'Intel Tutoring System'); 
+		$this->email->from($from_email, 'Intelligent Tutoring System'); 
 		$this->email->to($to_email);
-		$this->email->subject('Email Test'); 
-		$this->email->message('Testing the email class.');
+		$this->email->subject('Account Verification'); 
+		$this->email->message('Please click on this link to continue account verification http://inteltutoringsystem.great-site.net');
 		$this->email->send();
+		echo json_encode($this->email->print_debugger());
     }
 
     public function addAccount(){

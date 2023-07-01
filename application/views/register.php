@@ -107,8 +107,9 @@
     <script>
      var base_url='<?php echo base_url(); ?>';
        $(document).ready(function() {
-		   var data = [];
+		   
             $("#reg").submit(function(e) {
+                var data = [];
 				e.preventDefault();
 				$("#reg input").each(function(){
 				data.push(this.value);
@@ -116,8 +117,10 @@
 				$.post(base_url+'Main/add_account',
 					 {data:data}, function(result){
 						$('#reg')[0].reset();
-						alert('Account Registered!')
+						alert('Account Registered!');
+                        console.log(result);
 					 },'json');
+                     
                 });
             });
 
