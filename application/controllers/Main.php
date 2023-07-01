@@ -142,7 +142,7 @@ class Main extends CI_Controller {
         $email=$post[1];
 		$pw=$post[3];
 		$check_email=$this->model->select_table_with_id('account','accnt_user',$email);
-		if($check_email->num_rows()>1){
+		if($check_email->num_rows()>0){
 			echo json_encode(false);
 		}else{
         $data = array(
@@ -191,34 +191,38 @@ class Main extends CI_Controller {
         if($count>0){
             $acc=$this->model->select_table_with_id2("account","accnt_user",$un);
             foreach($acc as $ac){
-                if(password_verify($pass,$ac->accnt_pass))
-                {
-                    $fetch=$this->model->select_table_with_id2("account","accnt_id",$ac->accnt_id);
-                    foreach($fetch as $a){
-                        $acc_id = $a->accnt_id;
-                        $accnt = $a->accnt_name;
-						$type = $a->accnt_type;
-						$img = $a->accnt_img;
-						$user = $a->accnt_user;
+					if($ac->accnt_stat==1){
+						if(password_verify($pass,$ac->accnt_pass))
+						{
+							$fetch=$this->model->select_table_with_id2("account","accnt_id",$ac->accnt_id);
+							foreach($fetch as $a){
+								$acc_id = $a->accnt_id;
+								$accnt = $a->accnt_name;
+								$type = $a->accnt_type;
+								$img = $a->accnt_img;
+								$user = $a->accnt_user;
 
-                    }
-                    $newdata = array(
-					  'accnt_id'=>$acc_id,
-                      'accnt_name'=>$accnt,
-					  'accnt_type'=>$type,
-					  'accnt_img'=>$img,
-					  'accnt_user'=>$user
-                    );
+							}
+							$newdata = array(
+							'accnt_id'=>$acc_id,
+							'accnt_name'=>$accnt,
+							'accnt_type'=>$type,
+							'accnt_img'=>$img,
+							'accnt_user'=>$user
+							);
 
-                    //$this->model->update_where('accounts', $data, 'account_id', $acc_id);
-                    $this->session->set_userdata($newdata);
-                    //echo json_encode($newdata);
-                    //redirect(base_url().'masterfile/dashboard/');
-					echo json_encode($ac->accnt_type);
-                }else{
-					echo json_encode(false);
-				}
-            }
+							//$this->model->update_where('accounts', $data, 'account_id', $acc_id);
+							$this->session->set_userdata($newdata);
+							//echo json_encode($newdata);
+							//redirect(base_url().'masterfile/dashboard/');
+							echo json_encode($ac->accnt_type);
+						}else{
+							echo json_encode(false);
+						}
+            }else{
+				echo json_encode(null);
+			}
+		}
 		}else{
                     echo json_encode(false);
                 }
