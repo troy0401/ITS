@@ -68,14 +68,14 @@
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputEmail1">Password</label>
-                            <input type="password" id="pass1" required>
-                            <i class="ti-email"></i>
-                            <div class="text-danger"></div>
+                            <input type="password" oninput="validatePassword(this.value)" id="pass1" required>
+                            <i class="ti-lock"></i>
+                            <div class="text-danger pass_validate"></div>
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputEmail1">Confirm Password</label>
                             <input type="password" oninput="valPass(this.value);" id="pass2" required>
-                            <i class="ti-email"></i>
+                            <i class="ti-lock"></i>
                             <div class="text-danger pass_output"></div>
                         </div>
                         <!-- <div class="form-gp">
@@ -203,6 +203,31 @@
             $('.pass_output').append('Passwords are not the same');
             $("#reg button[type=submit]").prop('disabled',true);
         }
+    }
+    
+    function validatePassword(password) {
+        // Check length
+        if (password.length < 8) {
+            $('.pass_validate').empty().append('Must be minimum of 8 characters with a combination of uppercase and lowercase letters, numbers and special characters.');
+        }
+
+        // Check for uppercase, lowercase, numbers, and special characters
+        const uppercaseRegex = /[A-Z]/;
+        const lowercaseRegex = /[a-z]/;
+        const numberRegex = /[0-9]/;
+        const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+
+        if (
+            !uppercaseRegex.test(password) ||
+            !lowercaseRegex.test(password) ||
+            !numberRegex.test(password) ||
+            !specialCharRegex.test(password)
+        ) {
+            $('.pass_validate').empty().append('Must be minimum of 8 characters with a combination of uppercase and lowercase letters, numbers and special characters.');
+        }
+
+        // Password meets all requirements
+        $('.pass_validate').empty();
     }
     </script>
 </body>
