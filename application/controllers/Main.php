@@ -7,7 +7,7 @@ class Main extends CI_Controller {
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->helper('date');
-        $this->load->library('session');
+        $this->load->library('session','email');
         $this->load->model('model');
     }
 
