@@ -68,9 +68,9 @@
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputEmail1">Password</label>
-                            <input type="password" oninput="validatePassword(this.value)" id="pass1" required>
+                            <input type="password" oninput="validatePassword(this.value);" id="pass1" required>
                             <i class="ti-lock"></i>
-                            <div class="text-danger pass_validate"></div>
+                            <div class="text-danger pass_valid"></div>
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputEmail1">Confirm Password</label>
@@ -207,10 +207,10 @@
     
     function validatePassword(password) {
         // Check length
+        $('.pass_valid').empty();
         if (password.length < 8) {
-            $('.pass_validate').empty().append('Must be minimum of 8 characters with a combination of uppercase and lowercase letters, numbers and special characters.');
+            $('.pass_valid').append('*Must be minimum of 8 characters<br>');
         }
-
         // Check for uppercase, lowercase, numbers, and special characters
         const uppercaseRegex = /[A-Z]/;
         const lowercaseRegex = /[a-z]/;
@@ -223,11 +223,10 @@
             !numberRegex.test(password) ||
             !specialCharRegex.test(password)
         ) {
-            $('.pass_validate').empty().append('Must be minimum of 8 characters with a combination of uppercase and lowercase letters, numbers and special characters.');
+            $('.pass_valid').append('*Must be  a combination of uppercase and lowercase letters, numbers and special characters.');
         }
-
+       
         // Password meets all requirements
-        $('.pass_validate').empty();
     }
     </script>
 </body>
