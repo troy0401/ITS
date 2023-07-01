@@ -416,7 +416,7 @@ class Main extends CI_Controller {
                                             </button>
                                              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#viewAccount" onclick=updateAccountForm('.$a->accnt_id.')>Update</a>
-                                                <a class="dropdown-item"  data-toggle="modal" data-target="#delAccount" onclick=delAccountForm('.$a->accnt_id.','.$a->accnt_stat.')>Delete</a>
+                                                <a class="dropdown-item"  data-toggle="modal" data-target="#delAccount" onclick=delAccountForm('.$a->accnt_id.','.$a->accnt_stat.')>Change Status</a>
                                             </div>
                                         </div>'
       );
