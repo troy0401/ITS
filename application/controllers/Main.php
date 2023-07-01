@@ -1453,7 +1453,7 @@ class Main extends CI_Controller {
 	public function updateAccountStatus(){
 		$accnt=$this->model->select_table_with_id("account","accnt_id",$this->input->post('id'));
 		$stat='';
-		foreach($accnt as $ac){
+		foreach($accnt->result() as $ac){
 			if($ac->accnt_stat==0){
 				$stat=1;
 			}else{
