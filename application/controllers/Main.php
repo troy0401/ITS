@@ -110,29 +110,56 @@ class Main extends CI_Controller {
     }
 
     //--------------------------->functions------------------------------------------
-	public function add_account(){
+	public function verifyAccount(){
+		$post = $this->input->post('data');
+        $otp=$post[0];
+        $email=$this->input->post('email');
+		$check=$this->model->select_table_with_id("account","accnt_user",$email);
+		foreach($check->result() as $ch){
+				if($otp==$ch->accnt_otp){
+					$data=array(
+						'accnt_otp'=>'',
+						'accnt_stat'=>1
+					);
+					$this->model->update_where('account', $data, 'accnt_id', $ch->accnt_id);
+					echo json_encode(true);
+				}else{
+					echo json_encode(false);
+				}
+		}
+		
+    }
+
+	public function add_TempAcc(){
 		$this->load->library('email'); 
+		$characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		$randomString = '';
+		for ($i = 0; $i < 4; $i++) {
+			$randomString .= $characters[rand(0, strlen($characters) - 1)];
+		}
 		$post = $this->input->post('data');
         $name=$post[0];
         $email=$post[1];
+		$pw=$post[3];
         $data = array(
             'accnt_user'=>$email,
-            //'accnt_pass'=>password_hash($pass, PASSWORD_DEFAULT),
+            'accnt_pass'=>password_hash($pw, PASSWORD_DEFAULT),
             'accnt_name'=>$name,
 			'accnt_type'=>2,
-			'accnt_img'=>'avatar.png'
+			'accnt_img'=>'avatar.png',
+			'accnt_otp'=>$randomString,
+			'accnt_stat'=>0
         );
 		$this->model->insert_into("account", $data);
-
 		$from_email = "inteltutoringsys@gmail.com"; 
 		$to_email = $email; 
 		$this->email->from($from_email, 'Intelligent Tutoring System'); 
 		$this->email->to($to_email);
 		$this->email->subject('Account Verification'); 
-		$this->email->message('Please click on this link to continue account verification http://inteltutoringsystem.great-site.net');
+		$this->email->message('The OTP for this account is <b>'.$randomString.'</b>.');
 		$this->email->send();
 		echo json_encode($this->email->print_debugger());
-    }
+	}
 
     public function addAccount(){
 		$post = $this->input->post('data');

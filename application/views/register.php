@@ -97,6 +97,30 @@
         </div>
     </div>
     <!-- login area end -->
+    <div id="otpModal" class="modal fade ">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirm One-Time Password</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+										<form id="checkOTP" class="needs-validation" autocomplete="off">
+                                            <div class="modal-body">
+                                            <div class="form-row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationCustom02">One-Time Password</label>
+                                                    <input type="text" class="form-control" id="validationCustom03" placeholder="OTP PIN" required>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                            </div>
+                                             </form>
+                                        </div>
+                                    </div>
+                                </div>
 
      <script src="<?php echo base_url('srtdash-admin-dashboard-master/srtdash/assets/js/vendor/jquery-2.2.4.min.js')?>"></script>
     <!-- bootstrap 4 js -->
@@ -126,19 +150,38 @@
 				$("#reg input").each(function(){
 				data.push(this.value);
 			});
-				$.post(base_url+'Main/add_account',
+				$.post(base_url+'Main/add_TempAcc',
 					 {data:data}, function(result){
-						$('#reg')[0].reset();
-						alert('Account Registered! Please check your email to for OTP');
-                        console.log(result);
+                          $('#otpModal').modal('show');
 					 },'json');
                      
                 });
+
+                $("#checkOTP").submit(function(e){
+                    var data = [];
+                    e.preventDefault();
+				    $("#checkOTP input").each(function(){
+				        data.push(this.value);
+			        });
+                    $.post(base_url+'Main/verifyAccount',
+					 {data:data,email:$('#email1').val()}, function(result){
+                          if(result==true){
+                          $('#checkOTP')[0].reset();
+                          $('#reg')[0].reset();
+                          $('#otpModal').modal('hide');
+                          alert('Account has been activated, You may now login your account');
+                          window.location=base_url+'Main/Login';
+                          }else{
+                          alert('Invalid OTP, Please try again');
+                          }
+					 },'json');
+                    
+                })
             });
 
     function valEmail(val){
         var mail1=$('#email1').val();
-        $('.val_output').empty();
+        $('.mail_output').empty();
         if(val==mail1){
             $("#reg button[type=submit]").prop('disabled',false);
         }else{
@@ -149,11 +192,11 @@
 
     function valPass(val){
         var mail1=$('#pass1').val();
-        $('.val_output').empty();
+        $('.pass_output').empty();
         if(val==mail1){
             $("#reg button[type=submit]").prop('disabled',false);
         }else{
-            $('.pass_output').append('Email addresses are not the same');
+            $('.pass_output').append('Passwords are not the same');
             $("#reg button[type=submit]").prop('disabled',true);
         }
     }
