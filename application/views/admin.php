@@ -40,6 +40,7 @@
                                             <tr>
                                                 <th>Account Name</th>
                                                 <th>User name</th>
+                                                <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>

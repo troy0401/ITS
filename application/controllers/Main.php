@@ -409,6 +409,7 @@ class Main extends CI_Controller {
                $data[] = array(
                     $a->accnt_name,
 					$a->accnt_user,
+					($a->accnt_stat==0 ? 'Inactive' : 'Active'),
 					'<div class="btn-group" role="group">
                                                 <button id="btnGroupDrop" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 See Actions
