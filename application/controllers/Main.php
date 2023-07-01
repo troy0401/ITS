@@ -1464,7 +1464,7 @@ class Main extends CI_Controller {
 		$data=array(
 			'accnt_stat'=>$stat
 		);
-		$this->model->update_where('account', $data, 'accnt_id', $this->input->post('id'));
+		$this->model->update_where('account', $data, 'accnt_id', $this->input->post('accnt_id'));
 		echo json_encode($stat);		
 
 
