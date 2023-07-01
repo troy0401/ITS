@@ -1597,6 +1597,26 @@
 		$('.img').empty().append('<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+image+'" alt="image">');
 	}
 
+	function delAccountForm(id,stat){
+
+		$('.account-status').empty().append((stat==0 ? 'Reactivate this account?' : 'Deactivate this account?'));
+		$("#delAccount").data("index",id);
+	}
+
+	function updateAccountStatus(){
+		var id=$("#delAccount").data("index");
+			$.post(base_url+'Main/updateAccountStatus',{accnt_id:id}, function(result){
+				$('#delAccount').modal('hide');
+				$('#accounts').DataTable().ajax.reload();
+				if(result==0){
+					alert('Account has been deactivated');
+				}else{
+					alert('Account has been activated');
+				}
+					
+			},'json');
+	}
+
 
     </script>
 </body>

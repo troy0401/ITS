@@ -416,7 +416,7 @@ class Main extends CI_Controller {
                                             </button>
                                              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#viewAccount" onclick=updateAccountForm('.$a->accnt_id.')>Update</a>
-                                                <a class="dropdown-item"  data-toggle="modal" data-target="#delAccount" onclick=delAccountForm('.$a->accnt_id.')>Delete</a>
+                                                <a class="dropdown-item"  data-toggle="modal" data-target="#delAccount" onclick=delAccountForm('.$a->accnt_id.','.$a->accnt_stat.')>Delete</a>
                                             </div>
                                         </div>'
       );
@@ -1448,6 +1448,26 @@ class Main extends CI_Controller {
 		$array["items"]=0;
 		}
 		echo json_encode($array);
+	}
+
+	public function updateAccountStatus(){
+		$accnt=$this->model->select_table_with_id("account","accnt_id",$this->input->post('id'));
+		$stat='';
+		foreach($accnt as $ac){
+			if($ac->accnt_stat==0){
+				$stat=1;
+			}else{
+				$stat=0;
+			}
+		}
+
+		$data=array(
+			'accnt_stat'=>$stat
+		);
+		$this->model->update_where('account', $data, 'accnt_id', $this->input->post('id'));
+		echo json_encode($stat);		
+
+
 	}
 
 
