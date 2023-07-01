@@ -7,7 +7,7 @@ class Main extends CI_Controller {
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->helper('date');
-        $this->load->library('session','email');
+        $this->load->library('session');
         $this->load->model('model');
     }
 
@@ -111,6 +111,7 @@ class Main extends CI_Controller {
 
     //--------------------------->functions------------------------------------------
 	public function add_account(){
+		$this->load->library('email'); 
 		$post = $this->input->post('data');
         $name=$post[0];
         $email=$post[1];
@@ -124,6 +125,14 @@ class Main extends CI_Controller {
         if($this->model->insert_into("account", $data)){
            echo json_encode(true);
         }
+
+		$from_email = "inteltutoringsys@gmail.com"; 
+		$to_email = $email; 
+		$this->email->from($from_email, 'Intel Tutoring System'); 
+		$this->email->to($to_email);
+		$this->email->subject('Email Test'); 
+		$this->email->message('Testing the email class.');
+		$this->email->send();
     }
 
     public function addAccount(){
