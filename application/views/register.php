@@ -64,7 +64,19 @@
                             <label for="exampleInputEmail1">Confirm Email address</label>
                             <input type="email" oninput="valEmail(this.value);" id="email2" required>
                             <i class="ti-email"></i>
-                            <div class="text-danger val_output"></div>
+                            <div class="text-danger mail_output"></div>
+                        </div>
+                        <div class="form-gp">
+                            <label for="exampleInputEmail1">Password</label>
+                            <input type="password" id="pass1" required>
+                            <i class="ti-email"></i>
+                            <div class="text-danger"></div>
+                        </div>
+                        <div class="form-gp">
+                            <label for="exampleInputEmail1">Confirm Password</label>
+                            <input type="password" oninput="valPass(this.value);" id="pass2" required>
+                            <i class="ti-email"></i>
+                            <div class="text-danger pass_output"></div>
                         </div>
                         <!-- <div class="form-gp">
                             <label for="exampleInputPassword1">Password</label>
@@ -117,7 +129,7 @@
 				$.post(base_url+'Main/add_account',
 					 {data:data}, function(result){
 						$('#reg')[0].reset();
-						alert('Account Registered!');
+						alert('Account Registered! Please check your email to for OTP');
                         console.log(result);
 					 },'json');
                      
@@ -130,7 +142,18 @@
         if(val==mail1){
             $("#reg button[type=submit]").prop('disabled',false);
         }else{
-            $('.val_output').append('Email addresses are not the same');
+            $('.mail_output').append('Email addresses are not the same');
+            $("#reg button[type=submit]").prop('disabled',true);
+        }
+    }
+
+    function valPass(val){
+        var mail1=$('#pass1').val();
+        $('.val_output').empty();
+        if(val==mail1){
+            $("#reg button[type=submit]").prop('disabled',false);
+        }else{
+            $('.pass_output').append('Email addresses are not the same');
             $("#reg button[type=submit]").prop('disabled',true);
         }
     }
