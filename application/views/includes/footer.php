@@ -245,9 +245,14 @@
 // 				data.push(this.value);
 // 			});
 			var form=new FormData(this);
+			var checkArray =[];
+			$("input:checkbox[name=type]:checked").each(function(){
+    			checkArray.push($(this).val());
+			});
 			form.append('id',subject_id);
+			form.append('cons',checkArray);
 
-			//console.log(data);
+			console.log(form);
 			$.ajax({
             type: 'POST',
             url: base_url+'Main/add_Quest',
@@ -264,10 +269,6 @@
 				alert("Insert Success");
           }
       });
-// 			$.post(base_url+'Main/add_Quest',
-// 				{data:data,id:subject_id},function(result){
-//
-// 			},'json');
 		});
 
 		$('#editForm_quest').submit(function(e){//Edit Questionaire
@@ -1512,26 +1513,18 @@
 
 	}
 
-	function getConstraintsTable(){
-		var result = $.ajax({
-		url:base_url+"Main/getConstraints",
-		type:"POST",
-		dataType:"json",
-		async:false
-	}).responseJSON;
-	return result;
-
-	}
 
 	function displayQuestType(id){
-		var cons=getConstraintsTable();
-		var checkbox;
-		for(var i=0; i<=cons.length;i++){
-			checkbox='<div class="custom-control custom-checkbox custom-control-inline">'+
-        	'<input type="checkbox" class="custom-control-input constraints">'+
-        	'<label class="custom-control-label" for="customCheck5" value="'+cons[i]['constraint_ID']+'">'+cons[i]['feedback']+'</label>'+
-        	'</div>';
+		$('.boxes').empty();
+		$.post(base_url+'Main/getConstraints',
+			function(result){
+		for(var i=0; i<result.length; i++){
+			$('.boxes').append('<div class="custom-control-inline">'+
+        	'<input type="checkbox" name="type" value="'+result[i]['constraint_ID']+'">'+
+        	'<label class="custom-control-label">'+result[i]['feedback']+'</label>'+
+        	'</div>');
 		}
+		},'json');
 		var mult_choice='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
 		'<textarea class="form-control" id="validationCustom01" name="quest"  placeholder="Question" required></textarea>'+
 		'</div>'+
@@ -1562,8 +1555,7 @@
 		'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
 		'<input type="text" name="hint" class="form-control" id="validationCustom02" placeholder="Hint" required></div>'+
 		'</div>'+
-		'<b class="text-muted mb-3 mt-4 d-block">Constraints</b>'+
-        checkbox;
+		'<b class="text-muted mb-3 mt-4 d-block">Constraints</b><div class="boxes"></div>'
 
 		var quest_type=(id==1? mult_choice : fill_blank);
 		$('#question_set').empty().append(quest_type);

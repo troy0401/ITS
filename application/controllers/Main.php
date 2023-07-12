@@ -296,8 +296,21 @@ class Main extends CI_Controller {
 					"testq_img"=>$this->upload->data('file_name')
                  );
  		}
-		 $this->model->insert_into("test_quest", $data);
-		 echo json_encode(true);
+		 $test_id=$this->model->insert_into("test_quest", $data);
+		 $checks = $this->input->post('cons');
+		 if($checks!==''){
+			$checkArray=explode(",",$checks);
+			for($i=0;$i<sizeof($checkArray);$i++){
+				$cons[] = array(
+					"testq_id"=>$test_id,
+					"constraint_ID"=>$checkArray[$i],
+				);
+				
+			}
+			$this->db->insert_batch('questCons', $cons);
+			
+		 }
+		 echo json_encode($checkArray);
 
 
     }
