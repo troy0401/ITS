@@ -1541,9 +1541,9 @@
         '<div class="col-md-6 mb-3"><label for="validationCustom02">Answer</label>'+
 		'<input type="text" class="form-control" name="ans" id="validationCustom02" placeholder="Test Answer" required></div>'+
 		'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
-		'<input type="text" name="hint" class="form-control" id="validationCustom02" placeholder="Hint" required></div>
+		'<input type="text" name="hint" class="form-control" id="validationCustom02" placeholder="Hint" required></div>'+
 		'<input type="checkbox" class="form-check-input" id="exampleCheck1">'+
-        '<label class="form-check-label" for="exampleCheck1">Check me out</label>
+        '<label class="form-check-label" for="exampleCheck1">Check me out</label>'+
 		'<input type="checkbox" class="form-check-input" id="exampleCheck1">'+
         '<label class="form-check-label" for="exampleCheck1">Check me out</label></div>';
 
