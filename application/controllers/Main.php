@@ -1470,6 +1470,11 @@ class Main extends CI_Controller {
 
 	}
 
+	public function getConstraints(){
+		$cons=$this->model->select_all("constraints");
+		echo json_encode($cons->result());
+	}
+
 
 
 	public function Logout(){
