@@ -1525,7 +1525,13 @@
 
 	function displayQuestType(id){
 		var cons=getConstraintsTable();
-		console.log(cons);
+		var checkbox;
+		for(var i=0; i<=cons.length;i++){
+			checkbox='<div class="custom-control custom-checkbox custom-control-inline">'+
+        	'<input type="checkbox" class="custom-control-input constraints">'+
+        	'<label class="custom-control-label" for="customCheck5" value="'+cons[i]['constraint_ID']+'">'+cons[i]['feedback']+'</label>'+
+        	'</div>';
+		}
 		var mult_choice='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
 		'<textarea class="form-control" id="validationCustom01" name="quest"  placeholder="Question" required></textarea>'+
 		'</div>'+
@@ -1557,14 +1563,7 @@
 		'<input type="text" name="hint" class="form-control" id="validationCustom02" placeholder="Hint" required></div>'+
 		'</div>'+
 		'<b class="text-muted mb-3 mt-4 d-block">Constraints</b>'+
-        '<div class="custom-control custom-checkbox custom-control-inline">'+
-        '<input type="checkbox" class="custom-control-input" id="customCheck5">'+
-        '<label class="custom-control-label" for="customCheck5">checked Checkbox</label>'+
-        '</div>'+
-        '<div class="custom-control custom-checkbox custom-control-inline">'+
-        '<input type="checkbox" class="custom-control-input" id="customCheck6">'+
-        '<label class="custom-control-label" for="customCheck6">Unchecked Checkbox</label>'+
-        '</div>';
+        checkbox;
 
 		var quest_type=(id==1? mult_choice : fill_blank);
 		$('#question_set').empty().append(quest_type);
