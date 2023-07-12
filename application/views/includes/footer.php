@@ -586,6 +586,29 @@
 			},'json');
 	}
 
+	function getConstraintChecks(){
+		var result = $.ajax({
+		url:base_url+"Main/getConstraints",
+		type:"POST",
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+	}
+
+	function getAssignedConstraints(id){
+		var result = $.ajax({
+		url:base_url+"Main/getAssignedConstraints",
+		type:"POST",
+		data:{id:id},
+		dataType:"json",
+		async:false
+	}).responseJSON;
+	return result;
+
+	}
+
+
 	function editQuest(id){
 		$("#editForm_quest").data("index",id);
 		$.post(base_url+'Main/getQuest',
@@ -599,7 +622,7 @@
 					'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 2</label><input type="text" name="choice2" value="'+result[0]['testq_2']+'" class="form-control" id="validationCustom03"  required></div>'+
 					'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 3</label><input type="text" name="choice3" value="'+result[0]['testq_3']+'" class="form-control" id="validationCustom03"  required></div>'+
 					'<div class="col-md-3 mb-3"><label for="validationCustom02">Choice 4</label><input type="text" name="choice4" value="'+result[0]['testq_4']+'" class="form-control" id="validationCustom03"  required>'+
-					'<input type="text" name="type" value="'+result[0]['testq_type']+'" class="form-control" id="validationCustom03></div></div>';
+					'<input type="hidden" name="type" value="'+result[0]['testq_type']+'" class="form-control" id="validationCustom03></div></div>';
 					var fill_blank='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
 					'<textarea name="quest" class="form-control" id="validationCustom01" placeholder="Question" required>'+result[0]['testq_0']+'</textarea>'+
 					'<label for="validationCustom02">Question Attachment</label><input type="file" name="img" value="'+result[0]['testq_img']+'" class="form-control" id="validationCustom03" placeholder="File Image"></div>'+
@@ -607,10 +630,37 @@
 					'<input type="text" name="ans" class="form-control" id="validationCustom02" placeholder="Test Answer" value="'+result[0]['testq_ans']+'" required></div>'+
 					'<div class="col-md-6 mb-3"><label for="validationCustom02">Hint</label>'+
 					'<input type="text" name="hint" class="form-control" value="'+result[0]['testq_hint']+'" id="validationCustom02" placeholder="Hint" required>'+
-					'<input type="text" name="type" value="'+result[0]['testq_type']+'" class="form-control" id="validationCustom03></div></div>';
-
+					'<input type="hidden" name="type" value="'+result[0]['testq_type']+'"></div>'+
+					'</div>'+
+					'<b class="text-muted mb-3 mt-4 d-block">Constraints:</b><div class="box_check"></div>';
+					
 					var quest_list = result[0]['testq_type']==1 ? mult_choice : fill_blank;
 					$('.question_set').empty().append(quest_list);
+					var checks =[];
+					var assigned = [];
+					checks=getConstraintChecks();
+					assigned=getAssignedConstraints(id);
+					// for(var i=0; i<assigned.length; i++){
+					// 	//if(checks[i]['constraint_ID']==assigned[i]['constraint_ID']){
+					// 	$('.box_check').append('<div class="custom-control-inline">'+
+					// 	'<input type="checkbox" checked name="type" value="'+checks[i]['constraint_ID']+'">'+
+					// 	'<label class="custom-control-label">'+checks[i]['feedback']+'</label>'+
+					// 	'</div>');
+					// }
+					for(var j=0; j<checks.length; j++){
+						$('.box_check').append('<div class="custom-control-inline check'+checks[j]['constraint_ID']+'">'+
+						'<input type="checkbox" name="type" value="'+checks[j]['constraint_ID']+'">'+
+						'<label class="custom-control-label">'+checks[j]['feedback']+'</label>'+
+						'</div>');
+						}
+					for (var i=0; i<assigned.length; i++){
+						for(var j=0; j<checks.length; j++){
+							if(assigned[i]['constraint_ID'].indexOf(checks[j]['constraint_ID'])!==-1){
+								$('.check'+checks[j]['constraint_ID']+'').empty().append('<input type="checkbox" checked name="type" value="'+checks[j]['constraint_ID']+'">'+
+						'<label class="custom-control-label">'+checks[j]['feedback']+'</label>');
+							}
+						}
+					}
 			},'json');
 	}
 

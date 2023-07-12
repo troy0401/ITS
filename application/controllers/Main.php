@@ -1485,10 +1485,24 @@ class Main extends CI_Controller {
 
 	public function getConstraints(){
 		$cons=$this->model->select_all("constraints");
-		echo json_encode($cons->result());
+		foreach($cons->result() as $c){
+			$data[]=array(
+				"constraint_ID"=>$c->constraint_ID,
+				"feedback"=>$c->feedback
+			);
+		}
+		echo json_encode($data);
 	}
 
-
+	public function getAssignedConstraints(){
+		$cons=$this->model->select_table_with_id("questCons","testq_id",$this->input->post('id'));
+		foreach($cons->result() as $c){
+		$data[]=array(
+			"constraint_ID"=>$c->constraint_ID
+		);
+	}
+		echo json_encode($data);
+	}
 
 	public function Logout(){
     $data = array(
