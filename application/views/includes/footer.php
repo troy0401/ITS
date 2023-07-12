@@ -640,13 +640,6 @@
 					var assigned = [];
 					checks=getConstraintChecks();
 					assigned=getAssignedConstraints(id);
-					// for(var i=0; i<assigned.length; i++){
-					// 	//if(checks[i]['constraint_ID']==assigned[i]['constraint_ID']){
-					// 	$('.box_check').append('<div class="custom-control-inline">'+
-					// 	'<input type="checkbox" checked name="type" value="'+checks[i]['constraint_ID']+'">'+
-					// 	'<label class="custom-control-label">'+checks[i]['feedback']+'</label>'+
-					// 	'</div>');
-					// }
 					for(var j=0; j<checks.length; j++){
 						$('.box_check').append('<div class="custom-control-inline check'+checks[j]['constraint_ID']+'">'+
 						'<input type="checkbox" name="type" value="'+checks[j]['constraint_ID']+'">'+
