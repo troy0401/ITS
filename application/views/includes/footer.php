@@ -274,9 +274,14 @@
 		$('#editForm_quest').submit(function(e){//Edit Questionaire
 				e.preventDefault();
 
+			var checkArray =[];
+			$("input:checkbox[name=type]:checked").each(function(){
+    			checkArray.push($(this).val());
+			});
 			var id=$("#editForm_quest").data("index");
 			var form=new FormData(this);
 			form.append('id',id);
+			form.append('cons',checkArray);
 			$.ajax({
             type: 'POST',
             url: base_url+'Main/editQuest',
@@ -646,6 +651,7 @@
 						'<label class="custom-control-label">'+checks[j]['feedback']+'</label>'+
 						'</div>');
 						}
+					if(assigned!==null){
 					for (var i=0; i<assigned.length; i++){
 						for(var j=0; j<checks.length; j++){
 							if(assigned[i]['constraint_ID'].indexOf(checks[j]['constraint_ID'])!==-1){
@@ -654,6 +660,7 @@
 							}
 						}
 					}
+				}
 			},'json');
 	}
 

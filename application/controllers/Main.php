@@ -402,9 +402,24 @@ class Main extends CI_Controller {
 
     if($this->model->update_where('test_quest', $data, 'testq_id', $this->input->post('id')))
 	{
-           echo json_encode(true);
+		$checks = $this->input->post('cons');
+		$this->model->delete_where("questCons","testq_id",$this->input->post('id'));
+		if($checks!==''){
+		   $checkArray=explode(",",$checks);
+		   for($i=0;$i<sizeof($checkArray);$i++){
+			   $cons[] = array(
+				   "testq_id"=>$this->input->post('id'),
+				   "constraint_ID"=>$checkArray[$i],
+			   );
+			   
+		   }
+		   $this->db->insert_batch('questCons', $cons);
+           
+		}
+	echo json_encode(true);
 	}
-	}
+ }
+	
 
 	public function accounts()//admin view of modules
      {
@@ -1496,11 +1511,15 @@ class Main extends CI_Controller {
 
 	public function getAssignedConstraints(){
 		$cons=$this->model->select_table_with_id("questCons","testq_id",$this->input->post('id'));
+		if($cons->num_rows()>0){
 		foreach($cons->result() as $c){
 		$data[]=array(
 			"constraint_ID"=>$c->constraint_ID
 		);
 	}
+}else{
+	$data=null;
+}
 		echo json_encode($data);
 	}
 
