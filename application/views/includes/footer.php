@@ -1696,8 +1696,8 @@
 							for(var i=0; i<result.length; i++){
 								$('.constraint'+next_quest+'').append('<h6 class="text-danger feedback'+i+'"></h6>');
 								var regex=new RegExp(result[i]['constraint_regex']);
-								console.log(regex.test(key));
-								console.log(regex);
+								//console.log(regex.test(key));
+								//console.log(regex);
 								if(!regex.test(key)){
 									$('.feedback'+i+'').append('*'+result[i]['feedback']);
 										}else{
