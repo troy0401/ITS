@@ -316,6 +316,23 @@
 				},'json');
 		});
 
+		$($("#submitExamForm textarea")[0]).keypress(function(){
+			var key=$($("#submitExamForm textarea")[0]).val();
+			$.post(base_url+'Main/getAssignedConstraints',{testq_id:$($("#submitExamForm input[type='hidden']")[0]).val()},
+					function(result){
+						if(result!==null){
+							for(var i=0; i<result.length; i++){
+								if(!result[i]['constraint_regex'].test(key)){
+									$('.constraint'+count_quest+'').append('<h6 class="text-danger feedback'+i+'">'+result[i]['feedback']+'</h6>');
+								}else{
+									$('.feedback'+i+'').empty();
+								}
+							}
+						}
+
+			},'json');
+		});
+
 		 $('#submitExamForm').submit(function(e){//submit practice exam answer
             e.preventDefault();
 			var quest_type=$($("#submitExamForm input[type='hidden']")[7]).val();
@@ -939,6 +956,8 @@
 
 	}
 
+	
+
 	function showRequestModal(id){
 		$('#requestAttempt_modal').modal('show');
 		$('.button_attempt').empty().append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
@@ -1013,6 +1032,7 @@
                         '<h5>'+result[i]['testq_0']+'</h5></div>'+
 						(result[i]['testq_img']==''? '' :'<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+result[i]['testq_img']+'" alt="image">')+
 						'<br><textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="change(null);"></textarea>'+
+						'<span class="constraint'+i+'"></span>'+
 						'<h6 class="text-danger hint'+i+'" style="display:none;">[Incorrect]<br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
 						}
                       count_quest++;
