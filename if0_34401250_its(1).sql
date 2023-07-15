@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: sql107.infinityfree.com
--- Generation Time: Jun 21, 2023 at 01:13 AM
+-- Generation Time: Jul 15, 2023 at 10:08 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.2.22
 
@@ -34,44 +34,55 @@ CREATE TABLE `account` (
   `accnt_pass` varchar(255) NOT NULL,
   `accnt_name` varchar(45) NOT NULL,
   `accnt_type` int(11) NOT NULL COMMENT '1=prof, 2=student',
-  `accnt_img` text NOT NULL COMMENT 'account profile'
+  `accnt_img` text NOT NULL COMMENT 'account profile',
+  `accnt_otp` varchar(45) NOT NULL,
+  `accnt_stat` int(11) NOT NULL COMMENT '0-inactive 1=active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`accnt_id`, `accnt_user`, `accnt_pass`, `accnt_name`, `accnt_type`, `accnt_img`) VALUES
-(2, 'prof@gmail.com', '$2y$10$Fik76pO.IvKhxoq0f6HMv.C5fSrptLD9I9Ubv7pv9kBYKlFDAtMCC', 'Professor', 1, 'Screenshot_from_2023-04-18_13-06-21.png'),
-(4, 'admin@yahoo.com', '$2y$10$EhweeFiasnPTQJY58BS.J.R3xWeafw6OHurFdqaGbyJX62hEIfr/2', 'admin', 3, 'Screenshot_from_2023-04-18_13-06-26.png'),
-(8, '202011087@fit.edu.ph', '$2y$10$G7HDGldf6iMq.nHsBkWAN.i5t0JvLMLME83cbnQ9VVuyz2Kj5jBIu', 'Francis Niño Santos', 2, 'avatar.png'),
-(9, 'john@yahoo.com', '$2y$10$mXOy57pkuTRUjqubR6btGO7KFDZNqimKd5hcbKgjd1PmrnxIj41Ni', 'John Florenz Reyes', 2, 'images_(5).jpg'),
-(10, 'kir24vin@gmail.com', '$2y$10$TVmTKCVIw6wExCXIIpAvO.P6G4HQgugljcltl5XFIl3mrtcTR/yTi', 'Marvin Malig', 2, '339146515_931518308047079_24194902104718305_n.jpg'),
-(11, 'abelgomez01530@gmail.com', '$2y$10$COnDrA.V4g/eIQzhYSRGT.1zreT9/o7C6HuJakgC0EYtERX0pT/Va', 'Abel Gomez', 2, 'avatar.png'),
-(12, 'kavapo7057@rockdian.com', '$2y$10$CV9HokJ84MJ7UKGV1ZXJCOrEtxhB0R.mnVcy79FAxI/I2IDOgj.s.', 'Johnny', 2, 'avatar.png'),
-(13, 'dioshuadalugdugan@gmail.com', '$2y$10$YcI2x7DSTcRzmKpUmh.WfucAIhxT1WjCnjSdRYU9hj3TVhG.9LmPe', 'Dioshua', 2, 'avatar.png'),
-(14, 'miguelohara@gmail.com', '$2y$10$BQZsjvxrxvIEW4s1eyDm6O5MsuRHxL.0Jk5cqbyikFyCEUfG1aICq', 'Art Bautista ', 2, 'avatar.png'),
-(15, 'rikexis338@pyadu.com', '$2y$10$JIfzKdX7kqlclxYamqajMeaLHwHUqU6VfwnSJbPe6VXL8j9ft25Jy', 'John Dominic S. Contreras', 2, 'avatar.png'),
-(16, 'markbantayao3@gmail.com', '$2y$10$HZ1uONJr.ziYAbYM9NM04uslWEY01mFb.9l2ncDv1MRrF6uEem4cG', 'Mark yohann bantayao', 2, 'avatar.png'),
-(17, 'deannesantos69@gmail.com', '$2y$10$ezIDfG5eaNtW9rZ0wVVUKO6/AXHAA2AwOcqcwwfneeINy1Drl66/y', 'Deanne Santos', 2, 'avatar.png'),
-(18, 'Pedro@gmail.com', '$2y$10$eF26wjaJNd3uR696zDZmBeoByGAUy6EhJ7FM5Voov0BIix4E5QE.C', 'Pedro Pinagpala', 2, 'avatar.png'),
-(19, 'cleaffordqwe@gmail.com', '$2y$10$RSC6xeueDFyiY6wHQVCBgeE4h9ZvO1oj/awIVAak4A.UgZWazlRaq', 'Nino Rocamora', 2, 'avatar.png'),
-(20, 'cangcoshane@gmail.com', '$2y$10$gtXv2kHQcBqqOVyQQUNwrunNA1bPjf/9uv5qS/DLs37wqB8en/wUy', 'Francez Shane Cangco', 2, 'avatar.png'),
-(21, 'allan@gmail.com', '$2y$10$Z.no7MdpfbtZVWM2NTA/ve0ukYJSqYSHkgZI52u9ySRpqR9RrbvBa', 'Allan Magtibay', 2, 'akaseakari_official_342579606_247658800975361_758492408096546103_n.jpg'),
-(22, '202010306@fit.edu.ph', '$2y$10$aYviu4tvP9ocvNuu2//ItOtgnwrRlufzW7gsZ/fQcVcaaz5rmd3lu', 'Noriel Joy Embudo', 2, 'avatar.png'),
-(23, '202010039@fit.edu.ph', '$2y$10$JcAQa1M4rziBmPUoPw3Gg.mDoK2omM96ECsqqkWa1Xot.Bg5E4KE6', 'Kenneth Lim', 2, 'avatar.png'),
-(24, 'Test1@gmail.com', '$2y$10$3k5ST19xVVj6NNI/yTiVfeMI/pz.DY3QRNvnWBbwhb7gtrjYPLIRy', 'Professor Name', 1, 'avatar.png'),
-(25, 'prof2@gmail.com', '$2y$10$s2agKD47JAj1AO6sOyS1LehQC3Ad2HHM6lgreP27KEvFaeAXdfHg.', 'prof2', 1, 'avatar.png'),
-(26, 'new_stud3@gmail.com', '$2y$10$HSbriStv83nytgIHcTy/N.FxV9kVUxr2udUvr9txHBXzyNBbSpt0i', 'new_stud3', 3, 'avatar.png'),
-(28, 'john1@yahoo.com', '$2y$10$t9YvyLloZwOt6XjKSgOfdO/38jC0Ag4xsKON7FHh.O7KSccjmWiLu', 'john', 2, 'avatar.png'),
-(29, 'jd@user.com', '$2y$10$.uGHhXE9kWdGUOkHHHu7Cem34hlWugX/zYx5M16LILdXuubMV16wW', 'John Doe', 2, 'avatar.png'),
-(30, 'jd@user.com', '$2y$10$7F4m4lL6tIWxZtiTB5Sa3eGJbhatkysQbWk2tQ1q1z4jaBWEfFUVO', 'John Doe', 2, 'avatar.png'),
-(31, 'NEW@gmail.com', '$2y$10$xMQ3O5yYsKiMI6Z.qngxiOuqpERfA9dRPWpS.RI1lLXqgJOMVZ/8m', 'NEW USER', 2, 'avatar.png'),
-(32, 'teststudent@gmail.com', '$2y$10$gLTPG82e6q5L1fgYNdPc0ednoZ5OPppiSD0Ty08RNNvc7dEpal7ii', 'Test Student1', 2, 'avatar.png'),
-(33, 'malasagaelisa@gmail.com', '$2y$10$1Wtz.C764X7broGqYwi34ulz7u.yY7ddZeGpceogZTdfuoSP9jNwm', 'ELISA MALASAGA', 2, 'avatar.png'),
-(34, 'test_student3@gmail.com', '$2y$10$Fg.hffNmKDyXKNn0tn1FxOzYAcrBO4rp.YSnGzdzrlpWhfY2JbmK6', 'Test Student 3', 2, 'avatar.png'),
-(35, 'fekofin205@anomgo.com', '$2y$10$GSbXBJ1vfht05716RE6m4uVappbFVp5WUdW1zf87YugQsiGOcwBIi', 'Cristian', 2, 'avatar.png'),
-(36, 'johnwick@gmail.com', '$2y$10$WWhC3CcJmz3KCmbK8RxaQuLDN.8RGrdd3M1wEXazIJpxWBrSjlLSS', 'john wick ll', 2, 'avatar.png');
+INSERT INTO `account` (`accnt_id`, `accnt_user`, `accnt_pass`, `accnt_name`, `accnt_type`, `accnt_img`, `accnt_otp`, `accnt_stat`) VALUES
+(2, 'prof@gmail.com', '$2y$10$Fik76pO.IvKhxoq0f6HMv.C5fSrptLD9I9Ubv7pv9kBYKlFDAtMCC', 'Professor', 1, 'Screenshot_from_2023-04-18_13-06-21.png', '', 1),
+(4, 'admin@yahoo.com', '$2y$10$EhweeFiasnPTQJY58BS.J.R3xWeafw6OHurFdqaGbyJX62hEIfr/2', 'admin', 3, 'Screenshot_from_2023-04-18_13-06-26.png', '', 1),
+(8, '202011087@fit.edu.ph', '$2y$10$G7HDGldf6iMq.nHsBkWAN.i5t0JvLMLME83cbnQ9VVuyz2Kj5jBIu', 'Francis Niño Santos', 2, 'avatar.png', '', 1),
+(9, 'john@yahoo.com', '$2y$10$mXOy57pkuTRUjqubR6btGO7KFDZNqimKd5hcbKgjd1PmrnxIj41Ni', 'John Florenz Reyes', 2, 'images_(5).jpg', '', 1),
+(10, 'kir24vin@gmail.com', '$2y$10$7H9kRk8zRFGAMGCyLpomwOARyEXwTpDFCZZsVl7iWlgkSSmd8y3VC', 'Marvin Malig', 2, '339146515_931518308047079_24194902104718305_n.jpg', '', 1),
+(11, 'abelgomez01530@gmail.com', '$2y$10$COnDrA.V4g/eIQzhYSRGT.1zreT9/o7C6HuJakgC0EYtERX0pT/Va', 'Abel Gomez', 2, 'avatar.png', '', 1),
+(12, 'kavapo7057@rockdian.com', '$2y$10$CV9HokJ84MJ7UKGV1ZXJCOrEtxhB0R.mnVcy79FAxI/I2IDOgj.s.', 'Johnny', 2, 'avatar.png', '', 1),
+(13, 'dioshuadalugdugan@gmail.com', '$2y$10$YcI2x7DSTcRzmKpUmh.WfucAIhxT1WjCnjSdRYU9hj3TVhG.9LmPe', 'Dioshua', 2, 'avatar.png', '', 1),
+(14, 'miguelohara@gmail.com', '$2y$10$BQZsjvxrxvIEW4s1eyDm6O5MsuRHxL.0Jk5cqbyikFyCEUfG1aICq', 'Art Bautista ', 2, 'avatar.png', '', 1),
+(15, 'rikexis338@pyadu.com', '$2y$10$JIfzKdX7kqlclxYamqajMeaLHwHUqU6VfwnSJbPe6VXL8j9ft25Jy', 'John Dominic S. Contreras', 2, 'avatar.png', '', 1),
+(16, 'markbantayao3@gmail.com', '$2y$10$HZ1uONJr.ziYAbYM9NM04uslWEY01mFb.9l2ncDv1MRrF6uEem4cG', 'Mark yohann bantayao', 2, 'avatar.png', '', 1),
+(17, 'deannesantos69@gmail.com', '$2y$10$ezIDfG5eaNtW9rZ0wVVUKO6/AXHAA2AwOcqcwwfneeINy1Drl66/y', 'Deanne Santos', 2, 'avatar.png', '', 1),
+(18, 'Pedro@gmail.com', '$2y$10$eF26wjaJNd3uR696zDZmBeoByGAUy6EhJ7FM5Voov0BIix4E5QE.C', 'Pedro Pinagpala', 2, 'avatar.png', '', 1),
+(19, 'cleaffordqwe@gmail.com', '$2y$10$RSC6xeueDFyiY6wHQVCBgeE4h9ZvO1oj/awIVAak4A.UgZWazlRaq', 'Nino Rocamora', 2, 'avatar.png', '', 1),
+(20, 'cangcoshane@gmail.com', '$2y$10$gtXv2kHQcBqqOVyQQUNwrunNA1bPjf/9uv5qS/DLs37wqB8en/wUy', 'Francez Shane Cangco', 2, 'avatar.png', '', 1),
+(21, 'allan@gmail.com', '$2y$10$Z.no7MdpfbtZVWM2NTA/ve0ukYJSqYSHkgZI52u9ySRpqR9RrbvBa', 'Allan Magtibay', 2, 'akaseakari_official_342579606_247658800975361_758492408096546103_n.jpg', '', 1),
+(22, '202010306@fit.edu.ph', '$2y$10$aYviu4tvP9ocvNuu2//ItOtgnwrRlufzW7gsZ/fQcVcaaz5rmd3lu', 'Noriel Joy Embudo', 2, 'avatar.png', '', 1),
+(23, '202010039@fit.edu.ph', '$2y$10$JcAQa1M4rziBmPUoPw3Gg.mDoK2omM96ECsqqkWa1Xot.Bg5E4KE6', 'Kenneth Lim', 2, 'avatar.png', '', 1),
+(24, 'Test1@gmail.com', '$2y$10$3k5ST19xVVj6NNI/yTiVfeMI/pz.DY3QRNvnWBbwhb7gtrjYPLIRy', 'Professor Name', 1, 'avatar.png', '', 1),
+(25, 'prof2@gmail.com', '$2y$10$s2agKD47JAj1AO6sOyS1LehQC3Ad2HHM6lgreP27KEvFaeAXdfHg.', 'prof2', 1, 'avatar.png', '', 1),
+(26, 'new_stud3@gmail.com', '$2y$10$HSbriStv83nytgIHcTy/N.FxV9kVUxr2udUvr9txHBXzyNBbSpt0i', 'new_stud3', 3, 'avatar.png', '', 1),
+(28, 'john1@yahoo.com', '$2y$10$t9YvyLloZwOt6XjKSgOfdO/38jC0Ag4xsKON7FHh.O7KSccjmWiLu', 'john', 2, 'avatar.png', '', 1),
+(29, 'jd@user.com', '$2y$10$.uGHhXE9kWdGUOkHHHu7Cem34hlWugX/zYx5M16LILdXuubMV16wW', 'John Doe', 2, 'avatar.png', '', 1),
+(30, 'jd@user.com', '$2y$10$7F4m4lL6tIWxZtiTB5Sa3eGJbhatkysQbWk2tQ1q1z4jaBWEfFUVO', 'John Doe', 2, 'avatar.png', '', 1),
+(31, 'NEW@gmail.com', '$2y$10$xMQ3O5yYsKiMI6Z.qngxiOuqpERfA9dRPWpS.RI1lLXqgJOMVZ/8m', 'NEW USER', 2, 'avatar.png', '', 1),
+(32, 'teststudent@gmail.com', '$2y$10$gLTPG82e6q5L1fgYNdPc0ednoZ5OPppiSD0Ty08RNNvc7dEpal7ii', 'Test Student1', 2, 'avatar.png', '', 1),
+(33, 'malasagaelisa@gmail.com', '$2y$10$1Wtz.C764X7broGqYwi34ulz7u.yY7ddZeGpceogZTdfuoSP9jNwm', 'ELISA MALASAGA', 2, 'avatar.png', '', 1),
+(34, 'test_student3@gmail.com', '$2y$10$Fg.hffNmKDyXKNn0tn1FxOzYAcrBO4rp.YSnGzdzrlpWhfY2JbmK6', 'Test Student 3', 2, 'avatar.png', '', 1),
+(35, 'fekofin205@anomgo.com', '$2y$10$GSbXBJ1vfht05716RE6m4uVappbFVp5WUdW1zf87YugQsiGOcwBIi', 'Cristian', 2, 'avatar.png', '', 1),
+(36, 'johnwick@gmail.com', '$2y$10$WWhC3CcJmz3KCmbK8RxaQuLDN.8RGrdd3M1wEXazIJpxWBrSjlLSS', 'john wick ll', 2, 'avatar.png', '', 1),
+(37, 'new_student111@gmail.com', '$2y$10$7JYIpIt9oQVeY7clPnJKT.AJPfMq9r2nVmwcJk9fCgrFF.1NTWCq6', 'new_student111', 2, 'avatar.png', '', 1),
+(38, 'new_student15@gmail.com', '$2y$10$tUY.Ux391flEmSF./ydH5u/eJOmNWLBQuP8KoNIV0FTKs6cttxOru', 'new student 15', 2, 'avatar.png', '', 1),
+(39, 'newinstructor@gmail.com', '$2y$10$RdJBsCLwYtjas6QxdVApTOLlpwWMEXWTwvtHSMShnOg2mFy.d12Xq', 'New Instructor', 1, 'avatar.png', '', 1),
+(40, 'newinstructor2@gmail.com', '$2y$10$cC6YUARQmyDk7Yz92IMgL.EAcgGHGF03f9A0L0FLCWjvGPi0PNDqq', 'new instructor 2', 1, 'avatar.png', '', 1),
+(41, 'newstud@yahoo.com', '$2y$10$g3.EO7S0ViBoKchs4apGTOxyCUdYTPnNzX1abHcGAFKhGYzKg8Iqa', 'new student', 2, 'avatar.png', '', 1),
+(42, 'rjohnflorenz@gmail.com', '$2y$10$Z9UaUI.n9uaKBSN4JWwncOXXXcH8d.VwBSZ3QbfGBTaO9g7RxMi7C', 'John Florenz Reyes', 2, 'avatar.png', 'RMty', 0),
+(43, 'john.florenzmreyes.10061999@gmail.com', '$2y$10$2RMJXqi4jz3gO8gZ0Qzk/OhdHQpd/QAAIKMolcHajJDtncjeUlIEK', 'John Florenz Reyes 2', 2, 'avatar.png', '', 1),
+(44, '201911447@fit.edu.ph', '$2y$10$7mGS0qwcvYf.Rsv2FfRYEu9/2hXoUch/HaemGaTxCOQJbwv5XDqwu', 'Florenz Reyes 1', 2, 'avatar.png', '', 1),
+(45, 'arthur@email.com', '$2y$10$ff2WIgL/Mcxov5wYJ1B1j.zJckKgWLdI0i4b3SxlXSe4URmg1fA6C', 'arthur', 2, 'avatar.png', 'Vd9f', 1);
 
 -- --------------------------------------------------------
 
@@ -80,12 +91,28 @@ INSERT INTO `account` (`accnt_id`, `accnt_user`, `accnt_pass`, `accnt_name`, `ac
 --
 
 CREATE TABLE `constraints` (
-  `const_ID` int(11) NOT NULL,
-  `testq_id` int(11) NOT NULL,
-  `subj_id` int(11) NOT NULL,
-  `const` text NOT NULL,
-  `feed` text NOT NULL
+  `constraint_ID` int(11) NOT NULL,
+  `constraint_type` varchar(50) DEFAULT NULL,
+  `constraint_regex` varchar(255) DEFAULT NULL,
+  `feedback` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `constraints`
+--
+
+INSERT INTO `constraints` (`constraint_ID`, `constraint_type`, `constraint_regex`, `feedback`) VALUES
+(1, 'lowercase', '^[a-z]+$', 'Answer should contain lowercase letters only.'),
+(2, 'uppercase', '^[A-Z]+$', 'Answer should contain uppercase letters only.'),
+(3, 'numeric', '^[0-9]+$', 'Answer should contain numeric values only.'),
+(4, 'naming_class', '^[A-Z][a-zA-Z0-9]*$', 'Answer should follow the proper Java naming convention for class.'),
+(5, 'naming_interface', '^[A-Z][a-zA-Z0-9]*$', 'Answer should follow the proper Java naming convention for interface.'),
+(6, 'naming_method', '^[a-z][a-zA-Z0-9]*$', 'Answer should follow the proper Java naming convention for method.'),
+(7, 'naming_variable', '^(?![_$&])[a-z][a-zA-Z0-9]*$', 'Answer should follow the proper Java naming convention for variable.'),
+(8, 'naming_package', '^[a-z]+(\\.[a-z]+)*$', 'Answer should follow the proper Java naming convention for packages.'),
+(9, 'naming_constant', '^[A-Z][A-Z0-9_]*$', 'Answer should follow the proper Java naming convention for constant.'),
+(10, 'operator_symbol', '.*[+-*/%=+--==!><&|^~<>]|>>>', 'Answer should contain Java operator symbol.'),
+(11, 'non-operator_symbol', '.*[(){}[],;.:?!\'\"\\\\@#$%&_|~^]', 'Answer should contain Java non-operator symbol.');
 
 -- --------------------------------------------------------
 
@@ -122,7 +149,7 @@ INSERT INTO `exam` (`exam_id`, `subj_id`, `accnt_id`, `exam_type`, `exam_status`
 (12, 1, 9, 0, 0, '0', '10'),
 (13, 1, 34, 0, 0, '0', '10'),
 (14, 1, 35, 1, 0, '1', '10'),
-(15, 1, 36, 1, 1, '3', '10'),
+(15, 1, 36, 1, 1, '14', '30'),
 (16, 1, 36, 2, 1, '1', '1'),
 (17, 2, 36, 1, 1, '1', '10'),
 (18, 2, 36, 2, 1, '1', '1'),
@@ -131,7 +158,16 @@ INSERT INTO `exam` (`exam_id`, `subj_id`, `accnt_id`, `exam_type`, `exam_status`
 (21, 4, 36, 1, 1, '1', '10'),
 (22, 4, 36, 2, 1, '1', '1'),
 (23, 5, 36, 1, 1, '2', '10'),
-(24, 5, 36, 2, 1, '1', '1');
+(24, 5, 36, 2, 1, '1', '1'),
+(25, 1, 37, 1, 1, '4', '10'),
+(26, 1, 37, 2, 0, '2', '1'),
+(27, 1, 38, 0, 0, '0', '10'),
+(28, 1, 41, 1, 0, '33', '50'),
+(31, 1, 43, 1, 0, '0', '10'),
+(32, 1, 10, 0, 0, '0', '10'),
+(33, 1, 44, 1, 0, '0', '10'),
+(34, 1, 45, 1, 1, '1', '10'),
+(35, 1, 45, 2, 0, '0', '1');
 
 -- --------------------------------------------------------
 
@@ -161,7 +197,9 @@ INSERT INTO `exam_settings` (`exam_set_ID`, `exam_set_Type`, `exam_set_Time`, `e
 (7, 1, 600, 10, 4),
 (8, 2, 1200, 20, 4),
 (9, 1, 600, 10, 5),
-(10, 2, 1200, 20, 5);
+(10, 2, 1200, 20, 5),
+(11, 1, 600, 10, 6),
+(12, 2, 1200, 30, 6);
 
 -- --------------------------------------------------------
 
@@ -336,7 +374,26 @@ INSERT INTO `lesson_status` (`ls_id`, `subj_id`, `accnt_id`, `ls_status`) VALUES
 (11, 2, 36, 1),
 (12, 3, 36, 1),
 (13, 4, 36, 1),
-(14, 5, 36, 1);
+(14, 5, 36, 1),
+(15, 1, 37, 0),
+(16, 1, 38, 0),
+(17, 1, 41, 0),
+(18, 1, 43, 0),
+(19, 1, 10, 0),
+(20, 1, 44, 0),
+(21, 1, 45, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questCons`
+--
+
+CREATE TABLE `questCons` (
+  `questCons_ID` int(11) NOT NULL,
+  `testq_id` int(11) NOT NULL,
+  `constraint_ID` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -396,7 +453,58 @@ INSERT INTO `scores` (`score_id`, `subj_id`, `accnt_id`, `num_of_items`, `score`
 (24, 5, 36, 10, 1, 1),
 (25, 5, 36, 10, 8, 1),
 (26, 5, 36, 20, 3, 2),
-(27, 1, 36, 10, 6, 1);
+(27, 1, 36, 10, 6, 1),
+(28, 1, 37, 10, 5, 1),
+(29, 1, 37, 10, 10, 1),
+(30, 1, 37, 0, 0, 2),
+(31, 1, 37, 0, 0, 2),
+(32, 1, 37, 0, 0, 1),
+(33, 1, 37, 0, 0, 1),
+(34, 1, 36, 10, 2, 1),
+(35, 1, 36, 0, 0, 1),
+(36, 1, 36, 0, 0, 1),
+(37, 1, 36, 0, 0, 1),
+(38, 1, 36, 0, 0, 1),
+(39, 1, 36, 0, 0, 1),
+(40, 1, 36, 0, 0, 1),
+(41, 1, 36, 0, 0, 1),
+(42, 1, 36, 0, 0, 1),
+(43, 1, 36, 0, 0, 1),
+(44, 1, 36, 10, 0, 1),
+(45, 1, 41, 10, 5, 1),
+(46, 1, 41, 10, 4, 1),
+(47, 1, 41, 10, 5, 1),
+(48, 1, 41, 10, 5, 1),
+(49, 1, 41, 10, 2, 1),
+(50, 1, 41, 10, 4, 1),
+(51, 1, 41, 10, 3, 1),
+(52, 1, 41, 10, 3, 1),
+(53, 1, 41, 10, 1, 1),
+(54, 1, 45, 10, 7, 1),
+(59, 1, 41, 10, 0, 1),
+(60, 1, 41, 10, 3, 1),
+(61, 1, 41, 10, 0, 1),
+(62, 1, 41, 10, 0, 1),
+(63, 1, 41, 10, 0, 1),
+(64, 1, 41, 10, 1, 1),
+(65, 1, 41, 10, 0, 1),
+(66, 1, 41, 10, 0, 1),
+(67, 1, 41, 10, 1, 1),
+(68, 1, 41, 10, 1, 1),
+(69, 1, 41, 10, 0, 1),
+(70, 1, 41, 10, 0, 1),
+(71, 1, 41, 10, 1, 1),
+(72, 1, 41, 10, 1, 1),
+(73, 1, 41, 10, 0, 1),
+(74, 1, 41, 10, 0, 1),
+(75, 1, 41, 10, 1, 1),
+(76, 1, 41, 10, 5, 1),
+(77, 1, 41, 10, 0, 1),
+(78, 1, 41, 10, 0, 1),
+(79, 1, 41, 10, 0, 1),
+(80, 1, 41, 10, 1, 1),
+(81, 1, 41, 10, 1, 1),
+(82, 1, 41, 10, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -417,11 +525,12 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`subj_id`, `subj_name`, `subj_desc`, `subj_file`, `subj_file2`) VALUES
-(1, 'Java Concurrency and Multithreading', 'Subtopic 1', 'https://www.youtube.com/watch?v=mTGdtC9f4EU&list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&index=2&t=37s', 'https://jenkov.com/tutorials/java-concurrency/index.html'),
+(1, 'Java Concurrency and Multithreading', 'Subtopic 1', 'https://youtube.com/embed/mTGdtC9f4EU', 'https://jenkov.com/tutorials/java-concurrency/index.html'),
 (2, 'Creating, starting and stopping threads in Java', 'Subtopic 2', 'https://www.youtube.com/watch?v=eQk5AWcTS8w', 'https://jenkov.com/tutorials/java-concurrency/creating-and-starting-threads.html'),
 (3, 'Race Conditions in Java Multithreading', 'Subtopic 3', 'https://www.youtube.com/watch?v=RMR75VzYoos&list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&index=9', 'https://jenkov.com/tutorials/java-concurrency/race-conditions-and-critical-sections.html'),
 (4, 'Java Virtual Threads', 'Subtopic 4', 'https://www.youtube.com/watch?v=kirhhcFAGB4&list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&index=3', 'https://jenkov.com/tutorials/java-concurrency/java-virtual-threads.html'),
-(5, 'Thread Signaling in Java', 'Subtopic 5', 'https://www.youtube.com/watch?v=EgOjklzlnFw&list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&index=24', 'https://jenkov.com/tutorials/java-concurrency/thread-signaling.html');
+(5, 'Thread Signaling in Java', 'Subtopic 5', 'https://www.youtube.com/watch?v=EgOjklzlnFw&list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&index=24', 'https://jenkov.com/tutorials/java-concurrency/thread-signaling.html'),
+(6, 'Subtopic 5', 'Subtopic Descripition', 'https://www.w3schools.com/java/java_threads.asp', 'https://www.w3schools.com/java/java_threads.asp');
 
 -- --------------------------------------------------------
 
@@ -467,7 +576,58 @@ INSERT INTO `test_history` (`th_ID`, `th_Type`, `subj_id`, `accnt_id`) VALUES
 (24, 1, 5, 36),
 (25, 1, 5, 36),
 (26, 2, 5, 36),
-(27, 1, 1, 36);
+(27, 1, 1, 36),
+(28, 1, 1, 37),
+(29, 1, 1, 37),
+(30, 2, 1, 37),
+(31, 2, 1, 37),
+(32, 1, 1, 37),
+(33, 1, 1, 37),
+(34, 1, 1, 36),
+(35, 1, 1, 36),
+(36, 1, 1, 36),
+(37, 1, 1, 36),
+(38, 1, 1, 36),
+(39, 1, 1, 36),
+(40, 1, 1, 36),
+(41, 1, 1, 36),
+(42, 1, 1, 36),
+(43, 1, 1, 36),
+(44, 1, 1, 36),
+(45, 1, 1, 41),
+(46, 1, 1, 41),
+(47, 1, 1, 41),
+(48, 1, 1, 41),
+(49, 1, 1, 41),
+(50, 1, 1, 41),
+(51, 1, 1, 41),
+(52, 1, 1, 41),
+(53, 1, 1, 41),
+(54, 1, 1, 45),
+(59, 1, 1, 41),
+(60, 1, 1, 41),
+(61, 1, 1, 41),
+(62, 1, 1, 41),
+(63, 1, 1, 41),
+(64, 1, 1, 41),
+(65, 1, 1, 41),
+(66, 1, 1, 41),
+(67, 1, 1, 41),
+(68, 1, 1, 41),
+(69, 1, 1, 41),
+(70, 1, 1, 41),
+(71, 1, 1, 41),
+(72, 1, 1, 41),
+(73, 1, 1, 41),
+(74, 1, 1, 41),
+(75, 1, 1, 41),
+(76, 1, 1, 41),
+(77, 1, 1, 41),
+(78, 1, 1, 41),
+(79, 1, 1, 41),
+(80, 1, 1, 41),
+(81, 1, 1, 41),
+(82, 1, 1, 41);
 
 -- --------------------------------------------------------
 
@@ -594,7 +754,18 @@ INSERT INTO `test_quest` (`testq_id`, `subj_id`, `testq_0`, `testq_1`, `testq_2`
 (98, 5, 'The flag or variable that stores the signal state should be checked in a _________ loop to guard against spurious wakeups.', 'none', 'none', 'none', 'none', 'while', 'This loop keeps checking the condition until it becomes true.', 2, ''),
 (99, 5, 'Spurious wakeups can occur, where a thread wakes up without receiving a proper _________.', 'none', 'none', 'none', 'none', 'signal', 'This method is called to wake up a waiting thread.', 2, ''),
 (100, 5, 'If a thread calls notify() before the waiting thread calls _________, the signal can be missed', 'none', 'none', 'none', 'none', 'wait()', 'This method is used to make a thread wait for a signal.', 2, ''),
-(101, 5, ' In order to call wait(), notify(), or notifyAll(), the calling thread must obtain the _________ on the object.', 'none', 'none', 'none', 'none', 'lock', 'It is a lock that ensures exclusive access to the object.', 2, '');
+(101, 5, ' In order to call wait(), notify(), or notifyAll(), the calling thread must obtain the _________ on the object.', 'none', 'none', 'none', 'none', 'lock', 'It is a lock that ensures exclusive access to the object.', 2, ''),
+(102, 6, 'Create a Java thread using a subclass of `Thread` and override the ____ method.', 'none', 'none', 'none', 'none', 'run()', 'The class used to create and manage threads in Java.', 2, '1.png'),
+(103, 6, 'Create a Java thread using an anonymous subclass of `Thread` and override the ____ method.', 'none', 'none', 'none', 'none', 'run()', 'The method used to start a Java thread.', 2, '2.png'),
+(104, 6, 'Create a Java thread using a class that implements the ____ interface and overrides the run() method.', 'none', 'none', 'none', 'none', 'Runnable', 'The method that needs to be overridden in a subclass of Thread to specify the code that the thread should execute.', 2, '3.png'),
+(105, 6, 'To start a Java thread, you should call the ____ method.', 'none', 'none', 'none', 'none', 'start()', 'The method that should be called to start a thread and specify the Runnable instance.', 2, '6.png'),
+(106, 6, 'To stop a Java thread, you can call a method such as `doStop()` that sets the `keepRunning` flag to ____.', 'none', 'none', 'none', 'none', 'false', 'The method that needs to be implemented to provide a safe way to stop a thread.', 2, '10.png'),
+(107, 6, 'The deprecated method to stop a thread that should be avoided.', 'none', 'none', 'none', 'none', 'false', 'The deprecated method to stop a thread that should be avoided.', 2, '9.png'),
+(108, 6, 'Which version of Java introduced virtual threads?', 'Java 8', 'Java 9', 'Java 11', 'Java 19', 'Java 19', 'It is a version released after Java 11.', 1, ''),
+(109, 6, 'How do virtual threads differ from platform threads in terms of resource consumption?', 'Virtual threads consume more resources.', 'Virtual threads consume fewer resources.', ' Virtual threads and platform threads consume the same amount of resources.', 'Resource consumption is unrelated to the type of thread.', 'Virtual threads consume fewer resources.', 'Virtual threads are more lightweight.', 1, ''),
+(110, 6, 'What advantage do virtual threads offer when performing blocking IO operations?', 'They can execute more platform threads simultaneously.', 'They can handle more network calls.', 'They require fewer database connections.', 'They can handle more parallel operations.', 'They can handle more network calls.', 'Virtual threads allow for more parallelism in IO operations.', 1, ''),
+(111, 6, 'Are virtual threads currently a preview feature in Java?', 'Yes, they are.', 'No, they are fully stable and released.', 'It depends on the Java version being used.', 'The information is not provided.', 'Yes, they are.', 'The feature is still under development and subject to change.', 1, ''),
+(125, 1, 'test', 'none', 'none', 'none', 'none', 'test', 'test', 2, '');
 
 -- --------------------------------------------------------
 
@@ -605,7 +776,7 @@ INSERT INTO `test_quest` (`testq_id`, `subj_id`, `testq_0`, `testq_1`, `testq_2`
 CREATE TABLE `test_report` (
   `testr_ID` int(11) NOT NULL,
   `testr_StudAns` text NOT NULL COMMENT 'answer chosen by the student',
-  `testr_Status` int(11) NOT NULL COMMENT '1=right answer 0=wrong answer',
+  `testr_Status` int(11) NOT NULL COMMENT '1=right answer 2=wrong answer',
   `testr_TimeQuest` varchar(255) NOT NULL COMMENT 'time spent per question',
   `testr_Type` int(11) NOT NULL COMMENT '1=practice exam 2=summative\r\n3=finals',
   `testr_Attempt` int(11) NOT NULL,
@@ -973,7 +1144,143 @@ INSERT INTO `test_report` (`testr_ID`, `testr_StudAns`, `testr_Status`, `testr_T
 (350, 'program', 2, '00:00:18', 1, 2, '0', 14, 36, 27, 27),
 (351, 'shared', 2, '00:00:06', 1, 2, '0', 16, 36, 27, 27),
 (352, 'Allowing multiple threads of execution within an application', 1, '00:00:01', 1, 4, '1', 1, 36, 27, 27),
-(353, 'program', 2, '00:00:05', 1, 2, '0', 12, 36, 27, 27);
+(353, 'program', 2, '00:00:05', 1, 2, '0', 12, 36, 27, 27),
+(354, 'Fork/Join', 1, '00:00:06', 1, 1, '1', 7, 37, 28, 28),
+(355, 'Separate state concurrency model', 1, '00:00:02', 1, 2, '1', 3, 37, 28, 28),
+(356, 'Allowing multiple threads of execution within an application', 1, '00:00:02', 1, 2, '1', 1, 37, 28, 28),
+(357, 'beginning', 1, '00:00:42', 1, 1, '1', 18, 37, 28, 28),
+(358, 'program', 2, '00:00:06', 1, 2, '0', 12, 37, 28, 28),
+(359, 'Sharing resources among users', 1, '00:00:03', 1, 1, '1', 10, 37, 28, 28),
+(360, 'Improved user experience in terms of responsiveness', 2, '00:00:02', 1, 2, '0', 4, 37, 28, 28),
+(361, 'shared', 2, '00:00:19', 1, 2, '0', 16, 37, 28, 28),
+(362, 'Avoid concurrency problems', 2, '00:00:02', 1, 2, '0', 5, 37, 28, 28),
+(363, 'program', 2, '00:00:09', 1, 2, '0', 14, 37, 28, 28),
+(364, 'beginning', 1, '00:00:08', 1, 1, '1', 18, 37, 29, 29),
+(365, 'Simultaneous program execution', 1, '00:00:02', 1, 3, '1', 8, 37, 29, 29),
+(366, 'computer', 1, '00:00:31', 1, 1, '1', 12, 37, 29, 29),
+(367, 'Better resource utilization', 1, '00:00:02', 1, 1, '1', 2, 37, 29, 29),
+(368, 'Separate state concurrency model', 1, '00:00:01', 1, 1, '1', 3, 37, 29, 29),
+(369, 'sharing', 1, '00:00:11', 1, 1, '1', 16, 37, 29, 29),
+(370, 'Share objects and data', 1, '00:00:02', 1, 4, '1', 5, 37, 29, 29),
+(371, 'Sharing resources among users', 1, '00:00:02', 1, 3, '1', 10, 37, 29, 29),
+(372, 'memory', 1, '00:00:14', 1, 1, '1', 17, 37, 29, 29),
+(373, 'Fork/Join', 1, '00:00:02', 1, 1, '1', 7, 37, 29, 29),
+(374, 'Better resource utilization', 1, '00:00:26', 1, 4, '1', 2, 36, 34, 34),
+(375, 'program', 1, '00:00:05', 1, 1, '1', 11, 36, 34, 34),
+(376, 'Utilizing multiple CPUs or cores', 2, '00:00:03', 1, 4, '0', 6, 36, 35, 35),
+(377, 'Allowing multiple threads of execution within an application', 1, '00:00:12', 1, 3, '1', 1, 41, 45, 45),
+(378, 'Better resource utilization', 1, '00:00:13', 1, 1, '1', 2, 41, 45, 45),
+(379, 'test', 2, '00:00:03', 1, 2, '0', 13, 41, 45, 45),
+(380, 'test', 2, '00:00:02', 1, 2, '0', 14, 41, 45, 45),
+(381, 'test', 2, '00:00:05', 1, 2, '0', 20, 41, 45, 45),
+(382, 'Number of CPUs used', 2, '00:00:03', 1, 2, '0', 8, 41, 45, 45),
+(383, 'Better utilization of a single CPU', 2, '00:00:01', 1, 5, '0', 4, 41, 45, 45),
+(384, 'Fork/Join', 1, '00:00:02', 1, 2, '1', 7, 41, 45, 45),
+(385, 'Avoiding concurrency problems', 2, '00:00:01', 1, 4, '0', 10, 41, 45, 45),
+(386, 'Shared state model', 1, '00:00:04', 1, 3, '1', 9, 41, 45, 45),
+(387, 'test', 2, '00:00:07', 1, 2, '0', 14, 41, 46, 46),
+(388, 'test', 2, '00:00:03', 1, 2, '0', 16, 41, 46, 46),
+(389, 'test', 2, '00:00:03', 1, 2, '0', 17, 41, 46, 46),
+(390, 'test', 2, '00:00:03', 1, 2, '0', 15, 41, 46, 46),
+(391, 'Separate state concurrency model', 1, '00:00:02', 1, 2, '1', 3, 41, 46, 46),
+(392, 'Better resource utilization', 1, '00:00:02', 1, 1, '1', 2, 41, 46, 46),
+(393, 'test', 2, '00:00:03', 1, 2, '0', 12, 41, 46, 46),
+(394, 'Allowing multiple threads of execution within an application', 1, '00:00:02', 1, 1, '1', 1, 41, 46, 46),
+(395, 'Shared state model', 1, '00:00:02', 1, 4, '1', 9, 41, 46, 46),
+(396, 'test', 2, '00:00:02', 1, 2, '0', 11, 41, 46, 46),
+(397, 'test', 2, '00:00:09', 1, 2, '0', 20, 41, 47, 47),
+(398, 'test', 2, '00:00:03', 1, 2, '0', 17, 41, 47, 47),
+(399, 'Separate state concurrency model', 1, '00:00:02', 1, 3, '1', 3, 41, 47, 47),
+(400, 'test', 2, '00:00:02', 1, 2, '0', 11, 41, 47, 47),
+(401, 'Shared state model', 1, '00:00:01', 1, 2, '1', 9, 41, 47, 47),
+(402, 'Avoiding concurrent access errors', 1, '00:00:10', 1, 2, '1', 6, 41, 47, 47),
+(403, 'Simultaneous program execution', 1, '00:00:02', 1, 2, '1', 8, 41, 47, 47),
+(404, 'test', 2, '00:00:03', 1, 2, '0', 14, 41, 47, 47),
+(405, 'test', 2, '00:00:02', 1, 2, '0', 12, 41, 47, 47),
+(406, 'Share objects and data', 1, '00:00:30', 1, 2, '1', 5, 41, 47, 47),
+(407, 'Simultaneous program execution', 1, '00:00:21', 1, 2, '1', 8, 41, 48, 48),
+(408, 'test', 2, '00:00:03', 1, 2, '0', 13, 41, 48, 48),
+(409, 'Share objects and data', 1, '00:00:07', 1, 1, '1', 5, 41, 48, 48),
+(410, 'Allowing multiple threads of execution within an application', 1, '00:00:01', 1, 4, '1', 1, 41, 48, 48),
+(411, 'test', 2, '00:00:03', 1, 2, '0', 11, 41, 48, 48),
+(412, 'test', 2, '00:00:02', 1, 2, '0', 15, 41, 48, 48),
+(413, 'test', 2, '00:00:03', 1, 2, '0', 19, 41, 48, 48),
+(414, 'Separate state concurrency model', 1, '00:00:01', 1, 2, '1', 3, 41, 48, 48),
+(415, 'Shared state model', 1, '00:00:12', 1, 3, '1', 9, 41, 48, 48),
+(416, 'test', 2, '00:00:02', 1, 2, '0', 14, 41, 48, 48),
+(417, 'test', 2, '00:01:35', 1, 2, '0', 20, 41, 49, 49),
+(418, 'Better resource utilization', 1, '00:00:07', 1, 1, '1', 2, 41, 49, 49),
+(419, 'test', 2, '00:01:58', 1, 2, '0', 19, 41, 49, 49),
+(420, 'Share objects and data', 1, '00:00:36', 1, 1, '1', 5, 41, 49, 49),
+(421, 'test', 2, '00:00:45', 1, 3, '0', 15, 41, 49, 49),
+(422, 'Better utilization of a single CPU', 2, '00:00:27', 1, 10, '0', 4, 41, 49, 49),
+(423, 'test', 2, '00:00:05', 1, 1, '0', 18, 41, 49, 49),
+(424, 'Better resource utilization', 1, '00:00:06', 1, 1, '1', 2, 41, 50, 50),
+(425, 'Improved user experience in terms of responsiveness', 2, '00:00:02', 1, 7, '0', 4, 41, 50, 50),
+(426, 'test', 2, '00:00:03', 1, 2, '0', 13, 41, 50, 50),
+(427, 'Shared state model', 1, '00:00:01', 1, 3, '1', 9, 41, 50, 50),
+(428, 'test', 2, '00:00:03', 1, 2, '0', 15, 41, 50, 50),
+(429, 'test', 2, '00:00:02', 1, 2, '0', 12, 41, 50, 50),
+(430, 'test', 2, '00:00:05', 1, 2, '0', 17, 41, 50, 50),
+(431, 'Avoiding concurrent access errors', 1, '00:00:18', 1, 3, '1', 6, 41, 50, 50),
+(432, 'test', 2, '00:00:02', 1, 2, '0', 16, 41, 50, 50),
+(433, 'Sharing resources among users', 1, '00:00:01', 1, 3, '1', 10, 41, 50, 50),
+(434, 'Executing multiple programs simultaneously', 2, '00:00:02', 1, 2, '0', 1, 41, 51, 51),
+(435, 'Fork/Join', 1, '00:00:02', 1, 4, '1', 7, 41, 51, 51),
+(436, 'Simultaneous program execution', 1, '00:00:02', 1, 2, '1', 8, 41, 51, 51),
+(437, 'Shared state model', 1, '00:00:03', 1, 1, '1', 9, 41, 51, 51),
+(438, 'test', 2, '00:00:03', 1, 2, '0', 18, 41, 51, 51),
+(439, 'Fork/Join', 1, '00:00:02', 1, 4, '1', 7, 41, 52, 52),
+(440, 'Allowing multiple threads of execution within an application', 1, '00:00:01', 1, 4, '1', 1, 41, 52, 52),
+(441, 'test', 2, '00:00:02', 1, 2, '0', 16, 41, 52, 52),
+(442, 'test', 2, '00:00:03', 1, 2, '0', 11, 41, 52, 52),
+(443, 'Share objects and data', 1, '00:00:17', 1, 1, '1', 5, 41, 52, 52),
+(444, 'test', 2, '00:00:03', 1, 2, '0', 17, 41, 52, 52),
+(445, 'Better utilization of a single CPU', 2, '00:00:02', 1, 2, '0', 4, 41, 52, 52),
+(446, 'Fairness in resource sharing', 2, '00:00:01', 1, 2, '0', 2, 41, 52, 52),
+(447, 'test', 2, '00:00:02', 1, 2, '0', 12, 41, 52, 52),
+(448, 'test', 2, '00:00:02', 1, 2, '0', 20, 41, 52, 52),
+(449, 'test', 2, '00:00:03', 1, 2, '0', 13, 41, 53, 53),
+(450, 'test', 2, '00:00:02', 1, 2, '0', 16, 41, 53, 53),
+(451, 'test', 2, '00:00:02', 1, 2, '0', 18, 41, 53, 53),
+(452, 'test', 2, '00:00:02', 1, 2, '0', 11, 41, 53, 53),
+(453, 'Simultaneous program execution', 1, '00:00:02', 1, 3, '1', 8, 41, 53, 53),
+(454, 'test', 2, '00:00:08', 1, 2, '0', 17, 41, 53, 53),
+(455, 'Avoiding concurrent access errors', 1, '00:01:56', 1, 1, '1', 6, 45, 54, 54),
+(456, 'Fork/Join', 1, '00:00:46', 1, 1, '1', 7, 45, 54, 54),
+(457, 'responsiveness', 1, '00:01:07', 1, 1, '1', 15, 45, 54, 54),
+(458, 'efficient', 2, '00:00:53', 1, 2, '0', 20, 45, 54, 54),
+(459, 'memory', 1, '00:01:07', 1, 2, '1', 17, 45, 54, 54),
+(460, 'Sharing resources among users', 1, '00:01:01', 1, 1, '1', 10, 45, 54, 54),
+(461, 'cores', 1, '00:01:24', 1, 1, '1', 13, 45, 54, 54),
+(462, 'beginning', 1, '00:00:42', 1, 1, '1', 18, 45, 54, 54),
+(464, 'Simultaneous program execution', 1, '00:00:02', 1, 2, '1', 8, 41, 60, 60),
+(465, 'Fork/Join', 1, '00:00:02', 1, 4, '1', 7, 41, 60, 60),
+(466, 'Avoiding concurrent access errors', 1, '00:00:02', 1, 3, '1', 6, 41, 60, 60),
+(467, 'Separate state concurrency model', 1, '00:00:02', 1, 2, '1', 3, 41, 64, 64),
+(468, 'Avoiding concurrent access errors', 1, '00:00:03', 1, 3, '1', 6, 41, 67, 67),
+(469, 'Share objects and data', 1, '00:00:03', 1, 1, '1', 5, 41, 68, 68),
+(470, 'Allowing multiple threads of execution within an application', 1, '00:00:02', 1, 4, '1', 1, 41, 71, 71),
+(471, 'Fork/Join', 1, '00:00:03', 1, 2, '1', 7, 41, 72, 72),
+(472, 'Shared nothing model', 2, '00:00:02', 1, 1, '0', 9, 41, 73, 73),
+(473, 'test', 2, '00:00:05', 1, 2, '0', 16, 41, 74, 74),
+(474, 'Simultaneous program execution', 1, '00:00:02', 1, 1, '1', 8, 41, 75, 75),
+(475, 'test', 2, '00:00:04', 1, 1, '0', 11, 41, 75, 75),
+(476, 'Avoiding concurrent access errors', 1, '00:00:03', 1, 2, '1', 6, 41, 76, 76),
+(477, 'Simultaneous program execution', 1, '00:00:02', 1, 2, '1', 8, 41, 76, 76),
+(478, 'Separate state concurrency model', 1, '00:00:09', 1, 2, '1', 3, 41, 76, 76),
+(479, 'Share objects and data', 1, '00:00:02', 1, 3, '1', 5, 41, 76, 76),
+(480, 'Allowing multiple threads of execution within an application', 1, '00:00:04', 1, 2, '1', 1, 41, 76, 76),
+(481, 'test', 2, '00:00:04', 1, 2, '0', 15, 41, 76, 76),
+(482, 'COM', 2, '00:00:04', 1, 5, '0', 18, 41, 77, 77),
+(483, 'Improved user experience in terms of responsiveness', 2, '00:00:02', 1, 6, '0', 4, 41, 78, 78),
+(484, 'COM', 2, '00:00:03', 1, 6, '0', 17, 41, 78, 78),
+(485, 'TES', 2, '00:00:04', 1, 3, '0', 20, 41, 79, 79),
+(486, 'Sharing resources among users', 1, '00:00:02', 1, 4, '1', 10, 41, 80, 80),
+(487, 'LOL', 2, '00:00:08', 1, 5, '0', 125, 41, 80, 80),
+(488, 'Share objects and data', 1, '00:00:02', 1, 3, '1', 5, 41, 81, 81),
+(489, 'tE', 2, '00:00:03', 1, 6, '0', 14, 41, 81, 81),
+(490, 'TEST', 2, '00:00:04', 1, 4, '0', 15, 41, 82, 82);
 
 -- --------------------------------------------------------
 
@@ -1002,9 +1309,7 @@ ALTER TABLE `account`
 -- Indexes for table `constraints`
 --
 ALTER TABLE `constraints`
-  ADD PRIMARY KEY (`const_ID`),
-  ADD KEY `testq_id` (`testq_id`),
-  ADD KEY `subj_id` (`subj_id`);
+  ADD PRIMARY KEY (`constraint_ID`);
 
 --
 -- Indexes for table `exam`
@@ -1044,6 +1349,14 @@ ALTER TABLE `lesson_status`
   ADD PRIMARY KEY (`ls_id`),
   ADD KEY `subj_id` (`subj_id`),
   ADD KEY `accnt_id` (`accnt_id`);
+
+--
+-- Indexes for table `questCons`
+--
+ALTER TABLE `questCons`
+  ADD PRIMARY KEY (`questCons_ID`),
+  ADD KEY `testq_id` (`testq_id`),
+  ADD KEY `constraint_ID` (`constraint_ID`);
 
 --
 -- Indexes for table `requests`
@@ -1107,25 +1420,25 @@ ALTER TABLE `views`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `accnt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `accnt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `constraints`
 --
 ALTER TABLE `constraints`
-  MODIFY `const_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `constraint_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `exam`
 --
 ALTER TABLE `exam`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `exam_settings`
 --
 ALTER TABLE `exam_settings`
-  MODIFY `exam_set_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `exam_set_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `finals`
@@ -1143,7 +1456,13 @@ ALTER TABLE `finals_report`
 -- AUTO_INCREMENT for table `lesson_status`
 --
 ALTER TABLE `lesson_status`
-  MODIFY `ls_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ls_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `questCons`
+--
+ALTER TABLE `questCons`
+  MODIFY `questCons_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `requests`
@@ -1155,31 +1474,31 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subj_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `subj_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `test_history`
 --
 ALTER TABLE `test_history`
-  MODIFY `th_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `th_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `test_quest`
 --
 ALTER TABLE `test_quest`
-  MODIFY `testq_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `testq_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `test_report`
 --
 ALTER TABLE `test_report`
-  MODIFY `testr_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=354;
+  MODIFY `testr_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=491;
 
 --
 -- AUTO_INCREMENT for table `views`
