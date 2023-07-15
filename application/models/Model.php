@@ -24,6 +24,11 @@ class Model extends CI_Model
         return $query;
     }
 
+    public function getConstraintAndQuest($id){
+        $query = $this->db->query("SELECT a.*, b.* FROM constraints a LEFT JOIN questCons b on a.constraint_ID=b.constraint_ID WHERE b.testq_id='$id'");
+        return $query;
+    }
+
        public function getPassFailFinals()
     {
         $query = $this->db->query("SELECT* FROM finals");

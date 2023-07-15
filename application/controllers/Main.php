@@ -1512,6 +1512,7 @@ class Main extends CI_Controller {
 	public function getAssignedConstraints(){
 		$cons=$this->model->select_table_with_id("questCons","testq_id",$this->input->post('id'));
 		if($cons->num_rows()>0){
+		$getcons=$this->model->getConstraintAndQuest($this->input->post('id'));
 		foreach($cons->result() as $c){
 				$data[]=array(
 					"constraint_ID"=>$c->constraint_ID,
@@ -1525,9 +1526,6 @@ class Main extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function getQuestWithConstraint(){
-
-	}
 
 	public function Logout(){
     $data = array(
