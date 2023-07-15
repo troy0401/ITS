@@ -1513,7 +1513,7 @@ class Main extends CI_Controller {
 		$cons=$this->model->select_table_with_id("questCons","testq_id",$this->input->post('id'));
 		if($cons->num_rows()>0){
 		$getcons=$this->model->getConstraintAndQuest($this->input->post('id'));
-		foreach($cons->result() as $c){
+		foreach($getcons->result() as $c){
 				$data[]=array(
 					"constraint_ID"=>$c->constraint_ID,
 					"constraint_regex"=>$c->constraint_regex,
