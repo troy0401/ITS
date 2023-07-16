@@ -267,7 +267,7 @@ class Main extends CI_Controller {
                 $this->load->library('upload', $config);
                 $this->upload->do_upload('image');
 		}
- 		if($this->input->post('type')==1){
+ 		if($this->input->post('q_type')==1){
 
          $data = array(
 					"testq_0"=>$this->input->post('quest'),
