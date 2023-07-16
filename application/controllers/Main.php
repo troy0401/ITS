@@ -310,7 +310,7 @@ class Main extends CI_Controller {
 			$this->db->insert_batch('questCons', $cons);
 			
 		 }
-		 echo json_encode($checkArray);
+		 echo json_encode(true);
 
 
     }
