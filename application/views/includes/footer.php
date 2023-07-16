@@ -1001,7 +1001,7 @@
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_2']+'"> <span><b>'+result[i]['testq_2']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_3']+'"> <span><b>'+result[i]['testq_3']+'</b></span></label></div>'+
                         '<div class="ans ml-2"><label class="radio"> <input type="radio" name="answer'+i+'" onchange="change(this.value);" value="'+result[i]['testq_4']+'"> <span><b>'+result[i]['testq_4']+'</b></span></label></div>'+
-						'<h6 class="text-danger hint'+i+'" style="display:none;"><br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
+						'<h6 class="text-danger hint'+i+'" style="display:none;">[Incorrect]<br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
 						}else{
 						$('.question-list').append('<div id="question'+count_quest+'" '+(count_quest<1 ? 'style="display: block;"' : 'style="display:none;"')+'>'+
 						'<h5>Time Remaining: <b><span class="timer"></span></b></h5>'+
@@ -1019,7 +1019,7 @@
 						(result[i]['testq_img']==''? '' :'<img class="card-img-top img-fluid" src="<?php echo site_url('uploads/exam_images/'); ?>'+result[i]['testq_img']+'" alt="image">')+
 						'<br><textarea class="form-control" id="validationCustom01" name="answer'+i+' placeholder="Answer" oninput="change(null);"></textarea>'+
 						'<span class="constraint'+i+'"></span>'+
-						'<h6 class="text-danger hint'+i+'" style="display:none;"><br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
+						'<h6 class="text-danger hint'+i+'" style="display:none;"><br>Incorrect <br> Hint: '+result[i]['testq_hint']+'</h6>').outerHTML;
 						}
                       count_quest++;
                          }
