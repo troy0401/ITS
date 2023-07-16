@@ -648,7 +648,7 @@
 					checks=getConstraintChecks();
 					assigned=getAssignedConstraints(id);
 					for(var j=0; j<checks.length; j++){
-						$('.box_check').append('<div class="custom-control-inline check'+checks[j]['constraint_ID']+'">'+
+						$('.box_check').append('<div class="form-control check'+checks[j]['constraint_ID']+'">'+
 						'<input type="checkbox" name="type" value="'+checks[j]['constraint_ID']+'">'+
 						'<label class="custom-control-label">'+checks[j]['feedback']+'</label>'+
 						'</div>');
@@ -1575,8 +1575,10 @@
 		$.post(base_url+'Main/getConstraints',
 			function(result){
 		for(var i=0; i<result.length; i++){
-			$('.boxes').append('<input type="checkbox" name="type" value="'+result[i]['constraint_ID']+'">'+
-        	'<label class="custom-control-label">'+result[i]['feedback']+'</label>');
+			$('.boxes').append('<div class="form-control">'+
+        	'<input type="checkbox" name="type" value="'+result[i]['constraint_ID']+'">'+
+        	'<label class="custom-control-label">'+result[i]['feedback']+'</label>'+
+        	'</div>');
 		}
 		},'json');
 		var mult_choice='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
