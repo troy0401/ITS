@@ -278,7 +278,7 @@ class Main extends CI_Controller {
  					"testq_ans"=>$this->input->post('ans'),
  					"testq_hint"=>$this->input->post('hint'),
  					"subj_id"=>$this->input->post('id'),
- 					"testq_type"=>$this->input->post('type'),
+ 					"testq_type"=>$this->input->post('q_type'),
 					"testq_img"=>$this->upload->data('file_name')
 
                  );
@@ -292,7 +292,7 @@ class Main extends CI_Controller {
  					"testq_ans"=>$this->input->post('ans'),
  					"testq_hint"=>$this->input->post('hint'),
  					"subj_id"=>$this->input->post('id'),
- 					"testq_type"=>$this->input->post('type'),
+ 					"testq_type"=>$this->input->post('q_type'),
 					"testq_img"=>$this->upload->data('file_name')
                  );
  		}
