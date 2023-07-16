@@ -656,6 +656,7 @@
 					if(assigned!==null){
 					for (var i=0; i<assigned.length; i++){
 						for(var j=0; j<checks.length; j++){
+							console.log(assigned[i]['constraint_ID'].indexOf(checks[j]['constraint_ID']));
 							if(assigned[i]['constraint_ID'].indexOf(checks[j]['constraint_ID'])!==-1){
 								$('.check'+checks[j]['constraint_ID']+'').empty().append('<input type="checkbox" checked name="type" value="'+checks[j]['constraint_ID']+'">'+
 						'<label class="custom-control-label">'+checks[j]['feedback']+'</label>');

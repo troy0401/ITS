@@ -261,7 +261,7 @@
                                             <div class="modal-body">
                                             <div class="col-md-12 mb-3">
 													<label class="col-form-label">Select Question type</label>
-													<select onChange="displayQuestType(this.value);" class="form-control" name="type">
+													<select onChange="displayQuestType(this.value);" class="form-control" name="q_type">
 														<option>Choose Type...</option>
 														<option value="1">Multiple Choice</option>
 														<option value="2">Fill in the Blank</option>
