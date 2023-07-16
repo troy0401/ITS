@@ -1503,6 +1503,7 @@ class Main extends CI_Controller {
 		foreach($cons->result() as $c){
 			$data[]=array(
 				"constraint_ID"=>$c->constraint_ID,
+				"constraint_type"=>$c->constraint_type,
 				"feedback"=>$c->feedback
 			);
 		}
