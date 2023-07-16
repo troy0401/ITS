@@ -1575,10 +1575,8 @@
 		$.post(base_url+'Main/getConstraints',
 			function(result){
 		for(var i=0; i<result.length; i++){
-			$('.boxes').append('<div class="custom-control-inline">'+
-        	'<input type="checkbox" name="type" value="'+result[i]['constraint_ID']+'">'+
-        	'<label class="custom-control-label">'+result[i]['feedback']+'</label>'+
-        	'</div>');
+			$('.boxes').append('<input type="checkbox" name="type" value="'+result[i]['constraint_ID']+'">'+
+        	'<label class="custom-control-label">'+result[i]['feedback']+'</label>');
 		}
 		},'json');
 		var mult_choice='<div class="form-row"><div class="col-md-12 mb-3"><label for="validationCustom01">Test Questionaire</label>'+
