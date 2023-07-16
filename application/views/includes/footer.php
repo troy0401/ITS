@@ -650,7 +650,7 @@
 					for(var j=0; j<checks.length; j++){
 						$('.box_check').append('<div class="form-control check'+checks[j]['constraint_ID']+'">'+
 						'<input type="checkbox" name="type" value="'+checks[j]['constraint_ID']+'">'+
-						'<label class="custom-control-label">'+checks[j]['feedback']+'</label>'+
+						'<label class="custom-control-label">'+checks[j]['constraint_type']+'</label>'+
 						'</div>');
 						}
 					if(assigned!==null){
@@ -659,7 +659,7 @@
 							console.log(assigned[i]['constraint_ID'].indexOf(checks[j]['constraint_ID']));
 							if(assigned[i]['constraint_ID']==checks[j]['constraint_ID']){
 								$('.check'+checks[j]['constraint_ID']+'').empty().append('<input type="checkbox" checked name="type" value="'+checks[j]['constraint_ID']+'">'+
-						'<label class="custom-control-label">'+checks[j]['feedback']+'</label>');
+						'<label class="custom-control-label">'+checks[j]['constraint_type']+'</label>');
 							}
 						}
 					}
@@ -1577,7 +1577,7 @@
 		for(var i=0; i<result.length; i++){
 			$('.boxes').append('<div class="form-control">'+
         	'<input type="checkbox" name="type" value="'+result[i]['constraint_ID']+'">'+
-        	'<label class="custom-control-label">'+result[i]['feedback']+'</label>'+
+        	'<label class="custom-control-label">'+result[i]['constraint_type']+'</label>'+
         	'</div>');
 		}
 		},'json');
